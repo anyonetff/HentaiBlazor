@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31025.194
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HentaiBlazor", "HentaiBlazor\HentaiBlazor.csproj", "{D2188A7D-9B82-48AF-ABF3-4DB7D3956B7F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D2188A7D-9B82-48AF-ABF3-4DB7D3956B7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2188A7D-9B82-48AF-ABF3-4DB7D3956B7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2188A7D-9B82-48AF-ABF3-4DB7D3956B7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2188A7D-9B82-48AF-ABF3-4DB7D3956B7F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8092C69A-CC92-41A4-B96A-0DE4F8554D86}
+	EndGlobalSection
+EndGlobal
