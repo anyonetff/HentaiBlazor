@@ -1,4 +1,8 @@
-using HentaiBlazor.Data;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
@@ -6,10 +10,10 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using AntDesign.Pro.Layout;
+using HentaiBlazor.Data;
+using Microsoft.EntityFrameworkCore;
+using HentaiBlazor.Service.Basic;
 
 namespace HentaiBlazor
 {
@@ -28,7 +32,22 @@ namespace HentaiBlazor
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton<WeatherForecastService>();
+            services.AddAntDesign();
+			services.AddScoped(sp => new HttpClient
+            {
+                BaseAddress = new Uri(sp.GetService<NavigationManager>().BaseUri)
+            });
+            services.Configure<ProSettings>(Configuration.GetSection("ProSettings"));
+
+            services.AddDbContextFactory<HentaiContext>(options =>
+            {
+                Console.WriteLine("创建数据源工厂:");
+                options.UseSqlite($"Data Source ={nameof(HentaiContext.HentaiDb)}.db");
+            });
+
+            services.AddScoped<AuthorService>();
+            services.AddScoped<TagService>();
+            services.AddScoped<CatalogService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

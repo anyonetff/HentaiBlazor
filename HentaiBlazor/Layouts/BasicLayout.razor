@@ -1,0 +1,42 @@
+﻿@namespace HentaiBlazor
+@inherits LayoutComponentBase
+
+<AntDesign.Pro.Layout.BasicLayout 
+    Logo="@("https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg")"
+    MenuData="_menuData">
+    <RightContentRender>
+        <HentaiBlazor.Components.RightContent />
+    </RightContentRender>
+    <ChildContent>
+        @Body
+    </ChildContent>
+</AntDesign.Pro.Layout.BasicLayout>
+<SettingDrawer />
+
+@code
+{
+    private readonly MenuDataItem[] _menuData = 
+    {
+        new MenuDataItem
+        {
+            Path = "/",
+            Name = "welcome",
+            Key = "welcome",
+            Icon = "smile",
+        },
+        new MenuDataItem
+        {
+            Path = "/basic/catalog/list",
+            Name = "目录管理",
+            Key = "catalog",
+            Icon = "smile",
+        },
+        new MenuDataItem
+        {
+            Path = "/basic/author/list",
+            Name = "作者管理",
+            Key = "author",
+            Icon = "smile",
+        }
+    };
+}
