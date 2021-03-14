@@ -42,7 +42,7 @@ namespace HentaiBlazor
             services.AddDbContextFactory<HentaiContext>(options =>
             {
                 Console.WriteLine("创建数据源工厂:");
-                options.UseSqlite($"Data Source =db/{HentaiContext.HentaiDb}.db");
+                options.UseSqlite($"Data Source ={HentaiContext.HentaiDb}.db");
             });
 
             services.AddScoped<AuthorService>();

@@ -1,9 +1,28 @@
 ﻿@page "/basic/catalog/list"
 
+@using HentaiBlazor.Data.Basic;
+
 <PageContainer Title="目录设置">
+
+    <Space Style="margin-bottom: 0.1rem">
+        <SpaceItem>
+            <Button Type="primary" Icon="plus">添加</Button>
+        </SpaceItem>
+    </Space>
+
+    <Table TItem="BCatalogEntity" DataSource="@BCatalogEntities">
+        <AntDesign.Column @bind-Field="@context.Usage"></AntDesign.Column>
+        <AntDesign.Column @bind-Field="@context.Path"></AntDesign.Column>
+    </Table>
+
+    <Modal Title="@title"
+           Visible="@_visible"
+           OnOk="@HandleOk"
+           OnCancel="@HandleCancel">
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+    </Modal>
 
 </PageContainer>
 
-@code {
-
-}

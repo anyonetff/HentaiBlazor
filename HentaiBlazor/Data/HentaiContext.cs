@@ -1,5 +1,6 @@
 ﻿using HentaiBlazor.Data.Basic;
 using HentaiBlazor.Data.Comic;
+using HentaiBlazor.Data.Security;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,8 @@ namespace HentaiBlazor.Data
     public class HentaiContext : DbContext
     {
         public static readonly string HentaiDb = nameof(HentaiDb).ToLower();
+
+        public DbSet<SFunctionEntity> SFunctionEntities { get; set; }
 
         public DbSet<BAuthorEntity> BAuthorEntities { get; set; }
         public DbSet<BTagEntity> BTagEntities { get; set; }
