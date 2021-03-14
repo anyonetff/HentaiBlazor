@@ -6,7 +6,7 @@
 
     <Space Style="margin-bottom: 0.1rem">
         <SpaceItem>
-            <Button Type="primary" Icon="plus">添加</Button>
+            <Button Type="primary" Icon="plus" OnClick="@ShowModal">添加</Button>
         </SpaceItem>
     </Space>
 
@@ -15,14 +15,11 @@
         <AntDesign.Column @bind-Field="@context.Path"></AntDesign.Column>
     </Table>
 
-    <Modal Title="@title"
-           Visible="@_visible"
-           OnOk="@HandleOk"
-           OnCancel="@HandleCancel">
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-    </Modal>
+    
+
+    <CatalogEdit >
+
+    </CatalogEdit>
 
 </PageContainer>
 
