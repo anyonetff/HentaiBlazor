@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace HentaiBlazor.Pages.Basic
+namespace HentaiBlazor.Pages.Basic.Catalog
 {
     public partial class CatalogList
     {
