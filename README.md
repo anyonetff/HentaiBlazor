@@ -4,15 +4,19 @@
 
 老司机驾驶舱。
 
+#### 开发状态
+
+1.  2021-03-16 还处于框架学习中，仅编写了一些测试功能.
+
 #### 软件架构
 
 本应用使用了.NET的新一代前后端框架，主要包含以下技术要点：
 
-1.  dotnet5.0
-2.  Blazor Server
-3.  EntityFramework
-4.  SQLite
-5.  Ant Design Blazor Pro
+1.  dotnet - 巨硬的应用开发框架
+2.  Blazor Server - 巨硬的新一代前端开发框架，是继WebForm、JSF、GWT后的又一次前后端一体化框架技术路线尝试
+3.  EntityFramework - 巨硬的ORM持久层框架
+4.  SQLite - 简单的单机数据库，考虑到本应用比较简单，就没有使用PostgreSQL这类的大部头了
+5.  Ant Design Blazor Pro - 纳尼？居然有人把这套UI封成了razor组件库！
 
 #### 安装教程
 
@@ -20,6 +24,6 @@
 
 #### 使用说明
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+1.  在目录维护中添加各位司机的车库
+2.  漫画列表自动扫描目录，生成封面预览
+
