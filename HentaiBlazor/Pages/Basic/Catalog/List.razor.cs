@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace HentaiBlazor.Pages.Basic.Catalog
 {
-    public partial class CatalogList
+    public partial class List
     {
         [Inject]
         public CatalogService service { get; set; }

@@ -11,15 +11,11 @@
     </Space>
 
     <Table TItem="BCatalogEntity" DataSource="@BCatalogEntities">
-        <AntDesign.Column @bind-Field="@context.Usage"></AntDesign.Column>
-        <AntDesign.Column @bind-Field="@context.Path"></AntDesign.Column>
+        <Column @bind-Field="@context.Usage"></Column>
+        <Column @bind-Field="@context.Path"></Column>
     </Table>
 
-    
-    
-    <CatalogEdit >
-
-    </CatalogEdit>
+        <Edit />
 
 </PageContainer>
 

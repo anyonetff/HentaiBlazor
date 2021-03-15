@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace HentaiBlazor.Pages.Basic.Catalog
 {
-    public partial class CatalogEdit : ModalTemplate<BCatalogEntity>
+    public partial class Edit
     {
 
         private BCatalogEntity catalog;
