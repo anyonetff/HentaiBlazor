@@ -15,7 +15,9 @@
         <Column @bind-Field="@context.Path"></Column>
     </Table>
 
-        <Edit />
+    <Modal Visible="@_editVisible">
+        <Edit @bind-catalog="_catalog"></Edit>
+    </Modal>
 
 </PageContainer>
 

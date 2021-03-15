@@ -1,24 +1,15 @@
 ﻿@page "/basic/author/list"
 
-@using AntDesign.TableModels
-@using System.ComponentModel
-
 @using HentaiBlazor.Data.Basic
-@using HentaiBlazor.Service.Basic
-
-@inject AuthorService service
 
 <PageContainer Title="作者维护">
     <Table TItem="BAuthorEntity" DataSource="@BAuthorEntities">
-        <AntDesign.Column @bind-Field="@context.Name"></AntDesign.Column>
+        <Column @bind-Field="@context.Name"></Column>
+        <ActionColumn>
+            <Space>
+                <SpaceItem><Button Danger OnClick="()=>DeleteConfirm(context.Id)">Delete</Button></SpaceItem>
+            </Space>
+        </ActionColumn>
     </Table>
 </PageContainer>
 
-@code {
-    List<BAuthorEntity> BAuthorEntities;
-
-    protected override async Task OnInitializedAsync()
-    {
-        BAuthorEntities = await service.ListAsync();
-    }
-}

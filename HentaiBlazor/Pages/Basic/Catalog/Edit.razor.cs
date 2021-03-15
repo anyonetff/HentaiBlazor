@@ -15,6 +15,7 @@ namespace HentaiBlazor.Pages.Basic.Catalog
 
         protected override void OnInitialized()
         {
+            catalog = new BCatalogEntity();
             //_model = base.Options ?? new Form.demo.Basic.Model();
             base.OnInitialized();
         }
@@ -22,7 +23,7 @@ namespace HentaiBlazor.Pages.Basic.Catalog
         private void OnFinish(EditContext editContext)
         {
             //Console.WriteLine($"Success:{JsonSerializer.Serialize(_model)}");
-            _ = base.ModalRef.CloseAsync();
+            
         }
 
         private void OnFinishFailed(EditContext editContext)

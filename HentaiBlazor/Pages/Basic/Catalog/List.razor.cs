@@ -1,4 +1,5 @@
-﻿using HentaiBlazor.Data.Basic;
+﻿using AntDesign;
+using HentaiBlazor.Data.Basic;
 using HentaiBlazor.Service.Basic;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
@@ -18,6 +19,10 @@ namespace HentaiBlazor.Pages.Basic.Catalog
 
         private bool _confirmLoading = false;
 
+        private ModalRef _editRef;
+
+        private BCatalogEntity _catalog;
+
 
         private List<BCatalogEntity> BCatalogEntities { get; set; }
 
@@ -29,6 +34,7 @@ namespace HentaiBlazor.Pages.Basic.Catalog
         private void ShowModal()
         {
             _editVisible = true;
+            
         }
 
 
