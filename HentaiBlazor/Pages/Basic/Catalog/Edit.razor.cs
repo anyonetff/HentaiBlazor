@@ -1,5 +1,7 @@
 ﻿using AntDesign;
 using HentaiBlazor.Data.Basic;
+using HentaiBlazor.Service.Basic;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using System;
 using System.Collections.Generic;
@@ -13,17 +15,34 @@ namespace HentaiBlazor.Pages.Basic.Catalog
 
         private BCatalogEntity catalog;
 
+        [Inject]
+        public CatalogService service { get; set; }
+
         protected override void OnInitialized()
         {
-            catalog = new BCatalogEntity();
-            //_model = base.Options ?? new Form.demo.Basic.Model();
+            //catalog = new BCatalogEntity();
+            catalog = base.Options ?? new BCatalogEntity();
             base.OnInitialized();
         }
 
-        private void OnFinish(EditContext editContext)
+        private async Task OnFinish(EditContext editContext)
         {
             //Console.WriteLine($"Success:{JsonSerializer.Serialize(_model)}");
             
+
+            if (catalog.Id == null || catalog.Id == "")
+            {
+                Console.WriteLine("添加一条记录");
+                catalog.Id = Guid.NewGuid().ToString();
+                await service.AddAsync(catalog);
+            }
+            else
+            {
+                Console.WriteLine("修改一条记录");
+                service.Update(catalog);
+            }
+
+            _ = base.ModalRef.CloseAsync();
         }
 
         private void OnFinishFailed(EditContext editContext)

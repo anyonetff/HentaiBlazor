@@ -6,18 +6,22 @@
 
     <Space Style="margin-bottom: 0.1rem">
         <SpaceItem>
-            <Button Type="primary" Icon="plus" OnClick="@ShowModal">添加</Button>
+            <Button Type="primary" OnClick="()=>OpenAdd()">添加</Button>
         </SpaceItem>
     </Space>
 
     <Table TItem="BCatalogEntity" DataSource="@BCatalogEntities">
-        <Column @bind-Field="@context.Usage"></Column>
-        <Column @bind-Field="@context.Path"></Column>
+        <ActionColumn>
+            <Space>
+                <SpaceItem>
+                    <Button Type="primary" OnClick="()=>OpenModify(context.Id)">修改</Button>
+                    <Button Type="primary" Danger OnClick="()=>DeleteConfirm(context.Id)">删除</Button>
+                </SpaceItem>
+            </Space>
+        </ActionColumn>
+        <Column Title="用途" @bind-Field="@context.Usage"></Column>
+        <Column Title="路径" @bind-Field="@context.Path"></Column>
     </Table>
-
-    <Modal Visible="@_editVisible">
-        <Edit @bind-catalog="_catalog"></Edit>
-    </Modal>
 
 </PageContainer>
 

@@ -25,5 +25,23 @@ namespace HentaiBlazor.Service.Basic
             return await dbContext.BCatalogEntities.SingleAsync(b => b.Id == id);
         }
 
+        public async Task<int> AddAsync(BCatalogEntity entity)
+        {
+            await dbContext.BCatalogEntities.AddAsync(entity);
+            return await dbContext.SaveChangesAsync();
+        }
+
+        public int Update(BCatalogEntity entity)
+        {
+            dbContext.BCatalogEntities.Update(entity);
+            return dbContext.SaveChanges();
+        }
+
+        public int Remove(BCatalogEntity entity)
+        {
+            dbContext.BCatalogEntities.Remove(entity);
+            return dbContext.SaveChanges();
+        }
+
     }
 }
