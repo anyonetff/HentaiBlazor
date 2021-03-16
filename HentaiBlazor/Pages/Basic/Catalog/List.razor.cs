@@ -39,7 +39,7 @@ namespace HentaiBlazor.Pages.Basic.Catalog
 
         private async Task OpenModify(string id) 
         {
-            var templateOptions = await service.GetAsync(id);
+            var templateOptions = await service.FindAsync(id);
 
             await this.OpenEdit(templateOptions);
         }
@@ -77,7 +77,7 @@ namespace HentaiBlazor.Pages.Basic.Catalog
 
         private async Task DeleteConfirm(string Id)
         {
-            _catalog = await service.GetAsync(Id);
+            _catalog = await service.FindAsync(Id);
 
             _modal.Confirm(new ConfirmOptions()
             {

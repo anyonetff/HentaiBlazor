@@ -8,16 +8,12 @@ using System.Threading.Tasks;
 
 namespace HentaiBlazor.Service.Basic
 {
-    public class AuthorService : AbstractService
+    public class AuthorService : AbstractService<BAuthorEntity>
     {
 
         public AuthorService(IDbContextFactory<HentaiContext> dbFactory) : base(dbFactory)
         {
         }
 
-        public async Task<List<BAuthorEntity>> ListAsync()
-        {
-            return await dbContext.BAuthorEntities.ToListAsync();
-        }
     }
 }

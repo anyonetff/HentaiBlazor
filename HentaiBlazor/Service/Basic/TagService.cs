@@ -8,16 +8,12 @@ using System.Threading.Tasks;
 
 namespace HentaiBlazor.Service.Basic
 {
-    public class TagService : AbstractService
+    public class TagService : AbstractService<BTagEntity>
     {
 
         public TagService(IDbContextFactory<HentaiContext> dbFactory) : base(dbFactory)
         {
         }
 
-        public async Task<List<BTagEntity>> ListAsync()
-        {
-            return await dbContext.BTagEntities.ToListAsync();
-        }
     }
 }

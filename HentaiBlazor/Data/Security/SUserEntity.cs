@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace HentaiBlazor.Data.Security
 {
-    public class SUserEntity
+    public class SUserEntity : AbstractEntity
     {
     }
 }

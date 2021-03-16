@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace HentaiBlazor.Data.Anime
 {
-    public class AVideoEntity
+    public class AVideoEntity : AbstractEntity
     {
     }
 }

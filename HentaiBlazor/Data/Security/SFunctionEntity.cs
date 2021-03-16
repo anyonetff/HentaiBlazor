@@ -8,11 +8,12 @@ using System.Threading.Tasks;
 namespace HentaiBlazor.Data.Security
 {
     [Table("s_function")]
-    public class SFunctionEntity
+    public class SFunctionEntity : AbstractEntity
     {
+        
         [Key]
         [Column("f_id")]
-        public string Id { get; set; }
+        public new string Id { get; set; }
 
         [Column("f_parent")]
         public string Parent { get; set; }

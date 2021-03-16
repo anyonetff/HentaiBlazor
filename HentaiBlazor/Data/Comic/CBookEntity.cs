@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 namespace HentaiBlazor.Data.Comic
 {
     [Table("c_book")]
-    public class CBookEntity
+    public class CBookEntity : AbstractEntity
     {
         [Key]
         [Column("b_id")]
-        public string Id { get; set; }
+        public new string Id { get; set; }
 
         [Column("b_name")]
         public string Name { get; set; }

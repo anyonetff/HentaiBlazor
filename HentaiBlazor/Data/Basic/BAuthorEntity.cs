@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 namespace HentaiBlazor.Data.Basic
 {
     [Table("b_author")]
-    public class BAuthorEntity
+    public class BAuthorEntity : AbstractEntity
     {
 
         [Key]
         [Column("a_id")]
-        public string Id { get; set; }
+        public new string Id { get; set; }
 
         [Column("a_name")]
         public string Name { get; set; }

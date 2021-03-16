@@ -1,4 +1,5 @@
 ﻿using HentaiBlazor.Data;
+using HentaiBlazor.Data.Anime;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace HentaiBlazor.Service.Anime
 {
-    public class VideoService : AbstractService
+    public class VideoService : AbstractService<AVideoEntity>
     {
 
         public VideoService(IDbContextFactory<HentaiContext> dbFactory) : base(dbFactory)

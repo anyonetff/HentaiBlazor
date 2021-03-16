@@ -8,15 +8,11 @@ using System.Threading.Tasks;
 
 namespace HentaiBlazor.Service.Comic
 {
-    public class BookService : AbstractService
+    public class BookService : AbstractService<CBookEntity>
     {
         public BookService(IDbContextFactory<HentaiContext> dbFactory) : base(dbFactory)
         {
         }
 
-        public async Task<List<CBookEntity>> ListAsync()
-        {
-            return await dbContext.CBookEntities.ToListAsync();
-        }
     }
 }

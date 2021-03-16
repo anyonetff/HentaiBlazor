@@ -8,21 +8,11 @@ using System.Threading.Tasks;
 
 namespace HentaiBlazor.Service.Basic
 {
-    public class CatalogService : AbstractService
+    public class CatalogService : AbstractService<BCatalogEntity>
     {
 
         public CatalogService(IDbContextFactory<HentaiContext> dbFactory) : base(dbFactory)
         {
-        }
-
-        public async Task<List<BCatalogEntity>> ListAsync()
-        {
-            return await dbContext.BCatalogEntities.ToListAsync();
-        }
-
-        public async Task<BCatalogEntity> GetAsync(string id) 
-        {
-            return await dbContext.BCatalogEntities.SingleAsync(b => b.Id == id);
         }
 
         public async Task<int> AddAsync(BCatalogEntity entity)
