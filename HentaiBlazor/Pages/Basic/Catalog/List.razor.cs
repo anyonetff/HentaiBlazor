@@ -19,10 +19,6 @@ namespace HentaiBlazor.Pages.Basic.Catalog
         [Inject]
         public CatalogService service { get; set; }
 
-        private bool _editVisible = false;
-
-        private bool _confirmLoading = false;
-
         private ModalRef _editRef;
 
         private BCatalogEntity _catalog;
@@ -91,28 +87,6 @@ namespace HentaiBlazor.Pages.Basic.Catalog
                 },
                 OnCancel = DeleteOnCancel
             });
-        }
-
-        private void ShowModal()
-        {
-            _editVisible = true;
-            
-        }
-
-
-        private async Task HandleOk(MouseEventArgs e)
-        {
-            _confirmLoading = true;
-            StateHasChanged();
-            await Task.Delay(2000);
-            _editVisible = false;
-            _confirmLoading = false;
-        }
-
-        private void HandleCancel(MouseEventArgs e)
-        {
-            Console.WriteLine("Clicked cancel button");
-            _editVisible = false;
         }
 
     }

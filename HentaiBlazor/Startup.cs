@@ -14,6 +14,9 @@ using AntDesign.Pro.Layout;
 using HentaiBlazor.Data;
 using Microsoft.EntityFrameworkCore;
 using HentaiBlazor.Service.Basic;
+using HentaiBlazor.Service.Comic;
+using HentaiBlazor.Service.Security;
+using HentaiBlazor.Service.Anime;
 
 namespace HentaiBlazor
 {
@@ -45,9 +48,14 @@ namespace HentaiBlazor
                 options.UseSqlite($"Data Source ={HentaiContext.HentaiDb}.db");
             });
 
+            services.AddScoped<FunctionService>();
+
             services.AddScoped<AuthorService>();
             services.AddScoped<TagService>();
             services.AddScoped<CatalogService>();
+
+            services.AddScoped<BookService>();
+            services.AddScoped<VideoService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

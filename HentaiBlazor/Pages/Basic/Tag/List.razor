@@ -1,6 +1,17 @@
-﻿<h3>List</h3>
+﻿@page "/basic/tag/list"
 
+@using HentaiBlazor.Data.Basic
 
-@code {
+<PageContainer Title="标签维护">
+    <Table TItem="BTagEntity" DataSource="@BTagEntities">
+        <ActionColumn>
+            <Space>
+                <SpaceItem>
+                </SpaceItem>
+            </Space>
+        </ActionColumn>
+        <Column Title="名称" @bind-Field="@context.Name"></Column>
+        <Column Title="映射" @bind-Field="@context.Alias"></Column>
+    </Table>
+</PageContainer>
 
-}

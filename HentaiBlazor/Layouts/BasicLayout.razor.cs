@@ -1,4 +1,6 @@
 ﻿using AntDesign.Pro.Layout;
+using HentaiBlazor.Data.Security;
+using HentaiBlazor.Service.Security;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
@@ -9,29 +11,30 @@ namespace HentaiBlazor
 {
     public partial class BasicLayout
     {
-        private MenuDataItem[] _menuData =
-{
-        new MenuDataItem
+        private MenuDataItem[] Menus;
+
+        [Inject]
+        public FunctionService service { get; set; }
+
+        protected override async Task OnInitializedAsync()
         {
-            Path = "/",
-            Name = "welcome",
-            Key = "welcome",
-            Icon = "smile",
-        },
-        new MenuDataItem
-        {
-            Path = "/basic/catalog/list",
-            Name = "目录管理",
-            Key = "catalog",
-            Icon = "smile",
-        },
-        new MenuDataItem
-        {
-            Path = "/basic/author/list",
-            Name = "作者管理",
-            Key = "author",
-            Icon = "smile",
+            List<SFunctionEntity> results = await service.ListAsync();
+
+            List<MenuDataItem> data = new List<MenuDataItem>();
+
+            foreach (var r in results) 
+            {
+                MenuDataItem m = new MenuDataItem();
+
+                m.Key = r.Id;
+                m.Name = r.Name;
+                m.Path = r.Path;
+                m.Icon = r.Icon;
+
+                data.Add(m);
+            }
+
+            Menus = data.ToArray();
         }
-    };
     }
 }

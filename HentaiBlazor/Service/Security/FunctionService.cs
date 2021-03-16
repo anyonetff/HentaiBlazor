@@ -14,6 +14,5 @@ namespace HentaiBlazor.Service.Security
         {
         }
 
-
     }
 }

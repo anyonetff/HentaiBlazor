@@ -2,13 +2,18 @@
 @inherits LayoutComponentBase
 
 <AntDesign.Pro.Layout.BasicLayout Logo="@("https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg")"
-                                  MenuData="@_menuData">
+                                 
+                                  MenuData="@Menus">
     <RightContentRender>
         <!--
         <HentaiBlazor.Components.RightContent />
         -->
-
     </RightContentRender>
+    <FooterRender>
+        <p style="text-align: right; margin: 0.5rem; padding: 0.5rem; color: darkgray;">
+            Copyright &copy; Handsome All Rights Not Reserved.
+        </p>
+    </FooterRender>
     <ChildContent>
         @Body
     </ChildContent>

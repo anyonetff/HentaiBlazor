@@ -18,5 +18,8 @@ namespace HentaiBlazor.Data.Basic
         [Column("a_name")]
         public string Name { get; set; }
 
+        [Column("a_alias")]
+        public string Alias { get; set; }
+
     }
 }

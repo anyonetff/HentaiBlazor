@@ -30,5 +30,23 @@ namespace HentaiBlazor.Service
             return await this.dbContext.Set<T>().FindAsync(id);
         }
 
+        public int Add(T entity)
+        {
+            dbContext.Set<T>().Add(entity);
+            return dbContext.SaveChanges();
+        }
+
+        public int Update(T entity)
+        {
+            dbContext.Set<T>().Update(entity);
+            return dbContext.SaveChanges();
+        }
+
+        public int Remove(T entity)
+        {
+            dbContext.Set<T>().Remove(entity);
+            return dbContext.SaveChanges();
+        }
+
     }
 }

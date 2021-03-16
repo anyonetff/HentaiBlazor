@@ -1,4 +1,5 @@
-﻿using HentaiBlazor.Data.Basic;
+﻿using HentaiBlazor.Data.Anime;
+using HentaiBlazor.Data.Basic;
 using HentaiBlazor.Data.Comic;
 using HentaiBlazor.Data.Security;
 using Microsoft.EntityFrameworkCore;
@@ -18,7 +19,9 @@ namespace HentaiBlazor.Data
         public DbSet<BAuthorEntity> BAuthorEntities { get; set; }
         public DbSet<BTagEntity> BTagEntities { get; set; }
         public DbSet<BCatalogEntity> BCatalogEntities { get; set; }
+
         public DbSet<CBookEntity> CBookEntities { get; set; }
+        public DbSet<AVideoEntity> AVideoEntities { get; set; }
 
         public HentaiContext(DbContextOptions<HentaiContext> options) : base(options)
         {
@@ -43,7 +46,7 @@ namespace HentaiBlazor.Data
         {
             return new List<BAuthorEntity>
             {
-                new BAuthorEntity { Id = "0", Name = "unknown"},
+                new BAuthorEntity { Id = "0", Name = "unknown", Alias = "." },
             };
         }
 

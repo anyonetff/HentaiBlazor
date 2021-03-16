@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HentaiBlazor.Data.Basic;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -38,10 +39,13 @@ namespace HentaiBlazor.Data.Comic
         [Column("b_preview")]
         public string Preview { get; set; }
 
-        [Column("x_insert_")]
+        [ForeignKey("b_catalog")]
+        public BCatalogEntity Catalog { get; set; }
+
+        [Column("x_insert_", TypeName = "DATETIME")]
         public DateTime XInsert_ { get; set; }
 
-        [Column("x_update_")]
+        [Column("x_update_", TypeName = "DATETIME")]
         public DateTime XUpdate_ { get; set; }
     }
 }

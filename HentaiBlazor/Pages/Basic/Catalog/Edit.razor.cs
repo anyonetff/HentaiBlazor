@@ -25,7 +25,7 @@ namespace HentaiBlazor.Pages.Basic.Catalog
             base.OnInitialized();
         }
 
-        private async Task OnFinish(EditContext editContext)
+        private void OnFinish(EditContext editContext)
         {
             //Console.WriteLine($"Success:{JsonSerializer.Serialize(_model)}");
             
@@ -34,7 +34,7 @@ namespace HentaiBlazor.Pages.Basic.Catalog
             {
                 Console.WriteLine("添加一条记录");
                 catalog.Id = Guid.NewGuid().ToString();
-                await service.AddAsync(catalog);
+                service.Add(catalog);
             }
             else
             {

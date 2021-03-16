@@ -4,12 +4,13 @@
 
 <PageContainer Title="作者维护">
     <Table TItem="BAuthorEntity" DataSource="@BAuthorEntities">
-        <Column @bind-Field="@context.Name"></Column>
         <ActionColumn>
             <Space>
                 <SpaceItem><Button Danger OnClick="()=>DeleteConfirm(context.Id)">Delete</Button></SpaceItem>
             </Space>
         </ActionColumn>
+        <Column Title="名称" @bind-Field="@context.Name"></Column>
+        <Column Title="映射" @bind-Field="@context.Alias"></Column>
     </Table>
 </PageContainer>
 
