@@ -1,0 +1,37 @@
+﻿@page "/comic/index"
+
+@using HentaiBlazor.Data.Comic;
+
+<PageContainer Title="漫画">
+
+    <Pagination Total="Total"
+                PageSize="PageSize"
+                PageIndex="PageIndex"
+                OnPageIndexChange="HandlePageIndexChange"
+                OnPageSizeChange="HandlePageSizeChange" />
+
+    <AntList ItemLayout="ListItemLayout.Horizontal"
+                Grid="gutter" DataSource="@_CBookEntities">
+        <ListItem Grid="gutter">
+            <Card Hoverable Style="width: 240px" Cover="coverTemplate">
+                <CardMeta Title="@context.Title" Description="@context.Author" />
+            </Card>
+        </ListItem>
+
+    </AntList>
+
+    <Pagination Total="Total"
+                PageSize="PageSize"
+                PageIndex="PageIndex"
+                OnPageIndexChange="HandlePageIndexChange"
+                OnPageSizeChange="HandlePageSizeChange" />
+
+</PageContainer>
+
+@code {
+
+
+    public ListGridType gutter = new ListGridType { Gutter = 16, Column = 4 };
+
+    private RenderFragment coverTemplate =@<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />;
+}

@@ -1,0 +1,20 @@
+﻿@using HentaiBlazor.Data.Comic
+
+@inherits ModalTemplate<CBookEntity>
+
+<Form Model="@book"
+      LabelCol="new ColLayoutParam { Span = 8 }"
+      WrapperCol="new ColLayoutParam { Span = 16 }"
+      OnFinish="OnFinish"
+      OnFinishFailed="OnFinishFailed">
+
+    <FormItem Label="路径">
+        <span>@context.Path</span>
+    </FormItem>
+    <FormItem Label="名称">
+        <span>@context.Name</span>
+    </FormItem>
+
+    
+
+</Form>

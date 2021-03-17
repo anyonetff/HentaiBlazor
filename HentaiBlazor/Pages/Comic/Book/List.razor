@@ -3,22 +3,56 @@
 @using HentaiBlazor.Data.Comic
 
 <PageContainer Title="漫画">
-    <Space Style="margin-bottom: 0.5rem">
-        <SpaceItem>
-            <Button Type="primary" OnClick="()=>ScanAll()">扫描</Button>
-        </SpaceItem>
-    </Space>
+    <Row Gutter="24" Style="margin-bottom: 0.5rem">
+
+        <Col Span="18">
+        <Space>
+
+            <SpaceItem>
+                <InputGroup Compact>
+                    <Input Placeholder="Prefix and Suffix" Style="width: 15rem;" @bind-Value="searchCatalog">
+                    <Prefix>
+                        <Icon Type="folder" />
+                    </Prefix>
+                    </Input>
+                    <Input Placeholder="Prefix and Suffix" Style="width: 15rem;" @bind-Value="searchAuthor">
+                    <Prefix>
+                        <Icon Type="team" />
+                    </Prefix>
+                    </Input>
+                    <Input Placeholder="Prefix and Suffix" Style="width: 15rem;" @bind-Value="searchKeyword">
+                    <Prefix>
+                        <Icon Type="filter" />
+                    </Prefix>
+                    </Input>
+                </InputGroup>
+            </SpaceItem>
+            <SpaceItem>
+                <Button Type="primary" OnClick="()=>Search()">查询</Button>
+            </SpaceItem>
+            <SpaceItem>
+                <Button Type="primary" OnClick="()=>ScanAll()">扫描</Button>
+            </SpaceItem>
+        </Space>
+        </Col>
+
+    </Row>
+
+    
     <Table TItem="CBookEntity" DataSource="@CBookEntities">
         <ActionColumn>
             <Space>
                 <SpaceItem>
+                    <Button Type="primary" OnClick="()=>OpenModify(context.Id)">修改</Button>
                 </SpaceItem>
             </Space>
         </ActionColumn>
         <Column Title="作者" @bind-Field="@context.Author"></Column>
         <Column Title="标题" @bind-Field="@context.Title">
             <Tooltip Placement="@PlacementType.TopLeft" Title="@context.Name">
-                <span>@context.Title</span>
+                <NavLink href="@("/comic/detail/" + context.Id)">
+                    @context.Title
+                </NavLink>
             </Tooltip>
         </Column>
         <Column Title="目录" @bind-Field="@context.Path"></Column>

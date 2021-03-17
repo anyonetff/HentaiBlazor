@@ -23,11 +23,46 @@ namespace HentaiBlazor.Pages.Comic.Book
         [Inject]
         public ModalService _modal { get; set; }
 
+        private ModalRef _editRef;
+
         private List<CBookEntity> CBookEntities;
+
+        private string searchKeyword;
+
+        private string searchCatalog;
+
+        private string searchAuthor;
 
         protected override async Task OnInitializedAsync()
         {
             CBookEntities = await bookService.ListAsync();
+        }
+
+        private async Task OpenModify(string id)
+        {
+            var templateOptions = await bookService.FindAsync(id);
+
+            await this.OpenEdit(templateOptions);
+        }
+
+        private async Task OpenEdit(CBookEntity templateOptions)
+        {
+            var modalConfig = new ModalOptions();
+
+            modalConfig.Title = "编辑数据";
+            modalConfig.Footer = null;
+
+            _editRef = await _modal
+                .CreateModalAsync<Edit, CBookEntity>(modalConfig, templateOptions);
+        }
+
+        public async Task Search()
+        {
+            Console.WriteLine(" search: " + searchKeyword);
+
+            CBookEntities = await bookService.SearchAsync(searchCatalog, searchAuthor, searchKeyword);
+
+            StateHasChanged();
         }
 
         public async Task ScanAll()
