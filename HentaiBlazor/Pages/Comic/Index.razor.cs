@@ -79,7 +79,7 @@ namespace HentaiBlazor.Pages.Comic
         private string _paginationPosition = "bottomRight";
         private string _paginationClass;
         private int _pageIndex = 1;
-        private int _pageSize = 16;
+        private int _pageSize = 10;
 
         private List<CBookEntity> _CBookEntities;
 
@@ -147,37 +147,50 @@ namespace HentaiBlazor.Pages.Comic
             */
         }
 
-        private void ReadCover(CBookEntity book)
+
+        private async Task RefreshCover()
         {
+            Console.WriteLine("刷新当页封面");
 
-            if (book.Cover != "/book/cover.jpg") 
+            for (int i = 0; i < _CBookEntities.Count; i++)
             {
-                return ;
+                CBookEntity _book = _CBookEntities.ElementAt(i);
+                _book = await ReadCover(_book);
+                StateHasChanged();
             }
-
-            string file = book.Path + "\\" + book.Name;
-
+        }
 
 
-            ZipArchive archive = ZipFile.OpenRead(file);
-
-            foreach (ZipArchiveEntry entry in archive.Entries)
+        private async Task<CBookEntity> ReadCover(CBookEntity book)
+        {
+            return await Task.Run(() =>
             {
-                Console.WriteLine(" - " + entry.FullName);
-
-                if (entry.FullName.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase))
+                if (book.Cover != "/book/cover.jpg")
                 {
-                    string cover = "data:image/*;base64," + preview(entry);
-                    book.Cover = cover;
-
-                    Console.WriteLine(cover);
-
-                    break;
+                    return book;
                 }
-            }
 
+                string file = book.Path + "\\" + book.Name;
 
-            return ;
+                ZipArchive archive = ZipFile.OpenRead(file);
+
+                foreach (ZipArchiveEntry entry in archive.Entries)
+                {
+                    // Console.WriteLine(" - " + entry.FullName);
+
+                    if (entry.FullName.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase))
+                    {
+                        string cover = "data:image/*;base64," + preview(entry);
+                        book.Cover = cover;
+
+                        // Console.WriteLine(cover);
+
+                        break;
+                    }
+                }
+
+                return book;
+            });
         }
 
         protected string preview(ZipArchiveEntry entry)

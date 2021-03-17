@@ -4,6 +4,8 @@
 
 <PageContainer Title="漫画">
 
+    <Button Type="primary" @onclick="RefreshCover">查询</Button>
+
     <Pagination Style="margin-bottom: 0.5rem;" Total="Total"
                 PageSize="PageSize"
                 PageIndex="PageIndex"
@@ -32,7 +34,7 @@
 @code {
 
 
-    public ListGridType gutter = new ListGridType { Gutter = 16, Column = 4 };
+    public ListGridType gutter = new ListGridType { Gutter = 5, Column = 5 };
 
     private RenderFragment coverTemplate(string cover)
     {
