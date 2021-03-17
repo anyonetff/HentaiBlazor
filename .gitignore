@@ -342,4 +342,5 @@ healthchecksdb
 # SQLite
 hentai.db
 hentaidb.db
-
+*.db-shm
+*.db-wal
