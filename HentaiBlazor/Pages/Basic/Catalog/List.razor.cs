@@ -17,7 +17,7 @@ namespace HentaiBlazor.Pages.Basic.Catalog
         public ModalService _modal { get; set; }
 
         [Inject]
-        public CatalogService service { get; set; }
+        public CatalogService catalogService { get; set; }
 
         private ModalRef _editRef;
 
@@ -35,7 +35,7 @@ namespace HentaiBlazor.Pages.Basic.Catalog
 
         private async Task OpenModify(string id) 
         {
-            var templateOptions = await service.FindAsync(id);
+            var templateOptions = await catalogService.FindAsync(id);
 
             await this.OpenEdit(templateOptions);
         }
@@ -53,7 +53,9 @@ namespace HentaiBlazor.Pages.Basic.Catalog
 
         protected override async Task OnInitializedAsync()
         {
-            BCatalogEntities = await service.ListAsync();
+            BCatalogEntities = await catalogService.ListAsync();
+
+            await base.OnInitializedAsync();
         }
 
         Func<ModalClosingEventArgs, Task> DeleteOnOk = (e) =>
@@ -73,7 +75,7 @@ namespace HentaiBlazor.Pages.Basic.Catalog
 
         private async Task DeleteConfirm(string Id)
         {
-            _catalog = await service.FindAsync(Id);
+            _catalog = await catalogService.FindAsync(Id);
 
             _modal.Confirm(new ConfirmOptions()
             {
@@ -81,7 +83,7 @@ namespace HentaiBlazor.Pages.Basic.Catalog
                 // Icon = icon,
                 Content = "[" + _catalog.Usage + "] " + _catalog.Path,
                 OnOk = (r) => {
-                    service.Remove(_catalog);
+                    catalogService.Remove(_catalog);
 
                     return Task.CompletedTask; 
                 },

@@ -4,6 +4,8 @@ using HentaiBlazor.Service.Comic;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -131,8 +133,64 @@ namespace HentaiBlazor.Pages.Comic
         private void ReloadAndInvokeChange()
         {
             _CBookEntities = this.CBookEntities.Skip(PageSize * (PageIndex - 1)).Take(PageSize).ToList();
+
+            //StateHasChanged();
+            /*
+            _ = InvokeAsync(() => 
+            {
+                for (int i = 0; i < _CBookEntities.Count; i++)
+                {
+                    ReadCover(_CBookEntities.ElementAt(i));
+                    StateHasChanged();
+                }
+            });
+            */
         }
 
+        private void ReadCover(CBookEntity book)
+        {
 
+            if (book.Cover != "/book/cover.jpg") 
+            {
+                return ;
+            }
+
+            string file = book.Path + "\\" + book.Name;
+
+
+
+            ZipArchive archive = ZipFile.OpenRead(file);
+
+            foreach (ZipArchiveEntry entry in archive.Entries)
+            {
+                Console.WriteLine(" - " + entry.FullName);
+
+                if (entry.FullName.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase))
+                {
+                    string cover = "data:image/*;base64," + preview(entry);
+                    book.Cover = cover;
+
+                    Console.WriteLine(cover);
+
+                    break;
+                }
+            }
+
+
+            return ;
+        }
+
+        protected string preview(ZipArchiveEntry entry)
+        {
+            var stream = entry.Open();
+            byte[] bytes;
+            using (var ms = new MemoryStream())
+            {
+                stream.CopyTo(ms);
+                bytes = ms.ToArray();
+
+                return Convert.ToBase64String(bytes);
+            }
+        }
     }
 }

@@ -15,11 +15,16 @@ namespace HentaiBlazor.Data.Basic
         [Column("a_id")]
         public new string Id { get; set; }
 
+        [Required]
         [Column("a_name")]
         public string Name { get; set; }
 
+        [Required]
         [Column("a_alias")]
         public string Alias { get; set; }
+
+        [Column("a_valid")]
+        public bool Valid { get; set; }
 
     }
 }

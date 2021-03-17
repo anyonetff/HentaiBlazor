@@ -4,7 +4,7 @@
 
 <PageContainer Title="漫画">
 
-    <Pagination Total="Total"
+    <Pagination Style="margin-bottom: 0.5rem;" Total="Total"
                 PageSize="PageSize"
                 PageIndex="PageIndex"
                 OnPageIndexChange="HandlePageIndexChange"
@@ -13,7 +13,8 @@
     <AntList ItemLayout="ListItemLayout.Horizontal"
                 Grid="gutter" DataSource="@_CBookEntities">
         <ListItem Grid="gutter">
-            <Card Hoverable Style="width: 240px" Cover="coverTemplate">
+            <Card Hoverable Style="width: 240px" Cover="@coverTemplate(@context.Cover)">
+                
                 <CardMeta Title="@context.Title" Description="@context.Author" />
             </Card>
         </ListItem>
@@ -33,5 +34,8 @@
 
     public ListGridType gutter = new ListGridType { Gutter = 16, Column = 4 };
 
-    private RenderFragment coverTemplate =@<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />;
+    private RenderFragment coverTemplate(string cover)
+    {
+        return @<img alt="example" src="@cover" />;
+    }
 }

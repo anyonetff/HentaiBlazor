@@ -12,15 +12,47 @@ namespace HentaiBlazor.Pages.Basic.Author
     public partial class List
     {
         [Inject]
-        public AuthorService service { get; set; }
+        public AuthorService authorService { get; set; }
 
         [Inject]
         public ModalService _modal { get; set; }
 
-        List<BAuthorEntity> BAuthorEntities;
+        private ModalRef _editRef;
+
+        private List<BAuthorEntity> BAuthorEntities;
+
+        private string searchKeyword;
+
         protected override async Task OnInitializedAsync()
         {
-            BAuthorEntities = await service.ListAsync();
+            BAuthorEntities = await authorService.ListAsync();
+        }
+
+        private async Task OpenModify(string id)
+        {
+            var templateOptions = await authorService.FindAsync(id);
+
+            await this.OpenEdit(templateOptions);
+        }
+
+        private async Task OpenEdit(BAuthorEntity templateOptions)
+        {
+            var modalConfig = new ModalOptions();
+
+            modalConfig.Title = "编辑数据";
+            modalConfig.Footer = null;
+
+            _editRef = await _modal
+                .CreateModalAsync<Edit, BAuthorEntity>(modalConfig, templateOptions);
+        }
+
+        public async Task Search()
+        {
+            Console.WriteLine(" search: " + searchKeyword);
+
+            BAuthorEntities = await authorService.SearchAsync(searchKeyword);
+
+            StateHasChanged();
         }
 
         Func<ModalClosingEventArgs, Task> onOk = (e) =>

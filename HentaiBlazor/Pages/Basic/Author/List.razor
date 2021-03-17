@@ -3,14 +3,26 @@
 @using HentaiBlazor.Data.Basic
 
 <PageContainer Title="作者维护">
+    <Space>
+        <SpaceItem>
+            <Input Placeholder="Prefix and Suffix" Style="width: 15rem;" @bind-Value="searchKeyword">
+            <Prefix><Icon Type="filter" /></Prefix>
+            </Input>
+        </SpaceItem>
+        <SpaceItem>
+            <Button Type="primary" OnClick="()=>Search()">查询</Button>
+        </SpaceItem>
+    </Space>
     <Table TItem="BAuthorEntity" DataSource="@BAuthorEntities">
         <ActionColumn>
             <Space>
-                <SpaceItem><Button Danger OnClick="()=>DeleteConfirm(context.Id)">Delete</Button></SpaceItem>
+                <SpaceItem><Button Type="primary" Danger OnClick="()=>DeleteConfirm(context.Id)">删除</Button></SpaceItem>
+                <Button Type="primary" OnClick="()=>OpenModify(context.Id)">修改</Button>
             </Space>
         </ActionColumn>
         <Column Title="名称" @bind-Field="@context.Name"></Column>
         <Column Title="映射" @bind-Field="@context.Alias"></Column>
+        <Column Title="合法" @bind-Field="@context.Valid"></Column>
     </Table>
 </PageContainer>
 

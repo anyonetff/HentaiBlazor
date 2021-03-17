@@ -20,9 +20,22 @@ namespace HentaiBlazor.Service.Comic
 
             return await this.dbContext.Set<CBookEntity>()
                 .Where<CBookEntity>( book => book.Author.Contains(searchAuthor) )
-                
                 .ToListAsync<CBookEntity>();
 
+        }
+
+        public async Task<CBookEntity> FindByNameAsync(string path, string name)
+        {
+            return await this.dbContext.Set<CBookEntity>()
+                .Where<CBookEntity>(book => book.Path.Equals(path) && book.Name.Equals(name))
+                .FirstOrDefaultAsync<CBookEntity>();
+        }
+
+        public CBookEntity FindByName(string path, string name)
+        {
+            return this.dbContext.Set<CBookEntity>()
+                .Where<CBookEntity>(book => book.Path.Equals(path) && book.Name.Equals(name))
+                .FirstOrDefault<CBookEntity>();
         }
 
     }

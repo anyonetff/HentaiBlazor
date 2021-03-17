@@ -21,6 +21,9 @@ namespace HentaiBlazor.Pages.Comic.Book
         public CatalogService catalogService { get; set; }
 
         [Inject]
+        public AuthorService authorService { get; set; }
+
+        [Inject]
         public ModalService _modal { get; set; }
 
         private ModalRef _editRef;
@@ -68,28 +71,45 @@ namespace HentaiBlazor.Pages.Comic.Book
         public async Task ScanAll()
         {
             List<BCatalogEntity> catalogs = await this.catalogService.ListAsync();
-            await scan(catalogs.ElementAt(0));
+
+            foreach (var c in catalogs)
+            { 
+                await scan(c);
+            }
         }
 
         private async Task scan(BCatalogEntity catalog)
         {
+            Console.WriteLine("开始扫描目录[" + catalog.Usage + ":" + catalog.Path + "]");
+
             DirectoryInfo root = new DirectoryInfo(catalog.Path);
 
             FileInfo[] files = root.GetFiles("*.zip");
 
             foreach (var file in files)
             {
-                Console.WriteLine(" - " + file.FullName);
-
                 CBookEntity book = save(catalog, file);
+
+                authored(book.Author);
             }
+
+            Console.WriteLine("完成目录扫描");
 
             await Task.CompletedTask;
         }
 
         private CBookEntity save(BCatalogEntity catalog, FileInfo file)
         {
-            CBookEntity book = new CBookEntity();
+            CBookEntity book = bookService.FindByName(file.DirectoryName, file.Name);
+
+            if (book != null) 
+            {
+                return book;
+            }
+
+            Console.WriteLine(" - " + file.FullName);
+
+            book = new CBookEntity();
 
             book.Id = Guid.NewGuid().ToString();
             //book.Catalog = catalog;
@@ -125,6 +145,30 @@ namespace HentaiBlazor.Pages.Comic.Book
             Console.WriteLine("   [ " + s + " - " + e + " ] " + r);
 
             return r;
+        }
+
+        private void authored(string name)
+        {
+            if (name == null || name == "")
+            {
+                return;
+            }
+
+            BAuthorEntity author = authorService.FindByName(name);
+
+            if (author != null)
+            {
+                return;
+            }
+
+            author = new BAuthorEntity();
+
+            author.Id = Guid.NewGuid().ToString();
+            author.Name = name;
+            author.Alias = ".";
+            author.Valid = true;
+
+            authorService.Add(author);
         }
 
         private string titleing(string name)
