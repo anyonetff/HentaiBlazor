@@ -1,5 +1,6 @@
 ﻿using HentaiBlazor.Data;
 using HentaiBlazor.Data.Comic;
+using HentaiBlazor.Ezcomp;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,9 @@ namespace HentaiBlazor.Service.Comic
             //var Id = new SqlParameter("author", "%" + searchAuthor + "%");
 
             return await this.dbContext.Set<CBookEntity>()
-                .Where<CBookEntity>( book => book.Author.Contains(searchAuthor) )
+                .Where<CBookEntity>(book => StringUtils.IsBlank(searchPath) || book.Path.Contains(searchPath))
+                .Where<CBookEntity>(book => StringUtils.IsBlank(searchAuthor) || book.Author.Contains(searchAuthor))
+                .Where<CBookEntity>(book => StringUtils.IsBlank(searchKeyword) || book.Title.Contains(searchKeyword) || book.Name.Contains(searchKeyword))
                 .ToListAsync<CBookEntity>();
 
         }
@@ -37,6 +40,13 @@ namespace HentaiBlazor.Service.Comic
                 .Where<CBookEntity>(book => book.Path.Equals(path) && book.Name.Equals(name))
                 .FirstOrDefault<CBookEntity>();
         }
+
+        public async Task<int> TotalCountAsync()
+        {
+            return await this.dbContext.Set<CBookEntity>()
+                .CountAsync<CBookEntity>();
+        }
+
 
     }
 }

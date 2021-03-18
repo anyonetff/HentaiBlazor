@@ -22,6 +22,8 @@ namespace HentaiBlazor.Ezcomp
             }
         }
 
+        // public IEnumerable<TItem> PagedDataSource;
+
 
         [Parameter]
         public int Total
@@ -122,6 +124,8 @@ namespace HentaiBlazor.Ezcomp
                 await OnPageIndexChange.InvokeAsync(args);
             }
 
+            //Paged();
+
             //ReloadAndInvokeChange();
 
             //StateHasChanged();
@@ -132,6 +136,7 @@ namespace HentaiBlazor.Ezcomp
             _pageSize = args.PageSize;
 
             //ReloadAndInvokeChange();
+            //Paged();
 
             if (PageSizeChanged.HasDelegate)
             {

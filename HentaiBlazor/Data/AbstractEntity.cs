@@ -14,7 +14,7 @@ namespace HentaiBlazor.Data
      * 为简化DAO层的一些固定封装，定义了实体基类.
      * </p>
      */
-    public class AbstractEntity
+    public abstract class AbstractEntity
     {
         [Key]
         [Comment("主键编号")]

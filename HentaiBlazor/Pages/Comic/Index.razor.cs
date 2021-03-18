@@ -20,31 +20,70 @@ namespace HentaiBlazor.Pages.Comic
 
         private List<CBookEntity> CBookEntities;
 
-        //private List<CBookEntity> _CBookEntities;
+        private List<CBookEntity> _CBookEntities;
 
         private Paginator<CBookEntity> BookPaginator = new Paginator<CBookEntity>();
 
+        private string searchKeyword = "";
+
+        private string searchCatalog = "";
+
+        private string searchAuthor = "";
+
         protected override async Task OnInitializedAsync()
         {
+
             // _model.Pagination.Pagination.PageSize = 16;
 
-            CBookEntities = await bookService.ListAsync();
+            await Search();
 
             BookPaginator.DataSource = CBookEntities;
+            // BookPaginator.PagedDataSource = PagedCBookEntities;
+
+            _CBookEntities = BookPaginator.Paged().ToList();
+
+            StateHasChanged();
+
+            await Refresh();
         }
 
-        private async Task RefreshCover()
+        public async Task Search()
+        {
+            Console.WriteLine(" search: " + searchKeyword);
+
+            CBookEntities = await bookService.SearchAsync(searchCatalog, searchAuthor, searchKeyword);
+        }
+
+        public async Task _paging(PaginationEventArgs args)
+        {
+            await BookPaginator.HandlePageIndexChange(args);
+
+            _CBookEntities = BookPaginator.Paged().ToList();
+
+            StateHasChanged();
+
+            await Refresh();
+        }
+
+        public async Task _sizing(PaginationEventArgs args)
+        {
+            BookPaginator.HandlePageSizeChange(args);
+
+            _CBookEntities = BookPaginator.Paged().ToList();
+        }
+
+        private async Task Refresh()
         {
             Console.WriteLine("刷新当页封面");
 
-            List<CBookEntity> _CBookEntities = BookPaginator.Paged().ToList();
+            //_CBookEntities = BookPaginator.Paged().ToList();
 
             for (int i = 0; i < _CBookEntities.Count; i++)
             {
                 CBookEntity _book = _CBookEntities.ElementAt(i);
-                _book.Cover = "/book/cover.jpg";
+                //_book.Cover = "/book/cover.jpg";
                 
-                //_book = await ReadCover(_book);
+                _book = await ReadCover(_book);
                 StateHasChanged();
             }
         }
@@ -54,7 +93,7 @@ namespace HentaiBlazor.Pages.Comic
         {
             return await Task.Run(() =>
             {
-                if (book.Cover != "/book/cover.jpg")
+                if (book.Cover != null && book.Cover != "/book/cover.jpg")
                 {
                     return book;
                 }

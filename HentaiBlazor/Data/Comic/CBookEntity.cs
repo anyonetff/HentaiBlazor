@@ -13,7 +13,14 @@ namespace HentaiBlazor.Data.Comic
     {
         [Key]
         [Column("b_id")]
-        public new string Id { get; set; }
+        public new string Id
+        {
+            get => base.Id;
+            set 
+            {
+                base.Id = this.Id;
+            } 
+        }
 
         [Column("b_path")]
         public string Path { get; set; }

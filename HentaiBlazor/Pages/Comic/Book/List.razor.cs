@@ -38,7 +38,7 @@ namespace HentaiBlazor.Pages.Comic.Book
 
         protected override async Task OnInitializedAsync()
         {
-            CBookEntities = await bookService.ListAsync();
+            await Search();
         }
 
         private async Task OpenModify(string id)
@@ -64,8 +64,6 @@ namespace HentaiBlazor.Pages.Comic.Book
             Console.WriteLine(" search: " + searchKeyword);
 
             CBookEntities = await bookService.SearchAsync(searchCatalog, searchAuthor, searchKeyword);
-
-            StateHasChanged();
         }
 
         public async Task ScanAll()
@@ -111,7 +109,7 @@ namespace HentaiBlazor.Pages.Comic.Book
 
             book = new CBookEntity();
 
-            book.Id = Guid.NewGuid().ToString();
+            //book.Id = Guid.NewGuid().ToString();
             //book.Catalog = catalog;
 
             book.Path = file.DirectoryName;
@@ -122,10 +120,10 @@ namespace HentaiBlazor.Pages.Comic.Book
 
             book.Length = file.Length;
 
-            book.XInsert_ = DateTime.Now;
-            book.XUpdate_ = DateTime.Now;
+            book.XInsert_ = file.CreationTime;
+            book.XUpdate_ = file.LastWriteTime;
 
-            this.bookService.Add(book);
+            this.bookService.Save(book);
 
             return book;
         }
@@ -163,12 +161,12 @@ namespace HentaiBlazor.Pages.Comic.Book
 
             author = new BAuthorEntity();
 
-            author.Id = Guid.NewGuid().ToString();
+            //author.Id = Guid.NewGuid().ToString();
             author.Name = name;
             author.Alias = ".";
             author.Valid = true;
 
-            authorService.Add(author);
+            authorService.Save(author);
         }
 
         private string titleing(string name)

@@ -13,7 +13,14 @@ namespace HentaiBlazor.Data.Security
         
         [Key]
         [Column("f_id")]
-        public new string Id { get; set; }
+        public new string Id
+        {
+            get => base.Id;
+            set
+            {
+                base.Id = this.Id;
+            }
+        }
 
         [Column("f_parent")]
         public string Parent { get; set; }

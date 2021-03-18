@@ -16,7 +16,7 @@ namespace HentaiBlazor.Pages.Basic.Catalog
         private BCatalogEntity catalog;
 
         [Inject]
-        public CatalogService service { get; set; }
+        public CatalogService catalogService { get; set; }
 
         protected override void OnInitialized()
         {
@@ -27,20 +27,7 @@ namespace HentaiBlazor.Pages.Basic.Catalog
 
         private void OnFinish(EditContext editContext)
         {
-            //Console.WriteLine($"Success:{JsonSerializer.Serialize(_model)}");
-            
-
-            if (catalog.Id == null || catalog.Id == "")
-            {
-                Console.WriteLine("添加一条记录");
-                catalog.Id = Guid.NewGuid().ToString();
-                service.Add(catalog);
-            }
-            else
-            {
-                Console.WriteLine("修改一条记录");
-                service.Update(catalog);
-            }
+            catalogService.Save(catalog);
 
             _ = base.ModalRef.CloseAsync();
         }

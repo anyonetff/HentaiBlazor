@@ -12,7 +12,14 @@ namespace HentaiBlazor.Data.Basic
     {
         [Key]
         [Column("c_id")]
-        public new string Id { get; set; }
+        public new string Id
+        {
+            get => base.Id;
+            set 
+            {
+                base.Id = this.Id;
+            } 
+        }
 
         [Required]
         [Column("c_usage")]

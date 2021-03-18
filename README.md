@@ -35,7 +35,9 @@
 
 #### 安装教程
 
-可使用Visual Studio 2019对本应用进行编译。
+1.  可使用Visual Studio 2019对本应用进行编译和运行
+2.  启动程序后会自动创建数据库hentaidb.db
+3.  使用SQLite管理工具将hentaidb.sql中的菜单导入数据库
 
 #### 使用说明
 

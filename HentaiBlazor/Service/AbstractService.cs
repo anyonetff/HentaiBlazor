@@ -44,6 +44,8 @@ namespace HentaiBlazor.Service
         {
             if (entity.Id == null || entity.Id == "")
             {
+                Console.WriteLine("生成ID并添加一条数据.");
+
                 entity.Id = Guid.NewGuid().ToString();
 
                 this.Add(entity);
@@ -54,6 +56,8 @@ namespace HentaiBlazor.Service
 
             if (other == null)
             {
+                Console.WriteLine("使用现有ID添加一条数据.");
+
                 this.Add(entity);
                 return entity;
             }
@@ -66,8 +70,10 @@ namespace HentaiBlazor.Service
         // 添加一个实体.
         public int Add(T entity)
         {
-            entity.XInsert_ = DateTime.Now;
-            entity.XUpdate_ = DateTime.Now;
+            Console.WriteLine("添加一条新数据[" + entity.Id + "]");
+
+            // entity.XInsert_ = DateTime.Now;
+            // entity.XUpdate_ = DateTime.Now;
 
             dbContext.Set<T>().Add(entity);
             

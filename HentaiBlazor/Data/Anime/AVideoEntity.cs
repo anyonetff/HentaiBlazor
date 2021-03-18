@@ -13,7 +13,14 @@ namespace HentaiBlazor.Data.Anime
     {
         [Key]
         [Column("v_id")]
-        public new string Id { get; set; }
+        public new string Id
+        {
+            get => base.Id;
+            set
+            {
+                base.Id = this.Id;
+            }
+        }
 
         [Column("v_path")]
         public string Path { get; set; }

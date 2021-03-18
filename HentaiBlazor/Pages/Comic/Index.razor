@@ -3,20 +3,41 @@
 @using HentaiBlazor.Data.Comic;
 
 <PageContainer Title="漫画">
-
-    <Button Type="primary" @onclick="RefreshCover">查询</Button>
+    <Space Style="margin-bottom: 0.5rem;">
+        <SpaceItem>
+            <Input Placeholder="目录" Style="width: 15rem;" @bind-Value="searchCatalog">
+            <Prefix>
+                <Icon Type="folder" />
+            </Prefix>
+            </Input>
+            <Input Placeholder="作者" Style="width: 15rem;" @bind-Value="searchAuthor">
+            <Prefix>
+                <Icon Type="team" />
+            </Prefix>
+            </Input>
+            <Input Placeholder="关键词" Style="width: 15rem;" @bind-Value="searchKeyword">
+            <Prefix>
+                <Icon Type="filter" />
+            </Prefix>
+            </Input>
+        </SpaceItem>
+        <SpaceItem>
+            <Button Type="primary" @onclick="Search">查询</Button>
+            <Button Type="primary" @onclick="Refresh">刷新</Button>
+        </SpaceItem>
+    </Space>
 
     <Pagination Total="BookPaginator.Total"
                 PageSize="BookPaginator.PageSize"
                 PageIndex="BookPaginator.PageIndex"
-                OnPageIndexChange="BookPaginator.HandlePageIndexChange"
-                OnPageSizeChange="BookPaginator.HandlePageSizeChange"
+                OnPageIndexChange="_paging"
+                OnPageSizeChange="_sizing"
                 Style="margin-bottom: 0.5rem;" />
 
     <AntList ItemLayout="ListItemLayout.Horizontal"
-                Grid="gutter" DataSource="@BookPaginator.Paged()">
+             Grid="gutter" DataSource="_CBookEntities">
         <ListItem Grid="gutter">
-            <Card Hoverable Style="width: 240px" Cover="@coverTemplate(@context.Cover)">
+            <Card Hoverable Style="width: 240px;" Cover="@coverTemplate(@context.Cover)">
                 <CardMeta Title="@context.Title" Description="@context.Author" />
             </Card>
         </ListItem>
@@ -25,8 +46,8 @@
     <Pagination Total="BookPaginator.Total"
                 PageSize="BookPaginator.PageSize"
                 PageIndex="BookPaginator.PageIndex"
-                OnPageIndexChange="BookPaginator.HandlePageIndexChange"
-                OnPageSizeChange="BookPaginator.HandlePageSizeChange" />
+                OnPageIndexChange="_paging"
+                OnPageSizeChange="_sizing" />
 
 </PageContainer>
 
