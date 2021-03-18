@@ -1,6 +1,8 @@
 ﻿@page "/comic/index"
 
-@using HentaiBlazor.Data.Comic;
+@using HentaiBlazor.Data.Comic
+
+@inject NavigationManager NavigationManager
 
 <PageContainer Title="漫画">
     <Space Style="margin-bottom: 0.5rem;">
@@ -37,8 +39,12 @@
     <AntList ItemLayout="ListItemLayout.Horizontal"
              Grid="gutter" DataSource="_CBookEntities">
         <ListItem Grid="gutter">
-            <Card Hoverable Style="width: 240px;" Cover="@coverTemplate(@context.Cover)">
+            <Card Hoverable Style="width: 240px;"
+                  Cover="@coverTemplate(@context.Cover)">
                 <CardMeta Title="@context.Title" Description="@context.Author" />
+                <NavLink href="@("/comic/detail/" + context.Id)">
+                    查看
+                </NavLink>
             </Card>
         </ListItem>
     </AntList>
@@ -57,6 +63,8 @@
 
     private RenderFragment coverTemplate(string cover)
     {
-        return @<img alt="example" src="@cover" />;
+        return@<img alt="example" src="@cover" />;
     }
+
+
 }
