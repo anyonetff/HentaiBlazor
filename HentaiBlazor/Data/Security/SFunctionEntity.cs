@@ -26,5 +26,8 @@ namespace HentaiBlazor.Data.Security
 
         [Column("f_icon")]
         public string Icon { get; set; }
+
+        [Column("f_note")]
+        public string Note { get; set; }
     }
 }

@@ -37,7 +37,7 @@ namespace HentaiBlazor.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) 
         {
-            modelBuilder.Entity<BAuthorEntity>().HasData(GetAuthors());
+            //modelBuilder.Entity<BAuthorEntity>().HasData(GetAuthors());
             //modelBuilder.Entity<CBookEntity>();
             base.OnModelCreating(modelBuilder);
         }
@@ -46,7 +46,7 @@ namespace HentaiBlazor.Data
         {
             return new List<BAuthorEntity>
             {
-                new BAuthorEntity { Id = "0", Name = "unknown", Alias = "." },
+                new BAuthorEntity { Id = "0", Name = "unknown", Alias = "."},
             };
         }
 

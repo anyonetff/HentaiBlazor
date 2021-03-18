@@ -22,6 +22,7 @@ namespace HentaiBlazor.Data.Basic
         [Column("c_path")]
         public string Path { get; set; }
 
-
+        [Column("c_note")]
+        public string Note { get; set; }
     }
 }

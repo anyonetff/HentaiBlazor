@@ -6,35 +6,33 @@
 
     <Button Type="primary" @onclick="RefreshCover">查询</Button>
 
-    <Pagination Style="margin-bottom: 0.5rem;" Total="Total"
-                PageSize="PageSize"
-                PageIndex="PageIndex"
-                OnPageIndexChange="HandlePageIndexChange"
-                OnPageSizeChange="HandlePageSizeChange" />
+    <Pagination Total="BookPaginator.Total"
+                PageSize="BookPaginator.PageSize"
+                PageIndex="BookPaginator.PageIndex"
+                OnPageIndexChange="BookPaginator.HandlePageIndexChange"
+                OnPageSizeChange="BookPaginator.HandlePageSizeChange"
+                Style="margin-bottom: 0.5rem;" />
 
     <AntList ItemLayout="ListItemLayout.Horizontal"
-                Grid="gutter" DataSource="@_CBookEntities">
+                Grid="gutter" DataSource="@BookPaginator.Paged()">
         <ListItem Grid="gutter">
             <Card Hoverable Style="width: 240px" Cover="@coverTemplate(@context.Cover)">
-                
                 <CardMeta Title="@context.Title" Description="@context.Author" />
             </Card>
         </ListItem>
-
     </AntList>
 
-    <Pagination Total="Total"
-                PageSize="PageSize"
-                PageIndex="PageIndex"
-                OnPageIndexChange="HandlePageIndexChange"
-                OnPageSizeChange="HandlePageSizeChange" />
+    <Pagination Total="BookPaginator.Total"
+                PageSize="BookPaginator.PageSize"
+                PageIndex="BookPaginator.PageIndex"
+                OnPageIndexChange="BookPaginator.HandlePageIndexChange"
+                OnPageSizeChange="BookPaginator.HandlePageSizeChange" />
 
 </PageContainer>
 
 @code {
 
-
-    public ListGridType gutter = new ListGridType { Gutter = 5, Column = 5 };
+    public ListGridType gutter = new ListGridType { Gutter = 8, Column = 5 };
 
     private RenderFragment coverTemplate(string cover)
     {

@@ -15,6 +15,9 @@ namespace HentaiBlazor.Data.Anime
         [Column("v_id")]
         public new string Id { get; set; }
 
+        [Column("v_path")]
+        public string Path { get; set; }
+
         [Column("v_name")]
         public string Name { get; set; }
 
@@ -36,13 +39,7 @@ namespace HentaiBlazor.Data.Anime
         [Column("v_subtitle")]
         public string Subtitle { get; set; }
 
-        [ForeignKey("v_catalog")]
-        public BCatalogEntity Catalog { get; set; }
-
-        [Column("x_insert_", TypeName = "DATETIME")]
-        public DateTime XInsert_ { get; set; }
-
-        [Column("x_update_", TypeName = "DATETIME")]
-        public DateTime XUpdate_ { get; set; }
+        [Column("v_note")]
+        public string Note { get; set; }
     }
 }

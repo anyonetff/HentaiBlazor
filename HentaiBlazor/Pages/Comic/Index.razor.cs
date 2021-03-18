@@ -1,5 +1,6 @@
 ﻿using AntDesign;
 using HentaiBlazor.Data.Comic;
+using HentaiBlazor.Ezcomp;
 using HentaiBlazor.Service.Comic;
 using Microsoft.AspNetCore.Components;
 using System;
@@ -19,69 +20,9 @@ namespace HentaiBlazor.Pages.Comic
 
         private List<CBookEntity> CBookEntities;
 
-        [Parameter]
-        public int Total
-        {
-            get => _total > _dataSourceCount ? _total : _dataSourceCount;
-            set
-            {
-                _total = value;
-            }
-        }
+        //private List<CBookEntity> _CBookEntities;
 
-        [Parameter]
-        public EventCallback<int> TotalChanged { get; set; }
-
-        [Parameter]
-        public int PageIndex
-        {
-            get => _pageIndex;
-            set
-            {
-                if (_pageIndex != value)
-                {
-                    _pageIndex = value;
-                    _waitingReloadAndInvokeChange = true;
-                }
-            }
-        }
-
-        [Parameter]
-        public EventCallback<int> PageIndexChanged { get; set; }
-
-        [Parameter]
-        public int PageSize
-        {
-            get => _pageSize;
-            set
-            {
-                if (_pageSize != value)
-                {
-                    _pageSize = value;
-                    _waitingReloadAndInvokeChange = true;
-                }
-            }
-        }
-
-        bool _waitingReloadAndInvokeChange;
-
-        [Parameter]
-        public EventCallback<int> PageSizeChanged { get; set; }
-
-        [Parameter]
-        public EventCallback<PaginationEventArgs> OnPageIndexChange { get; set; }
-
-        [Parameter]
-        public EventCallback<PaginationEventArgs> OnPageSizeChange { get; set; }
-
-        private int _total;
-        private int _dataSourceCount;
-        private string _paginationPosition = "bottomRight";
-        private string _paginationClass;
-        private int _pageIndex = 1;
-        private int _pageSize = 10;
-
-        private List<CBookEntity> _CBookEntities;
+        private Paginator<CBookEntity> BookPaginator = new Paginator<CBookEntity>();
 
         protected override async Task OnInitializedAsync()
         {
@@ -89,73 +30,21 @@ namespace HentaiBlazor.Pages.Comic
 
             CBookEntities = await bookService.ListAsync();
 
-            _dataSourceCount = CBookEntities.Count();
-
-            this.ReloadAndInvokeChange();
+            BookPaginator.DataSource = CBookEntities;
         }
-
-        private async Task HandlePageIndexChange(PaginationEventArgs args)
-        {
-            _pageIndex = args.PageIndex;
-
-            if (PageIndexChanged.HasDelegate)
-            {
-                await PageIndexChanged.InvokeAsync(args.PageIndex);
-            }
-
-            if (OnPageIndexChange.HasDelegate)
-            {
-                await OnPageIndexChange.InvokeAsync(args);
-            }
-
-            ReloadAndInvokeChange();
-
-            StateHasChanged();
-        }
-
-        private void HandlePageSizeChange(PaginationEventArgs args)
-        {
-            _pageSize = args.PageSize;
-
-            ReloadAndInvokeChange();
-
-            if (PageSizeChanged.HasDelegate)
-            {
-                PageSizeChanged.InvokeAsync(args.PageSize);
-            }
-
-            if (OnPageSizeChange.HasDelegate)
-            {
-                OnPageSizeChange.InvokeAsync(args);
-            }
-        }
-
-        private void ReloadAndInvokeChange()
-        {
-            _CBookEntities = this.CBookEntities.Skip(PageSize * (PageIndex - 1)).Take(PageSize).ToList();
-
-            //StateHasChanged();
-            /*
-            _ = InvokeAsync(() => 
-            {
-                for (int i = 0; i < _CBookEntities.Count; i++)
-                {
-                    ReadCover(_CBookEntities.ElementAt(i));
-                    StateHasChanged();
-                }
-            });
-            */
-        }
-
 
         private async Task RefreshCover()
         {
             Console.WriteLine("刷新当页封面");
 
+            List<CBookEntity> _CBookEntities = BookPaginator.Paged().ToList();
+
             for (int i = 0; i < _CBookEntities.Count; i++)
             {
                 CBookEntity _book = _CBookEntities.ElementAt(i);
-                _book = await ReadCover(_book);
+                _book.Cover = "/book/cover.jpg";
+                
+                //_book = await ReadCover(_book);
                 StateHasChanged();
             }
         }

@@ -17,13 +17,9 @@ namespace HentaiBlazor.Service.Basic
 
         public BAuthorEntity FindByName(string name)
         {
-            BAuthorEntity r = null; 
-            
             return this.dbContext.Set<BAuthorEntity>()
                     .Where<BAuthorEntity>(book => book.Name.Equals(name))
                     .FirstOrDefault<BAuthorEntity>();
-            
-            
         }
 
         public async Task<List<BAuthorEntity>> SearchAsync(string searchKeyword)

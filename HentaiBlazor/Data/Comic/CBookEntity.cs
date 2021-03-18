@@ -30,7 +30,7 @@ namespace HentaiBlazor.Data.Comic
         [Column("b_tags")]
         public string Tags { get; set; }
 
-        [Column("b_length")]
+        [Column("b_length", TypeName = "BIGINT")]
         public long Length { get; set; }
 
         [Column("b_count")]
@@ -45,13 +45,9 @@ namespace HentaiBlazor.Data.Comic
         [Column("b_preview")]
         public string Preview { get; set; }
 
-        //[ForeignKey("b_catalog")]
-        //public BCatalogEntity Catalog { get; set; }
+        [Column("b_note")]
+        public string Note { get; set; }
 
-        [Column("x_insert_", TypeName = "DATETIME")]
-        public DateTime XInsert_ { get; set; }
 
-        [Column("x_update_", TypeName = "DATETIME")]
-        public DateTime XUpdate_ { get; set; }
     }
 }
