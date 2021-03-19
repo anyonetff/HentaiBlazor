@@ -26,6 +26,10 @@ namespace HentaiBlazor.Pages.Basic.Catalog
 
         private List<BCatalogEntity> BCatalogEntities { get; set; }
 
+        private string searchUsage;
+
+        private string searchKeyword;
+
         private async Task OpenAdd()
         {
             var templateOptions = new BCatalogEntity();
@@ -47,16 +51,30 @@ namespace HentaiBlazor.Pages.Basic.Catalog
             modalConfig.Title = "编辑数据";
             modalConfig.Footer = null;
 
+            modalConfig.AfterClose = async () =>
+            {
+                Console.WriteLine("AfterClose");
+
+                await Search();
+                StateHasChanged();
+                // InvokeAsync(StateHasChanged);
+                // return Task.CompletedTask;
+            };
+
             _editRef = await _modal
                 .CreateModalAsync<Edit, BCatalogEntity>(modalConfig, templateOptions);
         }
 
         protected override async Task OnInitializedAsync()
         {
-            BCatalogEntities = await catalogService.ListAsync();
-
-            await base.OnInitializedAsync();
+            await Search();
         }
+
+        public async Task Search()
+        {
+            BCatalogEntities = await catalogService.SearchAsync(searchUsage, searchKeyword);
+        }
+
 
         Func<ModalClosingEventArgs, Task> DeleteOnOk = (e) =>
         {
@@ -82,10 +100,12 @@ namespace HentaiBlazor.Pages.Basic.Catalog
                 Title = "删除数据",
                 // Icon = icon,
                 Content = "[" + _catalog.Usage + "] " + _catalog.Path,
-                OnOk = (r) => {
+                OnOk = async (r) => {
                     catalogService.Remove(_catalog);
 
-                    return Task.CompletedTask; 
+                    await Search();
+                    StateHasChanged();
+                    // return Task.CompletedTask; 
                 },
                 OnCancel = DeleteOnCancel
             });

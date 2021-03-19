@@ -3,10 +3,10 @@
 @using HentaiBlazor.Data.Basic
 
 <PageContainer Title="作者维护">
-    <Space>
+    <Space Style="margin-bottom: 0.5rem">
         <SpaceItem>
             <Input Placeholder="Prefix and Suffix" Style="width: 15rem;" @bind-Value="searchKeyword">
-            <Prefix><Icon Type="filter" /></Prefix>
+                <Prefix><Icon Type="filter" /></Prefix>
             </Input>
         </SpaceItem>
         <SpaceItem>
@@ -16,8 +16,12 @@
     <Table TItem="BAuthorEntity" DataSource="@BAuthorEntities">
         <ActionColumn>
             <Space>
-                <SpaceItem><Button Type="primary" Danger OnClick="()=>DeleteConfirm(context.Id)">删除</Button></SpaceItem>
-                <Button Type="primary" OnClick="()=>OpenModify(context.Id)">修改</Button>
+                <SpaceItem>
+                    <Button Type="primary" Danger OnClick="()=>DeleteConfirm(context.Id)">删除</Button>
+                </SpaceItem>
+                <SpaceItem>
+                    <Button Type="primary" OnClick="()=>OpenModify(context.Id)">修改</Button>
+                </SpaceItem>
             </Space>
         </ActionColumn>
         <Column Title="名称" @bind-Field="@context.Name"></Column>

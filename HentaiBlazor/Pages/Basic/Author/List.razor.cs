@@ -25,7 +25,14 @@ namespace HentaiBlazor.Pages.Basic.Author
 
         protected override async Task OnInitializedAsync()
         {
-            BAuthorEntities = await authorService.ListAsync();
+            await Search();
+        }
+
+        public async Task Search()
+        {
+            Console.WriteLine(" search: " + searchKeyword);
+
+            BAuthorEntities = await authorService.SearchAsync(searchKeyword);
         }
 
         private async Task OpenModify(string id)
@@ -46,14 +53,6 @@ namespace HentaiBlazor.Pages.Basic.Author
                 .CreateModalAsync<Edit, BAuthorEntity>(modalConfig, templateOptions);
         }
 
-        public async Task Search()
-        {
-            Console.WriteLine(" search: " + searchKeyword);
-
-            BAuthorEntities = await authorService.SearchAsync(searchKeyword);
-
-            StateHasChanged();
-        }
 
         Func<ModalClosingEventArgs, Task> onOk = (e) =>
         {

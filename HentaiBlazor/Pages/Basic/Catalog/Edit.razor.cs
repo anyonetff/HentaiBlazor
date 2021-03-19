@@ -29,6 +29,8 @@ namespace HentaiBlazor.Pages.Basic.Catalog
         {
             catalogService.Save(catalog);
 
+            // StateHasChanged();
+
             _ = base.ModalRef.CloseAsync();
         }
 

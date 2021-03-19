@@ -6,7 +6,13 @@
 
     <Space Style="margin-bottom: 0.5rem">
         <SpaceItem>
-            <Button Type="primary" OnClick="()=>OpenAdd()">添加</Button>
+            <Input Placeholder="关键字" Style="width: 15rem;" @bind-Value="searchKeyword">
+            <Prefix><Icon Type="filter" /></Prefix>
+            </Input>
+        </SpaceItem>
+        <SpaceItem>
+            <Button Type="primary" @onclick="Search">查询</Button>
+            <Button Type="primary" @onclick="OpenAdd">添加</Button>
         </SpaceItem>
     </Space>
 
@@ -16,6 +22,9 @@
                 <SpaceItem>
                     <Button Type="primary" OnClick="()=>OpenModify(context.Id)">修改</Button>
                     <Button Type="primary" Danger OnClick="()=>DeleteConfirm(context.Id)">删除</Button>
+                </SpaceItem>
+                <SpaceItem>
+                    <Button Type="primary" OnClick="()=>OpenModify(context.Id)">扫描</Button>
                 </SpaceItem>
             </Space>
         </ActionColumn>
