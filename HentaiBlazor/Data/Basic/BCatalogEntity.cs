@@ -29,6 +29,12 @@ namespace HentaiBlazor.Data.Basic
         [Column("c_path")]
         public string Path { get; set; }
 
+        [Column("c_children", TypeName = "BOOLEAN")]
+        public bool Children { get; set; }
+
+        [Column("c_items")]
+        public int Items { get; set; }
+
         [Column("c_note")]
         public string Note { get; set; }
     }

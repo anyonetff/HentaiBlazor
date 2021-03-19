@@ -15,13 +15,16 @@ namespace HentaiBlazor.Data
         public static readonly string HentaiDb = nameof(HentaiDb).ToLower();
 
         public DbSet<SFunctionEntity> SFunctionEntities { get; set; }
+        public DbSet<SUserEntity> SUserEntities { get; set; }
 
         public DbSet<BAuthorEntity> BAuthorEntities { get; set; }
         public DbSet<BTagEntity> BTagEntities { get; set; }
         public DbSet<BCatalogEntity> BCatalogEntities { get; set; }
 
         public DbSet<CBookEntity> CBookEntities { get; set; }
+        public DbSet<CBookTagEntity> CBookTagEntities { get; set; }
         public DbSet<AVideoEntity> AVideoEntities { get; set; }
+        public DbSet<AVideoTagEntity> AVideoTagEntities { get; set; }
 
         public HentaiContext(DbContextOptions<HentaiContext> options) : base(options)
         {

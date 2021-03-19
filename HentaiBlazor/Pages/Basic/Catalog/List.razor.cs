@@ -21,6 +21,9 @@ namespace HentaiBlazor.Pages.Basic.Catalog
 
         private ModalRef _editRef;
 
+        private ModalRef _scanRef;
+
+
         private BCatalogEntity _catalog;
 
 
@@ -37,11 +40,35 @@ namespace HentaiBlazor.Pages.Basic.Catalog
             await this.OpenEdit(templateOptions);
         }
 
-        private async Task OpenModify(string id) 
+        private async Task OpenModify(string id)
         {
             var templateOptions = await catalogService.FindAsync(id);
 
             await this.OpenEdit(templateOptions);
+        }
+
+        private async Task OpenScan(string id)
+        {
+            var templateOptions = await catalogService.FindAsync(id);
+
+            var modalConfig = new ModalOptions();
+
+            modalConfig.Title = "扫描内容";
+            modalConfig.Footer = null;
+            modalConfig.Width = 640;
+
+            modalConfig.AfterClose = async () =>
+            {
+                Console.WriteLine("AfterClose");
+
+                await Search();
+                StateHasChanged();
+                // InvokeAsync(StateHasChanged);
+                // return Task.CompletedTask;
+            };
+
+            _scanRef = await _modal
+                .CreateModalAsync<Scan, BCatalogEntity>(modalConfig, templateOptions);
         }
 
         private async Task OpenEdit(BCatalogEntity templateOptions) 
@@ -64,6 +91,7 @@ namespace HentaiBlazor.Pages.Basic.Catalog
             _editRef = await _modal
                 .CreateModalAsync<Edit, BCatalogEntity>(modalConfig, templateOptions);
         }
+
 
         protected override async Task OnInitializedAsync()
         {

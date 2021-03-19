@@ -16,12 +16,21 @@
             <Radio Value="@("COMIC")">漫画</Radio>
         </RadioGroup>
     </FormItem>
-    <FormItem Label="路径">
+    <FormItem Label="文件夹路径">
         <Input @bind-Value="@context.Path" />
     </FormItem>
-    <FormItem>
+    <FormItem Label="包含子文件夹">
+        <Checkbox @bind-Value="@context.Children" />
+    </FormItem>
+    <FormItem Label="备注">
+        <TextArea MinRows="2" MaxRows="6" @bind-Value="@context.Note" />
+    </FormItem>
+
+    <Divider />
+
+    <FormItem WrapperCol="new ColLayoutParam{ Offset = 8, Span = 16 }">
         <Button Type="@ButtonType.Primary" HtmlType="submit">
-            Submit
+            提交
         </Button>
     </FormItem>
 

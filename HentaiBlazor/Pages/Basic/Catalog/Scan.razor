@@ -1,0 +1,31 @@
+﻿@using HentaiBlazor.Data.Basic;
+@using System.ComponentModel.DataAnnotations
+@using System.Text.Json
+
+@inherits ModalTemplate<BCatalogEntity>
+
+<Row>
+    <Col Span="6">
+    <Progress Percent=_percent Type=ProgressType.Circle />
+    </Col>
+    <Col Span="18">
+    <Descriptions Column="1" Bordered Size="@DescriptionsSize.Small">
+        <DescriptionsItem Title="用途">@catalog.Usage</DescriptionsItem>
+        <DescriptionsItem Title="文件夹路径">@catalog.Path</DescriptionsItem>
+        <DescriptionsItem Title="包含子文件夹">@catalog.Children</DescriptionsItem>
+        <DescriptionsItem Title="项目数量">@catalog.Items</DescriptionsItem>
+    </Descriptions>
+    </Col>
+</Row>
+<Divider />
+<Row>
+    <Col Offset="6" Span="18">
+    <Button Type="@ButtonType.Primary" @onclick="Start" Disabled="_scaning" Loading="_scaning">
+        开始
+    </Button>
+    <Button Type="@ButtonType.Primary" @onclick="Stop" Disabled="! _scaning">
+        中止
+    </Button>
+    </Col>
+</Row>
+

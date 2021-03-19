@@ -6,13 +6,12 @@
 
     <Space Style="margin-bottom: 0.5rem">
         <SpaceItem>
-            <Input Placeholder="关键字" Style="width: 15rem;" @bind-Value="searchKeyword">
-            <Prefix><Icon Type="filter" /></Prefix>
-            </Input>
+            <Input Prefix="@_filter" Placeholder="关键字" Style="width: 12rem;"
+                   @bind-Value="searchKeyword" />
         </SpaceItem>
         <SpaceItem>
-            <Button Type="primary" @onclick="Search">查询</Button>
-            <Button Type="primary" @onclick="OpenAdd">添加</Button>
+            <Button Type="@ButtonType.Primary" @onclick="Search">查询</Button>
+            <Button Type="@ButtonType.Primary" @onclick="OpenAdd">添加</Button>
         </SpaceItem>
     </Space>
 
@@ -20,17 +19,22 @@
         <ActionColumn>
             <Space>
                 <SpaceItem>
-                    <Button Type="primary" OnClick="()=>OpenModify(context.Id)">修改</Button>
-                    <Button Type="primary" Danger OnClick="()=>DeleteConfirm(context.Id)">删除</Button>
+                    <Button Type="@ButtonType.Primary" OnClick="()=>OpenScan(context.Id)">扫描</Button>
                 </SpaceItem>
                 <SpaceItem>
-                    <Button Type="primary" OnClick="()=>OpenModify(context.Id)">扫描</Button>
+                    <Button Type="@ButtonType.Primary" OnClick="()=>OpenModify(context.Id)">修改</Button>
+                    <Button Type="@ButtonType.Primary" Danger OnClick="()=>DeleteConfirm(context.Id)">删除</Button>
                 </SpaceItem>
             </Space>
         </ActionColumn>
         <Column Title="用途" @bind-Field="@context.Usage"></Column>
-        <Column Title="路径" @bind-Field="@context.Path"></Column>
+        <Column Title="文件夹路径" @bind-Field="@context.Path"></Column>
+        <Column Title="包含子文件夹" @bind-Field="@context.Children"></Column>
+        <Column Title="项目数量" @bind-Field="@context.Items"></Column>
+        <Column Title="备注" @bind-Field="@context.Note"></Column>
     </Table>
 
 </PageContainer>
-
+@code {
+    RenderFragment _filter = @<Icon Type="filter" />;
+}

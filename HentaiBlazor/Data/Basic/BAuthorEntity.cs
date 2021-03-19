@@ -33,6 +33,9 @@ namespace HentaiBlazor.Data.Basic
         [Column("a_valid", TypeName = "BOOLEAN")]
         public bool Valid { get; set; }
 
+        [Column("a_items")]
+        public int Items { get; set; }
+
         [Column("a_note")]
         public string Note { get; set; }
 

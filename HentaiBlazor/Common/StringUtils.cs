@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace HentaiBlazor.Ezcomp
+namespace HentaiBlazor.Common
 {
     public class StringUtils
     {
@@ -26,6 +26,24 @@ namespace HentaiBlazor.Ezcomp
         public static bool IsNotEmpty(string s)
         {
             return !IsEmpty(s);
+        }
+
+        public static bool IsAnyContains(string s, string[] a, StringComparison stringComparison) 
+        {
+            if (IsEmpty(s) || ArrayUtils.IsEmpty(a)) 
+            {
+                return false;
+            }
+
+            foreach (var t in a)
+            {
+                if (IsNotEmpty(t) && s.Contains(t, stringComparison))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
     }

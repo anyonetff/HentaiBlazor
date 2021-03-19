@@ -19,10 +19,13 @@
     <FormItem Label="合法">
         <Checkbox @bind-Value="@context.Valid" />
     </FormItem>
-
-    <FormItem>
+    <FormItem Label="映射">
+        <Input @bind-Value="@context.Alias" />
+    </FormItem>
+    
+    <FormItem WrapperCol="new ColLayoutParam{ Offset = 8, Span = 16 }">
         <Button Type="@ButtonType.Primary" HtmlType="submit">
-            Submit
+            提交
         </Button>
     </FormItem>
 

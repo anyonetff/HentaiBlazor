@@ -1,6 +1,6 @@
-﻿using HentaiBlazor.Data;
+﻿using HentaiBlazor.Common;
+using HentaiBlazor.Data;
 using HentaiBlazor.Data.Comic;
-using HentaiBlazor.Ezcomp;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

@@ -1,0 +1,12 @@
+﻿@using HentaiBlazor.Common
+
+<Text>
+    @((Language == "ja") ? "日本語" : (Language == "zh") ? "中文" : (Language == "en") ? "English" : "")
+</Text>
+
+@code {
+
+    [Parameter]
+    public string Language { get; set; }
+
+}

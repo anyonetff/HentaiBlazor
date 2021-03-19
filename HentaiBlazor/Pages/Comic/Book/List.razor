@@ -1,6 +1,7 @@
 ﻿@page "/comic/book/list"
 
 @using HentaiBlazor.Data.Comic
+@using HentaiBlazor.Ezcomp
 
 <PageContainer Title="漫画">
     <Row Gutter="24" Style="margin-bottom: 0.5rem">
@@ -30,15 +31,12 @@
             <SpaceItem>
                 <Button Type="primary" OnClick="()=>Search()">查询</Button>
             </SpaceItem>
-            <SpaceItem>
-                <Button Type="primary" OnClick="()=>ScanAll()">扫描</Button>
-            </SpaceItem>
         </Space>
         </Col>
 
     </Row>
 
-    
+
     <Table TItem="CBookEntity" DataSource="@CBookEntities">
         <ActionColumn>
             <Space>
@@ -55,7 +53,17 @@
                 </NavLink>
             </Tooltip>
         </Column>
+        <Column Title="语言" @bind-Field="@context.Language">
+            <TextLanguage Language="@context.Language" />
+        </Column>
         <Column Title="目录" @bind-Field="@context.Path"></Column>
         <Column Title="大小" @bind-Field="@context.Length"></Column>
     </Table>
 </PageContainer>
+
+@code {
+
+
+
+
+} 
