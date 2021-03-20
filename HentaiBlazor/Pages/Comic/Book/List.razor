@@ -36,8 +36,7 @@
 
     </Row>
 
-
-    <Table TItem="CBookEntity" DataSource="@CBookEntities">
+    <Table TItem="CBookEntity" DataSource="@CBookEntities" Size=@TableSize.Small>
         <ActionColumn>
             <Space>
                 <SpaceItem>
@@ -57,7 +56,9 @@
             <TextLanguage Language="@context.Language" />
         </Column>
         <Column Title="目录" @bind-Field="@context.Path"></Column>
-        <Column Title="大小" @bind-Field="@context.Length"></Column>
+        <Column Title="大小" @bind-Field="@context.Length">
+            <TextFileLength FileLength="@context.Length" />
+        </Column>
     </Table>
 </PageContainer>
 

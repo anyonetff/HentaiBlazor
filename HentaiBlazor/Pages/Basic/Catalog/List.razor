@@ -8,6 +8,7 @@
         <SpaceItem>
             <Input Prefix="@_filter" Placeholder="关键字" Style="width: 12rem;"
                    @bind-Value="searchKeyword" />
+
         </SpaceItem>
         <SpaceItem>
             <Button Type="@ButtonType.Primary" @onclick="Search">查询</Button>
@@ -15,7 +16,7 @@
         </SpaceItem>
     </Space>
 
-    <Table TItem="BCatalogEntity" DataSource="@BCatalogEntities">
+    <Table TItem="BCatalogEntity" DataSource="@BCatalogEntities" Size=@TableSize.Small>
         <ActionColumn>
             <Space>
                 <SpaceItem>

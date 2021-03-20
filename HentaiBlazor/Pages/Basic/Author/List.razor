@@ -13,7 +13,7 @@
             <Button Type="primary" OnClick="()=>Search()">查询</Button>
         </SpaceItem>
     </Space>
-    <Table TItem="BAuthorEntity" DataSource="@BAuthorEntities">
+    <Table TItem="BAuthorEntity" DataSource="@BAuthorEntities" Size=@TableSize.Small>
         <ActionColumn>
             <Space>
                 <SpaceItem>
@@ -27,6 +27,8 @@
         <Column Title="名称" @bind-Field="@context.Name"></Column>
         <Column Title="映射" @bind-Field="@context.Alias"></Column>
         <Column Title="合法" @bind-Field="@context.Valid"></Column>
+        <Column Title="项目数量" @bind-Field="@context.Items"></Column>
+        <Column Title="备注" @bind-Field="@context.Note"></Column>
     </Table>
 </PageContainer>
 
