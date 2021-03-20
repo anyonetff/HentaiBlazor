@@ -1,4 +1,5 @@
 ﻿using AntDesign.Pro.Layout;
+using HentaiBlazor.Common;
 using HentaiBlazor.Data.Security;
 using HentaiBlazor.Service.Security;
 using Microsoft.AspNetCore.Components;
@@ -36,5 +37,6 @@ namespace HentaiBlazor
 
             Menus = data.ToArray();
         }
+
     }
 }

@@ -21,7 +21,10 @@ namespace HentaiBlazor.Pages.Basic.Author
 
         private List<BAuthorEntity> BAuthorEntities;
 
-        private string searchKeyword;
+        private string searchMode = "MASTER";
+
+        private string searchKeyword = "";
+
 
         protected override async Task OnInitializedAsync()
         {
@@ -32,7 +35,7 @@ namespace HentaiBlazor.Pages.Basic.Author
         {
             Console.WriteLine(" search: " + searchKeyword);
 
-            BAuthorEntities = await authorService.SearchAsync(searchKeyword);
+            BAuthorEntities = await authorService.SearchAsync(searchMode, searchKeyword);
         }
 
         private async Task OpenModify(string id)

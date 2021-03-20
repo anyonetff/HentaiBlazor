@@ -1,4 +1,5 @@
-﻿using HentaiBlazor.Data;
+﻿using HentaiBlazor.Common;
+using HentaiBlazor.Data;
 using HentaiBlazor.Data.Basic;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -15,21 +16,23 @@ namespace HentaiBlazor.Service.Basic
         {
         }
 
-        public BAuthorEntity FindByName(string name)
+        public async Task<BAuthorEntity> FindByNameAsync(string name)
         {
-            return this.dbContext.Set<BAuthorEntity>()
+            return await this.dbContext.Set<BAuthorEntity>()
                     .Where<BAuthorEntity>(book => book.Name.Equals(name))
-                    .FirstOrDefault<BAuthorEntity>();
+                    .FirstOrDefaultAsync<BAuthorEntity>();
         }
 
-        public async Task<List<BAuthorEntity>> SearchAsync(string searchKeyword)
+
+        public async Task<List<BAuthorEntity>> SearchAsync(string searchMode, string searchKeyword)
         {
             //var Id = new SqlParameter("author", "%" + searchAuthor + "%");
 
             return await this.dbContext.Set<BAuthorEntity>()
-                .Where<BAuthorEntity>(book => searchKeyword == null || searchKeyword == "" || book.Name.Contains(searchKeyword) || book.Alias.Contains(searchKeyword))
-                .OrderBy(book => book.Alias)
-                .OrderBy(book => book.Name)
+                .Where<BAuthorEntity>(author => (searchMode == "MASTER" && author.Alias == "." && author.Valid) || (searchMode == "ALL"))
+                .Where<BAuthorEntity>(author => StringUtils.IsBlank(searchKeyword) || author.Name.Contains(searchKeyword) || author.Alias.Contains(searchKeyword))
+                .OrderBy(author => author.Alias)
+                .ThenBy(author => author.Name)
                 .ToListAsync<BAuthorEntity>();
 
         }

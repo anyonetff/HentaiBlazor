@@ -30,11 +30,12 @@ namespace HentaiBlazor.Pages.Basic.Catalog
         [Inject]
         public AuthorService authorService { get; set; }
 
-        protected override void OnInitialized()
+        protected override async Task OnInitializedAsync()
         {
             //catalog = new BCatalogEntity();
             catalog = base.Options ?? new BCatalogEntity();
-            base.OnInitialized();
+
+            await base.OnInitializedAsync();
         }
 
         private async Task Stop()
@@ -87,8 +88,8 @@ namespace HentaiBlazor.Pages.Basic.Catalog
 
                 FileInfo file = files[i];
 
-                CBookEntity book = saveBook(catalog, file);
-                BAuthorEntity author = saveAuthor(book.Author);
+                CBookEntity book = await saveBook(catalog, file);
+                BAuthorEntity author = await saveAuthor(book.Author);
 
                 progress = (int) (((double) i) / total * 100.0);
 
@@ -112,12 +113,12 @@ namespace HentaiBlazor.Pages.Basic.Catalog
 
             _scaning = false;
 
-            await Task.CompletedTask;
+            
         }
 
-        private CBookEntity saveBook(BCatalogEntity catalog, FileInfo file)
+        private async Task<CBookEntity> saveBook(BCatalogEntity catalog, FileInfo file)
         {
-            CBookEntity book = bookService.FindByName(file.DirectoryName, file.Name);
+            CBookEntity book = await bookService.FindByNameAsync(file.DirectoryName, file.Name);
 
             if (book != null)
             {
@@ -143,19 +144,19 @@ namespace HentaiBlazor.Pages.Basic.Catalog
             book.XInsert_ = file.CreationTime;
             book.XUpdate_ = file.LastWriteTime;
 
-            book = bookService.Save(book);
+            book = await bookService.SaveAsync(book);
 
             return book;
         }
 
-        private BAuthorEntity saveAuthor(string name)
+        private async Task<BAuthorEntity> saveAuthor(string name)
         {
             if (name == null || name == "")
             {
                 return null;
             }
 
-            BAuthorEntity author = authorService.FindByName(name);
+            BAuthorEntity author = await authorService.FindByNameAsync(name);
 
             if (author != null)
             {
@@ -169,7 +170,7 @@ namespace HentaiBlazor.Pages.Basic.Catalog
             author.Alias = ".";
             author.Valid = true;
 
-            author = authorService.Save(author);
+            author = await authorService.SaveAsync(author);
 
             return author;
         }

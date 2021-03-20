@@ -20,6 +20,13 @@ namespace HentaiBlazor.Service
             this.dbContext = dbFactory.CreateDbContext();
         }
 
+        public List<T> List()
+        {
+            return this.dbContext.Set<T>()
+                .OrderBy(entity => entity.Id)
+                .ToList<T>();
+        }
+
         public async Task<List<T>> ListAsync()
         {
             return await this.dbContext.Set<T>()
@@ -67,6 +74,35 @@ namespace HentaiBlazor.Service
             return entity;
         }
 
+        public async Task<T> SaveAsync(T entity)
+        {
+            if (entity.Id == null || entity.Id == "")
+            {
+                Console.WriteLine("生成ID并添加一条数据.");
+
+                entity.Id = Guid.NewGuid().ToString();
+
+                await this.AddAsync(entity);
+
+                return entity;
+            }
+
+            T other = await dbContext.Set<T>().FindAsync(entity.Id);
+
+            if (other == null)
+            {
+                Console.WriteLine("使用现有ID添加一条数据.");
+
+                await this.AddAsync(entity);
+
+                return entity;
+            }
+
+            await this.UpdateAsync(entity);
+
+            return entity;
+        }
+
         // 添加一个实体.
         public int Add(T entity)
         {
@@ -80,6 +116,19 @@ namespace HentaiBlazor.Service
             return dbContext.SaveChanges();
         }
 
+        public async Task<int> AddAsync(T entity)
+        {
+            Console.WriteLine("添加一条新数据[" + entity.Id + "]");
+
+            // entity.XInsert_ = DateTime.Now;
+            // entity.XUpdate_ = DateTime.Now;
+
+            await dbContext.Set<T>().AddAsync(entity);
+
+            return await dbContext.SaveChangesAsync();
+        }
+
+
         // 修改一个实体
         public int Update(T entity)
         {
@@ -90,11 +139,28 @@ namespace HentaiBlazor.Service
             return dbContext.SaveChanges();
         }
 
+        public async Task<int> UpdateAsync(T entity)
+        {
+            entity.XUpdate_ = DateTime.Now;
+
+            dbContext.Set<T>().Update(entity);
+
+            return await dbContext.SaveChangesAsync();
+        }
+
         // 删除一个实体
         public int Remove(T entity)
         {
             dbContext.Set<T>().Remove(entity);
+
             return dbContext.SaveChanges();
+        }
+
+        public async Task<int> RemoveAsync(T entity)
+        {
+            dbContext.Set<T>().Remove(entity);
+
+            return await dbContext.SaveChangesAsync();
         }
 
     }

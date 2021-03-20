@@ -5,9 +5,15 @@
 <PageContainer Title="作者维护">
     <Space Style="margin-bottom: 0.5rem">
         <SpaceItem>
-            <Input Placeholder="Prefix and Suffix" Style="width: 15rem;" @bind-Value="searchKeyword">
-                <Prefix><Icon Type="filter" /></Prefix>
+            <Input Placeholder="关键词" Style="width: 12rem;" @bind-Value="searchKeyword">
+            <Prefix><Icon Type="filter" /></Prefix>
             </Input>
+            <Select @bind-Value="@searchMode" Style="width: 8rem;" TItemValue="string" TItem="string">
+                <SelectOptions>
+                    <SelectOption TItemValue="string" TItem="string" Value="@("ALL")" Label="全部数据" />
+                    <SelectOption TItemValue="string" TItem="string" Value="@("MASTER")" Label="主数据" />
+                </SelectOptions>
+            </Select>
         </SpaceItem>
         <SpaceItem>
             <Button Type="primary" OnClick="()=>Search()">查询</Button>

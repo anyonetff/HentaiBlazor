@@ -44,6 +44,7 @@ namespace HentaiBlazor.Common
             return r;
         }
 
+        // 获取语言
         public static string ParseLanguage(string name)
         {
             if (IsZh(name))
@@ -59,15 +60,19 @@ namespace HentaiBlazor.Common
             return "ja";
         }
 
+        // 可能是中文的关键词
         private static string[] _Zh = { "中国", "中文", "汉化", "漢化" };
 
+        // 可能是英语的关键词
         private static string[] _En = { "English" };
 
+        // 判断是否是中文
         public static bool IsZh(string name)
         {
             return StringUtils.IsAnyContains(name, _Zh, StringComparison.OrdinalIgnoreCase);
         }
 
+        // 判断是否是英文
         private static bool IsEn(string name)
         {
             return StringUtils.IsAnyContains(name, _En, StringComparison.OrdinalIgnoreCase);
