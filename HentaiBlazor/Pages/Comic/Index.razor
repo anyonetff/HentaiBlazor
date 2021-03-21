@@ -7,25 +7,14 @@
 <PageContainer Title="漫画">
     <Space Style="margin-bottom: 0.5rem;">
         <SpaceItem>
-            <Input Placeholder="目录" Style="width: 15rem;" @bind-Value="searchCatalog">
-            <Prefix>
-                <Icon Type="folder" />
-            </Prefix>
-            </Input>
-            <Input Placeholder="作者" Style="width: 15rem;" @bind-Value="searchAuthor">
-            <Prefix>
-                <Icon Type="team" />
-            </Prefix>
-            </Input>
-            <Input Placeholder="关键词" Style="width: 15rem;" @bind-Value="searchKeyword">
-            <Prefix>
-                <Icon Type="filter" />
-            </Prefix>
-            </Input>
+            <InputGroup Compact>
+                <Input Prefix="@_folder" Placeholder="目录" Style="width: 15rem;" @bind-Value="searchCatalog" />
+                <Input Prefix="@_team" Placeholder="作者" Style="width: 15rem;" @bind-Value="searchAuthor" />
+                <Input Prefix="@_filter" Placeholder="关键词" Style="width: 15rem;" @bind-Value="searchKeyword" />
+            </InputGroup>
         </SpaceItem>
         <SpaceItem>
-            <Button Type="primary" @onclick="Search">查询</Button>
-            <Button Type="primary" @onclick="Refresh">刷新</Button>
+            <Button Type="@ButtonType.Primary" @onclick="Search">查询</Button>
         </SpaceItem>
     </Space>
 
@@ -39,7 +28,7 @@
     <AntList ItemLayout="ListItemLayout.Horizontal"
              Grid="gutter" DataSource="_CBookEntities">
         <ListItem Grid="gutter">
-            <Card Hoverable Style="width: 240px;"
+            <Card Size="small" Hoverable Style="width: 240px;"
                   Cover="@coverTemplate(@context.Cover)">
                 <CardMeta Title="@context.Title" Description="@context.Author" />
                 <NavLink href="@("/comic/detail/" + context.Id)">
@@ -57,14 +46,16 @@
 
 </PageContainer>
 
-@code {
+@code
+{
+    RenderFragment _folder =@<Icon Type="folder" />;
+    RenderFragment _team =@<Icon Type="team" />;
+    RenderFragment _filter =@<Icon Type="filter" />;
 
     public ListGridType gutter = new ListGridType { Gutter = 8, Column = 5 };
 
     private RenderFragment coverTemplate(string cover)
     {
-        return@<img alt="example" src="@cover" />;
+    return @<img alt="example" src="@cover" />;
     }
-
-
 }

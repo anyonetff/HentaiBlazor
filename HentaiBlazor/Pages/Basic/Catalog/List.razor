@@ -8,11 +8,10 @@
         <SpaceItem>
             <Input Prefix="@_filter" Placeholder="关键字" Style="width: 12rem;"
                    @bind-Value="searchKeyword" />
-
         </SpaceItem>
         <SpaceItem>
             <Button Type="@ButtonType.Primary" @onclick="Search">查询</Button>
-            <Button Type="@ButtonType.Primary" @onclick="OpenAdd">添加</Button>
+            <Button Type="@ButtonType.Primary" OnClick="()=>OpenEdit(null)">添加</Button>
         </SpaceItem>
     </Space>
 
@@ -23,8 +22,8 @@
                     <Button Type="@ButtonType.Primary" OnClick="()=>OpenScan(context.Id)">扫描</Button>
                 </SpaceItem>
                 <SpaceItem>
-                    <Button Type="@ButtonType.Primary" OnClick="()=>OpenModify(context.Id)">修改</Button>
-                    <Button Type="@ButtonType.Primary" Danger OnClick="()=>DeleteConfirm(context.Id)">删除</Button>
+                    <Button Type="@ButtonType.Primary" OnClick="()=>OpenEdit(context.Id)">修改</Button>
+                    <Button Type="@ButtonType.Primary" Danger OnClick="()=>OpenRemove(context.Id)">删除</Button>
                 </SpaceItem>
             </Space>
         </ActionColumn>
@@ -36,6 +35,8 @@
     </Table>
 
 </PageContainer>
-@code {
+
+@code 
+{
     RenderFragment _filter = @<Icon Type="filter" />;
 }

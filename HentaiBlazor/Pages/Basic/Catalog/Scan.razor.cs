@@ -19,7 +19,9 @@ namespace HentaiBlazor.Pages.Basic.Catalog
 
         private int _percent = 0;
 
-        private BCatalogEntity catalog;
+        private string catalogId;
+
+        private BCatalogEntity catalogEntity;
 
         [Inject]
         public CatalogService catalogService { get; set; }
@@ -33,7 +35,9 @@ namespace HentaiBlazor.Pages.Basic.Catalog
         protected override async Task OnInitializedAsync()
         {
             //catalog = new BCatalogEntity();
-            catalog = base.Options ?? new BCatalogEntity();
+            catalogId = base.Options;
+
+            catalogEntity = await catalogService.FindAsync(catalogId);
 
             await base.OnInitializedAsync();
         }
@@ -62,7 +66,7 @@ namespace HentaiBlazor.Pages.Basic.Catalog
             _scaning = true;
             _percent = 0;
 
-            DirectoryInfo root = new DirectoryInfo(catalog.Path);
+            DirectoryInfo root = new DirectoryInfo(catalogEntity.Path);
 
             if (! root.Exists)
             {
@@ -88,12 +92,12 @@ namespace HentaiBlazor.Pages.Basic.Catalog
 
                 FileInfo file = files[i];
 
-                CBookEntity book = await saveBook(catalog, file);
+                CBookEntity book = await saveBook(catalogEntity, file);
                 BAuthorEntity author = await saveAuthor(book.Author);
 
                 progress = (int) (((double) i) / total * 100.0);
 
-                catalog.Items = i;
+                catalogEntity.Items = i;
 
                 // Console.WriteLine(progress);
 
@@ -102,7 +106,7 @@ namespace HentaiBlazor.Pages.Basic.Catalog
                     _percent = progress;
                     Console.WriteLine(" * " + _percent + "% * ");
 
-                    // await Task.Delay(500);
+                    await Task.Delay(1000);
 
                     StateHasChanged();
                 }
@@ -112,8 +116,6 @@ namespace HentaiBlazor.Pages.Basic.Catalog
             Console.WriteLine("完成目录扫描");
 
             _scaning = false;
-
-            
         }
 
         private async Task<CBookEntity> saveBook(BCatalogEntity catalog, FileInfo file)

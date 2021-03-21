@@ -18,19 +18,14 @@ namespace HentaiBlazor.Pages.Comic.Book
         public BookService bookService { get; set; }
 
         [Inject]
-        public CatalogService catalogService { get; set; }
-
-        [Inject]
-        public AuthorService authorService { get; set; }
+        public DrawerService _drawer { get; set; }
 
         [Inject]
         public ModalService _modal { get; set; }
 
-        [Inject]
-        public DrawerService _drawer { get; set; }
-
         private DrawerRef<string> _editRef;
 
+        private ConfirmRef _removeRef;
 
         private List<CBookEntity> CBookEntities;
 
@@ -45,6 +40,13 @@ namespace HentaiBlazor.Pages.Comic.Book
             await Search();
         }
 
+        public async Task Search()
+        {
+            // Console.WriteLine(" search: " + searchKeyword);
+
+            CBookEntities = await bookService.SearchAsync(searchCatalog, searchAuthor, searchKeyword);
+        }
+
         private async Task OpenEdit(string options)
         {
             var _config = new DrawerOptions();
@@ -52,16 +54,34 @@ namespace HentaiBlazor.Pages.Comic.Book
             _config.Title = "编辑数据";
             _config.Width = 800;
             //modalConfig.Footer = null;
-
+            
             _editRef = await _drawer
                 .CreateAsync<Edit, string, string>(_config, options);
+
+            _editRef.OnClosed = async (r) => 
+            {
+                Console.WriteLine(r);
+
+                await Search();
+                StateHasChanged();
+            };
         }
 
-        public async Task Search()
+        private async Task OpenRemove(string options)
         {
-            Console.WriteLine(" search: " + searchKeyword);
+            var _config = new ConfirmOptions();
 
-            CBookEntities = await bookService.SearchAsync(searchCatalog, searchAuthor, searchKeyword);
+            _config.Title = "删除数据";
+
+            _config.OnOk = async (r) =>
+            {
+                Console.WriteLine("关闭删除确认后刷新数据...");
+
+                await Search();
+                StateHasChanged();
+            };
+
+            _removeRef = await _modal.CreateConfirmAsync<Remove, string, string>(_config, options);
         }
 
     }

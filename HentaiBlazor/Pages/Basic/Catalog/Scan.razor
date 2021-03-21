@@ -2,7 +2,7 @@
 @using System.ComponentModel.DataAnnotations
 @using System.Text.Json
 
-@inherits ModalTemplate<BCatalogEntity>
+@inherits ModalTemplate<string>
 
 <Row>
     <Col Span="6">
@@ -10,10 +10,10 @@
     </Col>
     <Col Span="18">
     <Descriptions Column="1" Bordered Size="@DescriptionsSize.Small">
-        <DescriptionsItem Title="用途">@catalog.Usage</DescriptionsItem>
-        <DescriptionsItem Title="文件夹路径">@catalog.Path</DescriptionsItem>
-        <DescriptionsItem Title="包含子文件夹">@catalog.Children</DescriptionsItem>
-        <DescriptionsItem Title="项目数量">@catalog.Items</DescriptionsItem>
+        <DescriptionsItem Title="用途">@catalogEntity.Usage</DescriptionsItem>
+        <DescriptionsItem Title="文件夹路径">@catalogEntity.Path</DescriptionsItem>
+        <DescriptionsItem Title="包含子文件夹">@catalogEntity.Children</DescriptionsItem>
+        <DescriptionsItem Title="项目数量">@catalogEntity.Items</DescriptionsItem>
     </Descriptions>
     </Col>
 </Row>

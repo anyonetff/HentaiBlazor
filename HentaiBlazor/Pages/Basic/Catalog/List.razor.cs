@@ -21,8 +21,9 @@ namespace HentaiBlazor.Pages.Basic.Catalog
 
         private ModalRef _editRef;
 
-        private ModalRef _scanRef;
+        private ConfirmRef _removeRef;
 
+        private ModalRef _scanRef;
 
         private BCatalogEntity _catalog;
 
@@ -44,24 +45,8 @@ namespace HentaiBlazor.Pages.Basic.Catalog
             BCatalogEntities = await catalogService.SearchAsync(searchUsage, searchKeyword);
         }
 
-        private async Task OpenAdd()
+        private async Task OpenScan(string options)
         {
-            var templateOptions = new BCatalogEntity();
-
-            await this.OpenEdit(templateOptions);
-        }
-
-        private async Task OpenModify(string id)
-        {
-            var templateOptions = await catalogService.FindAsync(id);
-
-            await this.OpenEdit(templateOptions);
-        }
-
-        private async Task OpenScan(string id)
-        {
-            var templateOptions = await catalogService.FindAsync(id);
-
             var modalConfig = new ModalOptions();
 
             modalConfig.Title = "扫描内容";
@@ -74,15 +59,13 @@ namespace HentaiBlazor.Pages.Basic.Catalog
 
                 await Search();
                 StateHasChanged();
-                // InvokeAsync(StateHasChanged);
-                // return Task.CompletedTask;
             };
 
             _scanRef = await _modal
-                .CreateModalAsync<Scan, BCatalogEntity>(modalConfig, templateOptions);
+                .CreateModalAsync<Scan, string>(modalConfig, options);
         }
 
-        private async Task OpenEdit(BCatalogEntity templateOptions)
+        private async Task OpenEdit(string options)
         {
             var modalConfig = new ModalOptions();
 
@@ -94,49 +77,29 @@ namespace HentaiBlazor.Pages.Basic.Catalog
                 Console.WriteLine("AfterClose");
 
                 await Search();
+
                 StateHasChanged();
-                // InvokeAsync(StateHasChanged);
-                // return Task.CompletedTask;
             };
 
             _editRef = await _modal
-                .CreateModalAsync<Edit, BCatalogEntity>(modalConfig, templateOptions);
+                .CreateModalAsync<Edit, string>(modalConfig, options);
         }
 
-
-        Func<ModalClosingEventArgs, Task> DeleteOnOk = (e) =>
+        private async Task OpenRemove(string options)
         {
-            Console.WriteLine("删除数据");
+            var _config = new ConfirmOptions();
 
-            
+            _config.Title = "删除数据";
 
-            return Task.CompletedTask;
-        };
-
-        Func<ModalClosingEventArgs, Task> DeleteOnCancel = (e) =>
-        {
-            Console.WriteLine("Cancel");
-            return Task.CompletedTask;
-        };
-
-        private async Task DeleteConfirm(string Id)
-        {
-            _catalog = await catalogService.FindAsync(Id);
-
-            _modal.Confirm(new ConfirmOptions()
+            _config.OnOk = async (r) =>
             {
-                Title = "删除数据",
-                // Icon = icon,
-                Content = "[" + _catalog.Usage + "] " + _catalog.Path,
-                OnOk = async (r) => {
-                    catalogService.Remove(_catalog);
+                Console.WriteLine("关闭删除确认后刷新数据...");
 
-                    await Search();
-                    StateHasChanged();
-                    // return Task.CompletedTask; 
-                },
-                OnCancel = DeleteOnCancel
-            });
+                await Search();
+                StateHasChanged();
+            };
+
+            _removeRef = await _modal.CreateConfirmAsync<Remove, string, string>(_config, options);
         }
 
     }

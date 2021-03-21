@@ -25,9 +25,14 @@
         <Input @bind-Value="@context.Language" />
     </FormItem>
 
-
     <FormItem Label="备注">
         <TextArea MinRows="2" MaxRows="6" @bind-Value="@context.Note" />
+    </FormItem>
+
+    <FormItem WrapperCol="new ColLayoutParam{ Offset = 4, Span = 20 }">
+        <Button Type="@ButtonType.Primary" HtmlType="submit">
+            提交
+        </Button>
     </FormItem>
 
 </Form>

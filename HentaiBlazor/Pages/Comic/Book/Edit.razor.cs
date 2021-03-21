@@ -36,11 +36,11 @@ namespace HentaiBlazor.Pages.Comic.Book
             await base.OnInitializedAsync();
         }
 
-        private void OnFinish(EditContext editContext)
+        private async Task OnFinish(EditContext editContext)
         {
+            await bookService.SaveAsync(bookEntity);
 
-
-            _ = base.DrawerRef.CloseAsync();
+            await base.DrawerRef.CloseAsync("success");
         }
 
         private void OnFinishFailed(EditContext editContext)

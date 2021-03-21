@@ -1,4 +1,5 @@
 ﻿using AntDesign;
+using HentaiBlazor.Common;
 using HentaiBlazor.Data.Basic;
 using HentaiBlazor.Service.Basic;
 using Microsoft.AspNetCore.Components;
@@ -13,25 +14,34 @@ namespace HentaiBlazor.Pages.Basic.Catalog
     public partial class Edit
     {
 
-        private BCatalogEntity catalog;
+        private string catalogId;
+
+        private BCatalogEntity catalogEntity;
 
         [Inject]
         public CatalogService catalogService { get; set; }
 
-        protected override void OnInitialized()
+        protected override async Task OnInitializedAsync()
         {
-            //catalog = new BCatalogEntity();
-            catalog = base.Options ?? new BCatalogEntity();
-            base.OnInitialized();
+            catalogId = base.Options ?? null;
+
+            if (StringUtils.IsBlank(catalogId))
+            {
+                catalogEntity = new BCatalogEntity();
+            }
+            else
+            {
+                catalogEntity = await catalogService.FindAsync(catalogId);
+            }
+
+            await base.OnInitializedAsync();
         }
 
-        private void OnFinish(EditContext editContext)
+        private async Task OnFinish(EditContext editContext)
         {
-            catalogService.Save(catalog);
+            await this.catalogService.SaveAsync(catalogEntity);
 
-            // StateHasChanged();
-
-            _ = base.ModalRef.CloseAsync();
+            await base.ModalRef.CloseAsync();
         }
 
         private void OnFinishFailed(EditContext editContext)

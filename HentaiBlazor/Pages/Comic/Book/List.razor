@@ -23,6 +23,7 @@
             <Space>
                 <SpaceItem>
                     <Button Type="@ButtonType.Primary" OnClick="() => OpenEdit(context.Id)">修改</Button>
+                    <Button Type="@ButtonType.Primary" Danger OnClick="() => OpenRemove(context.Id)">删除</Button>
                 </SpaceItem>
             </Space>
         </ActionColumn>
@@ -44,7 +45,8 @@
     </Table>
 </PageContainer>
 
-@code {
+@code 
+{
     RenderFragment _folder =@<Icon Type="folder" />;
     RenderFragment _team =@<Icon Type="team" />;
     RenderFragment _filter =@<Icon Type="filter" />;
