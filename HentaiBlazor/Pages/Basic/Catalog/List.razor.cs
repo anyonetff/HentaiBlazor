@@ -29,9 +29,20 @@ namespace HentaiBlazor.Pages.Basic.Catalog
 
         private List<BCatalogEntity> BCatalogEntities { get; set; }
 
-        private string searchUsage;
+        private string searchUsage = "";
 
-        private string searchKeyword;
+        private string searchKeyword = "";
+
+
+        protected override async Task OnInitializedAsync()
+        {
+            await Search();
+        }
+
+        public async Task Search()
+        {
+            BCatalogEntities = await catalogService.SearchAsync(searchUsage, searchKeyword);
+        }
 
         private async Task OpenAdd()
         {
@@ -71,7 +82,7 @@ namespace HentaiBlazor.Pages.Basic.Catalog
                 .CreateModalAsync<Scan, BCatalogEntity>(modalConfig, templateOptions);
         }
 
-        private async Task OpenEdit(BCatalogEntity templateOptions) 
+        private async Task OpenEdit(BCatalogEntity templateOptions)
         {
             var modalConfig = new ModalOptions();
 
@@ -90,17 +101,6 @@ namespace HentaiBlazor.Pages.Basic.Catalog
 
             _editRef = await _modal
                 .CreateModalAsync<Edit, BCatalogEntity>(modalConfig, templateOptions);
-        }
-
-
-        protected override async Task OnInitializedAsync()
-        {
-            await Search();
-        }
-
-        public async Task Search()
-        {
-            BCatalogEntities = await catalogService.SearchAsync(searchUsage, searchKeyword);
         }
 
 

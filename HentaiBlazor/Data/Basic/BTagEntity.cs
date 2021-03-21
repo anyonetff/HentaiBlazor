@@ -21,6 +21,7 @@ namespace HentaiBlazor.Data.Basic
             }
         }
 
+        [Required]
         [Column("t_name")]
         public string Name { get; set; }
 

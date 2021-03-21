@@ -15,5 +15,11 @@ namespace HentaiBlazor.Service.Anime
         {
         }
 
+        public async Task<int> TotalCountAsync()
+        {
+            return await this.dbContext.Set<AVideoEntity>()
+                .CountAsync<AVideoEntity>();
+        }
+
     }
 }

@@ -104,6 +104,7 @@ namespace HentaiBlazor.Pages.Basic.Author
 
         private void OnFinishFailed(EditContext editContext)
         {
+            Console.WriteLine("编辑失败.");
             //Console.WriteLine($"Failed:{JsonSerializer.Serialize(_model)}");
         }
     }

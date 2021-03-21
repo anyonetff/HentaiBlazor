@@ -1,4 +1,5 @@
-﻿using HentaiBlazor.Data;
+﻿using HentaiBlazor.Common;
+using HentaiBlazor.Data;
 using HentaiBlazor.Data.Basic;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -13,6 +14,22 @@ namespace HentaiBlazor.Service.Basic
 
         public TagService(IDbContextFactory<HentaiContext> dbFactory) : base(dbFactory)
         {
+        }
+
+        public async Task<List<BTagEntity>> SearchAsync(string searchKeyword)
+        {
+            return await this.dbContext.Set<BTagEntity>()
+                .Where<BTagEntity>(tag => StringUtils.IsBlank(searchKeyword) || tag.Name.Contains(searchKeyword))
+                .OrderBy(tag => tag.Name)
+                .ToListAsync<BTagEntity>();
+
+        }
+
+        public async Task<BTagEntity> FindByNameAsync(string name)
+        {
+            return await this.dbContext.Set<BTagEntity>()
+                    .Where<BTagEntity>(tag => tag.Name.Equals(name))
+                    .FirstOrDefaultAsync<BTagEntity>();
         }
 
     }
