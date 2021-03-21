@@ -26,7 +26,11 @@ namespace HentaiBlazor.Pages.Comic.Book
         [Inject]
         public ModalService _modal { get; set; }
 
-        private ModalRef _editRef;
+        [Inject]
+        public DrawerService _drawer { get; set; }
+
+        private DrawerRef<string> _editRef;
+
 
         private List<CBookEntity> CBookEntities;
 
@@ -41,22 +45,16 @@ namespace HentaiBlazor.Pages.Comic.Book
             await Search();
         }
 
-        private async Task OpenModify(string id)
+        private async Task OpenEdit(string options)
         {
-            var templateOptions = await bookService.FindAsync(id);
+            var _config = new DrawerOptions();
 
-            await this.OpenEdit(templateOptions);
-        }
+            _config.Title = "编辑数据";
+            _config.Width = 800;
+            //modalConfig.Footer = null;
 
-        private async Task OpenEdit(CBookEntity templateOptions)
-        {
-            var modalConfig = new ModalOptions();
-
-            modalConfig.Title = "编辑数据";
-            modalConfig.Footer = null;
-
-            _editRef = await _modal
-                .CreateModalAsync<Edit, CBookEntity>(modalConfig, templateOptions);
+            _editRef = await _drawer
+                .CreateAsync<Edit, string, string>(_config, options);
         }
 
         public async Task Search()

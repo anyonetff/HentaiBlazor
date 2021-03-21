@@ -4,43 +4,25 @@
 @using HentaiBlazor.Ezcomp
 
 <PageContainer Title="漫画">
-    <Row Gutter="24" Style="margin-bottom: 0.5rem">
 
-        <Col Span="18">
-        <Space>
-
-            <SpaceItem>
-                <InputGroup Compact>
-                    <Input Placeholder="目录" Style="width: 15rem;" @bind-Value="searchCatalog">
-                    <Prefix>
-                        <Icon Type="folder" />
-                    </Prefix>
-                    </Input>
-                    <Input Placeholder="作者" Style="width: 15rem;" @bind-Value="searchAuthor">
-                    <Prefix>
-                        <Icon Type="team" />
-                    </Prefix>
-                    </Input>
-                    <Input Placeholder="关键词" Style="width: 15rem;" @bind-Value="searchKeyword">
-                    <Prefix>
-                        <Icon Type="filter" />
-                    </Prefix>
-                    </Input>
-                </InputGroup>
-            </SpaceItem>
-            <SpaceItem>
-                <Button Type="primary" OnClick="()=>Search()">查询</Button>
-            </SpaceItem>
-        </Space>
-        </Col>
-
-    </Row>
+    <Space Style="margin-bottom: 0.5rem">
+        <SpaceItem>
+            <InputGroup Compact>
+                <Input Prefix="@_folder" Placeholder="目录" Style="width: 15rem;" @bind-Value="searchCatalog" />
+                <Input Prefix="@_team" Placeholder="作者" Style="width: 15rem;" @bind-Value="searchAuthor" />
+                <Input Prefix="@_filter" Placeholder="关键词" Style="width: 15rem;" @bind-Value="searchKeyword" />
+            </InputGroup>
+        </SpaceItem>
+        <SpaceItem>
+            <Button Type="@ButtonType.Primary" OnClick="()=>Search()">查询</Button>
+        </SpaceItem>
+    </Space>
 
     <Table TItem="CBookEntity" DataSource="@CBookEntities" Size=@TableSize.Small>
         <ActionColumn>
             <Space>
                 <SpaceItem>
-                    <Button Type="primary" OnClick="()=>OpenModify(context.Id)">修改</Button>
+                    <Button Type="@ButtonType.Primary" OnClick="() => OpenEdit(context.Id)">修改</Button>
                 </SpaceItem>
             </Space>
         </ActionColumn>
@@ -63,8 +45,7 @@
 </PageContainer>
 
 @code {
-
-
-
-
+    RenderFragment _folder =@<Icon Type="folder" />;
+    RenderFragment _team =@<Icon Type="team" />;
+    RenderFragment _filter =@<Icon Type="filter" />;
 } 
