@@ -13,9 +13,10 @@ namespace HentaiBlazor.Pages.Basic.Author
 {
     public partial class Edit
     {
-        //private CustomValidator customValidator;
 
-        private BAuthorEntity author;
+        private string authorId;
+
+        private BAuthorEntity authorEntity;
 
         [Inject]
         public AuthorService authorService { get; set; }
@@ -23,11 +24,20 @@ namespace HentaiBlazor.Pages.Basic.Author
         [Inject]
         public BookService bookService { get; set; }
 
-        protected override void OnInitialized()
+        protected override async Task OnInitializedAsync()
         {
-            //catalog = new BCatalogEntity();
-            author = base.Options ?? new BAuthorEntity();
-            base.OnInitialized();
+            authorId = base.Options ?? null;
+
+            if (StringUtils.IsBlank(authorId))
+            {
+                authorEntity = new BAuthorEntity();
+            }
+            else
+            {
+                authorEntity = await authorService.FindAsync(authorId);
+            }
+
+            await base.OnInitializedAsync();
         }
 
         private async Task<bool> validatorByAlias(BAuthorEntity author)
@@ -80,21 +90,21 @@ namespace HentaiBlazor.Pages.Basic.Author
         {
             //Console.WriteLine($"Success:{JsonSerializer.Serialize(_model)}");
 
-            if (! await this.validatorByName(author))
+            if (! await this.validatorByName(authorEntity))
             {
                 return;
             }
 
-            await this.validatorByAlias(author);
+            await this.validatorByAlias(authorEntity);
 
 
-            await this.authorService.SaveAsync(author);
+            await this.authorService.SaveAsync(authorEntity);
 
-            if (author.Alias != ".")
+            if (authorEntity.Alias != ".")
             {
                 Console.WriteLine("批量更新作者名称.");
 
-                await this .bookService.UpdateAuthorAsync(author.Name, author.Alias);
+                await this .bookService.UpdateAuthorAsync(authorEntity.Name, authorEntity.Alias);
             }
 
             _ = base.ModalRef.CloseAsync();

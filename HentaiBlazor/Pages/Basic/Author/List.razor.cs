@@ -19,6 +19,8 @@ namespace HentaiBlazor.Pages.Basic.Author
 
         private ModalRef _editRef;
 
+        private ConfirmRef _removeRef;
+
         private List<BAuthorEntity> BAuthorEntities;
 
         private string searchMode = "MASTER";
@@ -38,47 +40,40 @@ namespace HentaiBlazor.Pages.Basic.Author
             BAuthorEntities = await authorService.SearchAsync(searchMode, searchKeyword);
         }
 
-        private async Task OpenModify(string id)
+        private async Task OpenEdit(string options)
         {
-            var templateOptions = await authorService.FindAsync(id);
+            var _config = new ModalOptions();
 
-            await this.OpenEdit(templateOptions);
-        }
+            _config.Title = "编辑数据";
+            _config.Footer = null;
 
-        private async Task OpenEdit(BAuthorEntity templateOptions)
-        {
-            var modalConfig = new ModalOptions();
+            _config.AfterClose = async () =>
+            {
+                Console.WriteLine("关闭编辑弹窗后刷新数据...");
 
-            modalConfig.Title = "编辑数据";
-            modalConfig.Footer = null;
+                await Search();
+                StateHasChanged();
+            };
 
             _editRef = await _modal
-                .CreateModalAsync<Edit, BAuthorEntity>(modalConfig, templateOptions);
+                .CreateModalAsync<Edit, string>(_config, options);
         }
 
-
-        Func<ModalClosingEventArgs, Task> onOk = (e) =>
+        private async Task OpenRemove(string options)
         {
-            Console.WriteLine("Ok");
-            return Task.CompletedTask;
-        };
+            var _config = new ConfirmOptions();
 
-        Func<ModalClosingEventArgs, Task> onCancel = (e) =>
-        {
-            Console.WriteLine("Cancel");
-            return Task.CompletedTask;
-        };
+            _config.Title = "删除数据";
 
-        private void DeleteConfirm(String Id)
-        {
-            _modal.Confirm(new ConfirmOptions()
+            _config.OnOk = async (r) =>
             {
-                Title = "Do you Want to delete these items?",
-               // Icon = icon,
-                Content = Id,
-                OnOk = onOk,
-                OnCancel = onCancel
-            });
+                Console.WriteLine("关闭删除确认后刷新数据...");
+
+                await Search();
+                StateHasChanged();
+            };
+
+            _removeRef = await _modal.CreateConfirmAsync<Remove, string, string>(_config, options);
         }
 
     }
