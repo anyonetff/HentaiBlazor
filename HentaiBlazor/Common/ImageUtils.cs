@@ -12,25 +12,48 @@ namespace HentaiBlazor.Common
     public class ImageUtils
     {
 
-        public static string base64(Image image, ImageFormat format)
+        public static string Preview(ZipArchiveEntry entry, 
+            int width, int height, ImageFormat format)
         {
-            using (var ms = new MemoryStream())
-            {
-                image.Save(ms, format);
+            Image source = Create(entry);
 
-                byte[] bytes = ms.ToArray();
+            Image target = ThumbnailFit(source, width, height);
 
-                return Convert.ToBase64String(ms.t);
-            }
+            return Base64(target, format);
         }
 
-        public static Image create(ZipArchiveEntry entry)
+        public static string Read(ZipArchiveEntry entry)
         {
             var stream = entry.Open();
             // byte[] bytes;
             using (var ms = new MemoryStream())
             {
-                //stream.CopyTo(ms);
+                stream.CopyTo(ms);
+                // bytes = ms.ToArray();
+
+                return Convert.ToBase64String(ms.ToArray());
+            }
+        }
+
+        public static string Base64(Image image, ImageFormat format)
+        {
+            using (var ms = new MemoryStream())
+            {
+                image.Save(ms, format);
+
+                //byte[] bytes = ms.ToArray();
+
+                return Convert.ToBase64String(ms.ToArray());
+            }
+        }
+
+        public static Image Create(ZipArchiveEntry entry)
+        {
+            var stream = entry.Open();
+            // byte[] bytes;
+            using (var ms = new MemoryStream())
+            {
+                stream.CopyTo(ms);
                 // bytes = ms.ToArray();
 
                 return Image.FromStream(ms);

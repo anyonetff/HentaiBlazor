@@ -2,6 +2,7 @@
 using HentaiBlazor.Common;
 using HentaiBlazor.Data.Comic;
 using HentaiBlazor.Ezcomp;
+using HentaiBlazor.Service;
 using HentaiBlazor.Service.Comic;
 using Microsoft.AspNetCore.Components;
 using System;
@@ -18,6 +19,9 @@ namespace HentaiBlazor.Pages.Comic
 
         [Inject]
         public BookService bookService { get; set; }
+
+        [Inject]
+        public CoverService coverService { get; set; }
 
         private List<CBookEntity> CBookEntities;
 
@@ -86,57 +90,12 @@ namespace HentaiBlazor.Pages.Comic
             for (int i = 0; i < _CBookEntities.Count; i++)
             {
                 CBookEntity _book = _CBookEntities.ElementAt(i);
-                //_book.Cover = "/book/cover.jpg";
-                
-                _book = await ReadCover(_book);
+
+                _book.Cover = await coverService.GetAsync(_book);
+
                 StateHasChanged();
             }
         }
 
-
-        private async Task<CBookEntity> ReadCover(CBookEntity book)
-        {
-            return await Task.Run(() =>
-            {
-                if (book.Cover != null && book.Cover != "/book/cover.jpg")
-                {
-                    return book;
-                }
-
-                string file = book.Path + "\\" + book.Name;
-
-                ZipArchive archive = ZipFile.OpenRead(file);
-
-                foreach (ZipArchiveEntry entry in archive.Entries)
-                {
-                    // Console.WriteLine(" - " + entry.FullName);
-
-                    if (ComicUtils.IsImage(entry.FullName))
-                    {
-                        string cover = "data:image/*;base64," + preview(entry);
-                        book.Cover = cover;
-
-                        // Console.WriteLine(cover);
-
-                        break;
-                    }
-                }
-
-                return book;
-            });
-        }
-
-        protected string preview(ZipArchiveEntry entry)
-        {
-            var stream = entry.Open();
-            byte[] bytes;
-            using (var ms = new MemoryStream())
-            {
-                stream.CopyTo(ms);
-                bytes = ms.ToArray();
-
-                return Convert.ToBase64String(bytes);
-            }
-        }
     }
 }
