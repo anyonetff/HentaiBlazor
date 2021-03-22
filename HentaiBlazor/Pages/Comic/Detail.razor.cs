@@ -1,4 +1,5 @@
-﻿using HentaiBlazor.Data.Comic;
+﻿using HentaiBlazor.Common;
+using HentaiBlazor.Data.Comic;
 using HentaiBlazor.Service.Comic;
 using Microsoft.AspNetCore.Components;
 using System;
@@ -51,7 +52,7 @@ namespace HentaiBlazor.Pages.Comic
             ZipArchive archive = ZipFile.OpenRead(file);
 
             entries = archive.Entries
-                    .Where(a => a.FullName.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase) || a.FullName.EndsWith(".png", StringComparison.OrdinalIgnoreCase))
+                    .Where(a => ComicUtils.IsImage(a.FullName))
                     .OrderBy(a => a.FullName)
                     .ToList();
         }

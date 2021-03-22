@@ -1,4 +1,5 @@
 ﻿using AntDesign;
+using HentaiBlazor.Common;
 using HentaiBlazor.Data.Comic;
 using HentaiBlazor.Ezcomp;
 using HentaiBlazor.Service.Comic;
@@ -67,9 +68,13 @@ namespace HentaiBlazor.Pages.Comic
 
         public async Task _sizing(PaginationEventArgs args)
         {
-            BookPaginator.HandlePageSizeChange(args);
+            await BookPaginator.HandlePageSizeChange(args);
 
             _CBookEntities = BookPaginator.Paged().ToList();
+
+            StateHasChanged();
+
+            await Refresh();
         }
 
         private async Task Refresh()
@@ -106,7 +111,7 @@ namespace HentaiBlazor.Pages.Comic
                 {
                     // Console.WriteLine(" - " + entry.FullName);
 
-                    if (entry.FullName.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase))
+                    if (ComicUtils.IsImage(entry.FullName))
                     {
                         string cover = "data:image/*;base64," + preview(entry);
                         book.Cover = cover;

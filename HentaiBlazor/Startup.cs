@@ -17,6 +17,7 @@ using HentaiBlazor.Service.Basic;
 using HentaiBlazor.Service.Comic;
 using HentaiBlazor.Service.Security;
 using HentaiBlazor.Service.Anime;
+using HentaiBlazor.Service;
 
 namespace HentaiBlazor
 {
@@ -56,6 +57,8 @@ namespace HentaiBlazor
 
             services.AddScoped<BookService>();
             services.AddScoped<VideoService>();
+
+            services.AddSingleton<CoverService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

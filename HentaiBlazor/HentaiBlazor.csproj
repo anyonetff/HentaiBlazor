@@ -9,6 +9,7 @@
     <PackageReference Include="AntDesign.Charts" Version="0.2.0-*" />
     <PackageReference Include="AntDesign.Pro.Layout" Version="0.1.0-*" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.4" />
+    <PackageReference Include="System.Drawing.Common" Version="5.0.2" />
     <PackageReference Include="System.Net.Http.Json" Version="5.0.0" />
   </ItemGroup>
   

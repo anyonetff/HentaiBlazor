@@ -8,6 +8,46 @@ namespace HentaiBlazor.Common
     public class ComicUtils
     {
 
+        private static string[] _archive = { ".jpg", ".jpeg", ".png", ".bmp" };
+
+        private static string[] _image = { ".jpg", ".jpeg", ".png", ".bmp" };
+
+        public static bool IsImage(string name)
+        {
+            if (StringUtils.IsBlank(name))
+            {
+                return false;
+            }
+
+            foreach (var image in _image)
+            {
+                if (name.EndsWith(image, StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public static bool IsArchive(string name)
+        {
+            if (StringUtils.IsBlank(name))
+            {
+                return false;
+            }
+
+            foreach (var archive in _archive)
+            {
+                if (name.EndsWith(archive, StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         // 获取作者
         public static string ParseAuthor(string name)
         {

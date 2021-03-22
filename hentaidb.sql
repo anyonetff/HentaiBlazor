@@ -1,3 +1,5 @@
+-- 写入导航数据.
+
 DELETE FROM s_function;
 
 INSERT INTO s_function (f_id, f_parent, f_path, f_name, f_icon, f_note, x_insert_, x_update_)

@@ -131,7 +131,7 @@ namespace HentaiBlazor.Ezcomp
             //StateHasChanged();
         }
 
-        public void HandlePageSizeChange(PaginationEventArgs args)
+        public async Task HandlePageSizeChange(PaginationEventArgs args)
         {
             _pageSize = args.PageSize;
 
@@ -140,12 +140,12 @@ namespace HentaiBlazor.Ezcomp
 
             if (PageSizeChanged.HasDelegate)
             {
-                PageSizeChanged.InvokeAsync(args.PageSize);
+                await PageSizeChanged.InvokeAsync(args.PageSize);
             }
 
             if (OnPageSizeChange.HasDelegate)
             {
-                OnPageSizeChange.InvokeAsync(args);
+                await OnPageSizeChange .InvokeAsync(args);
             }
         }
 
