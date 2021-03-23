@@ -8,7 +8,7 @@ namespace HentaiBlazor.Common
     public class ComicUtils
     {
 
-        private static string[] _archive = { ".jpg", ".jpeg", ".png", ".bmp" };
+        private static string[] _archive = { ".zip", ".rar", ".7z" };
 
         private static string[] _image = { ".jpg", ".jpeg", ".png", ".bmp" };
 
