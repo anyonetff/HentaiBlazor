@@ -6,7 +6,7 @@
 <p align="center">
   <img src="Screenshot/001.png">
 </p>
-编写本应用的目的主要是实践巨硬（Microsoft）的新一代前端框架Blazor，本应用也给想要学习这套框架的童鞋提供了标准的CRUD案例。
+编写本应用的目的主要是实践巨硬（Microsoft）的新一代前端框架Blazor与EntityFramework，本应用也给想要学习这套框架的童鞋提供了标准的CRUD案例。
 
 ## 开发状态
 
