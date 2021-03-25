@@ -69,6 +69,7 @@ namespace HentaiBlazor.Service
                 return entity;
             }
 
+            // TODO: 整个编辑的代码结构还需要优化
             dbContext.Entry(exist).CurrentValues.SetValues(entity);
             dbContext.SaveChanges();
             // other = entity;
@@ -101,6 +102,7 @@ namespace HentaiBlazor.Service
                 return entity;
             }
 
+            // TODO: 整个编辑的代码结构还需要优化
             dbContext.Entry(exist).CurrentValues.SetValues(entity);
             await dbContext.SaveChangesAsync();
             //await this.UpdateAsync(entity);
