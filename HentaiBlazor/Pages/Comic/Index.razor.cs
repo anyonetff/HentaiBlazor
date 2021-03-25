@@ -18,6 +18,9 @@ namespace HentaiBlazor.Pages.Comic
     {
 
         [Inject]
+        public NavigationManager mavigationManager { get; set; }
+
+        [Inject]
         public BookService bookService { get; set; }
 
         [Inject]
@@ -95,6 +98,11 @@ namespace HentaiBlazor.Pages.Comic
 
                 StateHasChanged();
             }
+        }
+
+        public void NavigateTo(string url)
+        {
+            mavigationManager.NavigateTo(url);
         }
 
     }

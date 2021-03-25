@@ -1,4 +1,5 @@
 ﻿using HentaiBlazor.Service.Anime;
+using HentaiBlazor.Service.Basic;
 using HentaiBlazor.Service.Comic;
 using Microsoft.AspNetCore.Components;
 using System;
@@ -10,6 +11,8 @@ namespace HentaiBlazor.Pages
 {
     public partial class Welcome
     {
+        [Inject]
+        public NavigationManager NavigationManager { get; set; }
 
         [Inject]
         public BookService bookService { get; set; }
@@ -17,16 +20,33 @@ namespace HentaiBlazor.Pages
         [Inject]
         public VideoService videoService { get; set; }
 
+        [Inject]
+        public AuthorService authorService { get; set; }
+
+        [Inject]
+        public TagService tagService { get; set; }
+
         private int BookTotal;
 
         private int VideoTotal;
 
+        private int AuthorTotal;
+
+        private int TagTotal;
+
         protected override async Task OnInitializedAsync()
         {
-
             BookTotal = await bookService.TotalCountAsync();
             VideoTotal = await videoService.TotalCountAsync();
+            AuthorTotal = await authorService.TotalCountAsync();
+            TagTotal = await tagService.TotalCountAsync();
         }
+
+        public void navTo(string url)
+        {
+            NavigationManager.NavigateTo(url);
+        }
+
 
     }
 }

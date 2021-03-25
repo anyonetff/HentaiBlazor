@@ -30,10 +30,12 @@
         <ListItem Grid="gutter">
             <Card Size="small" Hoverable Style="width: 240px;"
                   Cover="@coverTemplate(@context.Cover)">
-                <CardMeta Title="@context.Title" Description="@context.Author" />
-                <NavLink href="@("/comic/detail/" + context.Id)">
-                    查看
-                </NavLink>
+                <ChildContent>
+                    <CardMeta Title="@context.Title" Description="@context.Author" />
+                </ChildContent>
+                <ActionTemplate>
+                    <CardAction><Icon Type="eye" OnClick="@(()=> NavigateTo("comic/detail/" + context.Id))" /></CardAction>
+                </ActionTemplate>
             </Card>
         </ListItem>
     </AntList>

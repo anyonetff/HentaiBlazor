@@ -23,7 +23,6 @@ namespace HentaiBlazor.Service.Basic
                     .FirstOrDefaultAsync<BAuthorEntity>();
         }
 
-
         public async Task<List<BAuthorEntity>> SearchAsync(string searchMode, string searchKeyword)
         {
             //var Id = new SqlParameter("author", "%" + searchAuthor + "%");
@@ -35,6 +34,13 @@ namespace HentaiBlazor.Service.Basic
                 .ThenBy(author => author.Name)
                 .ToListAsync<BAuthorEntity>();
 
+        }
+
+        public async Task<int> TotalCountAsync()
+        {
+            return await this.dbContext.Set<BAuthorEntity>()
+                .Where<BAuthorEntity>(author => (author.Alias == "." && author.Valid))
+                .CountAsync<BAuthorEntity>();
         }
 
     }

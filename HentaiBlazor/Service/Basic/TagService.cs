@@ -32,5 +32,11 @@ namespace HentaiBlazor.Service.Basic
                     .FirstOrDefaultAsync<BTagEntity>();
         }
 
+        public async Task<int> TotalCountAsync()
+        {
+            return await this.dbContext.Set<BTagEntity>()
+                .CountAsync<BTagEntity>();
+        }
+
     }
 }

@@ -3,20 +3,32 @@
 <PageContainer Title="欢迎">
     <Row Gutter="8">
         <Col Span="6">
-        <Statistic Title="漫画" Value="BookTotal" />
-        <NavLink href="comic/index">查看</NavLink>
+        <Card>
+            <ChildContent>
+                <Statistic Title="漫画" Value="BookTotal" />
+            </ChildContent>
+            <ActionTemplate>
+                <CardAction><Icon Type="ellipsis"OnClick="@(()=>navTo("comic/index"))" /></CardAction>
+            </ActionTemplate>
+        </Card>
         </Col>
         <Col Span="6">
-        <Statistic Title="动画" Value="VideoTotal" />
-        <NavLink href="anime/index">查看</NavLink>
+        <Card>
+            <Statistic Title="动画" Value="VideoTotal" />
+            <NavLink href="anime/index">查看</NavLink>
+        </Card>
         </Col>
         <Col Span="6">
-        <Statistic Title="作者" Value="VideoTotal" />
-        <NavLink href="anime/index">查看</NavLink>
+        <Card>
+            <Statistic Title="作者" Value="AuthorTotal" />
+            <NavLink href="anime/index">查看</NavLink>
+        </Card>
         </Col>
         <Col Span="6">
-        <Statistic Title="标签" Value="VideoTotal" />
-        <NavLink href="anime/index">查看</NavLink>
+        <Card>
+            <Statistic Title="标签" Value="TagTotal" />
+            <NavLink href="anime/index">查看</NavLink>
+        </Card>
         </Col>
     </Row>
 </PageContainer>
