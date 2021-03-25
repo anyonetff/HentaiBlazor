@@ -59,9 +59,9 @@ namespace HentaiBlazor.Service
                 return entity;
             }
 
-            T other = dbContext.Set<T>().Find(entity.Id);
+            T exist = dbContext.Set<T>().Find(entity.Id);
 
-            if (other == null)
+            if (exist == null)
             {
                 Console.WriteLine("使用现有ID添加一条数据.");
 
@@ -69,7 +69,10 @@ namespace HentaiBlazor.Service
                 return entity;
             }
 
-            this.Update(entity);
+            dbContext.Entry(exist).CurrentValues.SetValues(entity);
+            dbContext.SaveChanges();
+            // other = entity;
+            // this.Update(entity);
 
             return entity;
         }
@@ -87,9 +90,9 @@ namespace HentaiBlazor.Service
                 return entity;
             }
 
-            T other = await dbContext.Set<T>().FindAsync(entity.Id);
+            T exist = await dbContext.Set<T>().FindAsync(entity.Id);
 
-            if (other == null)
+            if (exist == null)
             {
                 Console.WriteLine("使用现有ID添加一条数据.");
 
@@ -98,7 +101,9 @@ namespace HentaiBlazor.Service
                 return entity;
             }
 
-            await this.UpdateAsync(entity);
+            dbContext.Entry(exist).CurrentValues.SetValues(entity);
+            await dbContext.SaveChangesAsync();
+            //await this.UpdateAsync(entity);
 
             return entity;
         }
@@ -133,6 +138,8 @@ namespace HentaiBlazor.Service
         public int Update(T entity)
         {
             entity.XUpdate_ = DateTime.Now;
+
+            
 
             dbContext.Set<T>().Update(entity);
 

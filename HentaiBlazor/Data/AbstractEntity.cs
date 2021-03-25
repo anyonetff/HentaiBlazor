@@ -14,7 +14,7 @@ namespace HentaiBlazor.Data
      * 为简化DAO层的一些固定封装，定义了实体基类.
      * </p>
      */
-    public abstract class AbstractEntity
+    public abstract class AbstractEntity : ICloneable
     {
         [Key]
         [Comment("主键编号")]
@@ -28,5 +28,9 @@ namespace HentaiBlazor.Data
         [Comment("修改时间")]
         public DateTime XUpdate_ { get; set; }
 
+        public object Clone()
+        {
+            return this.MemberwiseClone();
+        }
     }
 }

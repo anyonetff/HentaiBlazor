@@ -28,7 +28,7 @@ namespace HentaiBlazor.Service.Basic
         {
             //var Id = new SqlParameter("author", "%" + searchAuthor + "%");
 
-            return await this.dbContext.Set<BAuthorEntity>()
+            return await this.dbContext.Set<BAuthorEntity>().AsNoTracking()
                 .Where<BAuthorEntity>(author => (searchMode == "MASTER" && author.Alias == "." && author.Valid) || (searchMode == "ALL"))
                 .Where<BAuthorEntity>(author => StringUtils.IsBlank(searchKeyword) || author.Name.Contains(searchKeyword) || author.Alias.Contains(searchKeyword))
                 .OrderBy(author => author.Alias)
