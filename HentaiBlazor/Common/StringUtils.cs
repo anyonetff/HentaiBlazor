@@ -8,6 +8,26 @@ namespace HentaiBlazor.Common
     public class StringUtils
     {
 
+        public static bool IsNotEqual(string s, string o)
+        {
+            return ! IsEqual(s, o);
+        }
+
+        public static bool IsEqual(string s, string o)
+        {
+            return IsEqual(s, o, StringComparison.Ordinal);
+        }
+
+        public static bool IsNotEqualIgnoreCase(string s, string o)
+        {
+            return ! IsEqualIgnoreCase(s, o);
+        }
+
+        public static bool IsEqualIgnoreCase(string s, string o)
+        {
+            return IsEqual(s, o, StringComparison.OrdinalIgnoreCase);
+        }
+
         public static bool IsEqual(string s, string o, StringComparison stringComparison)
         {
             if (s == null && o == null)

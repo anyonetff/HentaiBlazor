@@ -27,7 +27,7 @@ namespace HentaiBlazor.Pages.Basic.Tag
 
         protected override async Task OnInitializedAsync()
         {
-            BTagEntities = await tagService.ListAsync();
+            await Search();
         }
 
         public async Task Search()

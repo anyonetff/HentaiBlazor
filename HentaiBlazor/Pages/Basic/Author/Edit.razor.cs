@@ -13,6 +13,7 @@ namespace HentaiBlazor.Pages.Basic.Author
 {
     public partial class Edit
     {
+        private ValidationMessageStore messageStore;
 
         private string authorId;
 
@@ -40,63 +41,57 @@ namespace HentaiBlazor.Pages.Basic.Author
             await base.OnInitializedAsync();
         }
 
-        private async Task<bool> validatorByAlias(BAuthorEntity author)
+        private async Task ValidatorByAlias(EditContext editContext)
         {
-            author.Alias = author.Alias.Trim();
+            authorEntity.Alias = authorEntity.Alias.Trim();
 
-            if (StringUtils.IsBlank(author.Alias) || author.Name == author.Alias)
+            if (StringUtils.IsEqual(authorEntity.Alias, ".")) 
             {
-                author.Alias = ".";
+                // authorEntity.Alias = ".";
+                return;
+            }
 
-                return false;
+            if (StringUtils.IsEqual(authorEntity.Name, authorEntity.Alias))
+            {
+                messageStore.Add(editContext.Field("Alias"), "映射别名不能与名称相等");
+                return;
             }
             
-            if (author.Alias != ".")
+            if (StringUtils.IsNotEqual(authorEntity.Alias, "."))
             {
-                BAuthorEntity other = await this.authorService.FindByNameAsync(author.Alias);
+                BAuthorEntity other = await this.authorService.FindByNameAsync(authorEntity.Alias);
 
-                // 如果映射的数据不存在，或不合法
-                if (other == null || ! other.Valid)
+                // 如果映射的数据不存在，或不合法，或不是主数据
+                if (other == null || ! other.Valid || StringUtils.IsNotEqual(other.Alias, "."))
                 {
-                    author.Alias = ".";
-                    
-                    return false;
-                }
-
-                if (other.Alias != ".")
-                {
-                    author.Alias = other.Alias;
-
-                    return false;
+                    messageStore.Add(editContext.Field("Alias"), "映射别名未找到主数据、或匹配的主数据不合法");
                 }
             }
-
-            return true;
         }
 
-        private async Task<bool> validatorByName(BAuthorEntity author) 
+        private async Task ValidatorByName(EditContext editContext) 
         {
-            BAuthorEntity other = await this.authorService.FindByNameAsync(author.Name);
+            BAuthorEntity other = await this.authorService.FindByNameAsync(authorEntity.Name);
 
-            if (other != null && StringUtils.IsNotEqual(author.Id, other.Id, StringComparison.OrdinalIgnoreCase)) 
+            if (other != null && StringUtils.IsNotEqual(authorEntity.Id, other.Id)) 
             {
-                return false;
+                messageStore.Add(editContext.Field("Name"), "名字重复了");
             }
-
-            return true;
         }
 
         private async Task OnFinish(EditContext editContext)
         {
-            //Console.WriteLine($"Success:{JsonSerializer.Serialize(_model)}");
+            messageStore = new ValidationMessageStore(editContext);
 
-            if (! await this.validatorByName(authorEntity))
+            await this.ValidatorByName(editContext);
+            await this.ValidatorByAlias(editContext);
+
+            if (editContext.GetValidationMessages().Any())
             {
+                editContext.NotifyValidationStateChanged();
+                messageStore.Clear();
                 return;
             }
-
-            await this.validatorByAlias(authorEntity);
-
 
             await this.authorService.SaveAsync(authorEntity);
 
