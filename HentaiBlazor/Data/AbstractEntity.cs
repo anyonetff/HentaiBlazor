@@ -16,6 +16,7 @@ namespace HentaiBlazor.Data
      */
     public abstract class AbstractEntity : ICloneable
     {
+        // 子类继承后可以定义字段名字
         [Key]
         [Comment("主键编号")]
         public virtual string Id { get; set; }
