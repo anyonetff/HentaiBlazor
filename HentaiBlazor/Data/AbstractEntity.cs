@@ -18,7 +18,7 @@ namespace HentaiBlazor.Data
     {
         [Key]
         [Comment("主键编号")]
-        public string Id { get; set; }
+        public virtual string Id { get; set; }
 
         [Column("x_insert_", TypeName = "DATETIME")]
         [Comment("创建时间")]

@@ -16,3 +16,8 @@ INSERT INTO s_function (f_id, f_parent, f_path, f_name, f_icon, f_note, x_insert
 VALUES ('60', '0', '/basic/author/list', '作者', 'team', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 INSERT INTO s_function (f_id, f_parent, f_path, f_name, f_icon, f_note, x_insert_, x_update_)
 VALUES ('65', '0', '/basic/tag/list', '标签', 'tags', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+INSERT INTO s_function (f_id, f_parent, f_path, f_name, f_icon, f_note, x_insert_, x_update_)
+VALUES ('80', '0', '/security/function/list', '菜单', 'bars', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO s_function (f_id, f_parent, f_path, f_name, f_icon, f_note, x_insert_, x_update_)
+VALUES ('85', '0', '/security/user/list', '用户', 'idcard', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

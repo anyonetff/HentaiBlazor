@@ -28,5 +28,20 @@ namespace HentaiBlazor.Service.Basic
 
         }
 
+        public async Task<List<BCatalogEntity>> ListByUsageAsync(string usage)
+        {
+            return await this.dbContext.Set<BCatalogEntity>()
+                    .Where<BCatalogEntity>(c => (c.Usage == usage))
+                    .OrderBy(c => c.Path)
+                    .ToListAsync<BCatalogEntity>();
+        }
+
+        public async Task<BCatalogEntity> FindByPathAsync(string usage, string path)
+        {
+            return await this.dbContext.Set<BCatalogEntity>()
+                    .Where<BCatalogEntity>(c => (c.Usage == usage) && (c.Path == path))
+                    .FirstOrDefaultAsync<BCatalogEntity>();
+        }
+
     }
 }

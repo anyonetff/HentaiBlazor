@@ -35,7 +35,7 @@ namespace HentaiBlazor.Pages.Basic.Author
             }
             else
             {
-                authorEntity = (BAuthorEntity) (await authorService.FindAsync(authorId)).Clone();
+                authorEntity = await authorService.FindCloneAsync(authorId);
                 
             }
 

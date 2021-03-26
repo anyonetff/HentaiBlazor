@@ -22,7 +22,6 @@ namespace HentaiBlazor.Service.Basic
                 .Where<BTagEntity>(tag => StringUtils.IsBlank(searchKeyword) || tag.Name.Contains(searchKeyword))
                 .OrderBy(tag => tag.Name)
                 .ToListAsync<BTagEntity>();
-
         }
 
         public async Task<BTagEntity> FindByNameAsync(string name)

@@ -1,7 +1,35 @@
 ﻿@page "/security/user/list"
 
-<h3>List</h3>
+@using HentaiBlazor.Data.Security
+
+<PageContainer Title="用户">
+
+    <Space Style="margin-bottom: 0.5rem">
+        <SpaceItem>
+            <Input Prefix="@_filter" Placeholder="关键字" Style="width: 12rem;"
+                   @bind-Value="searchKeyword" />
+        </SpaceItem>
+        <SpaceItem>
+            <Button Type="@ButtonType.Primary" @onclick="Search">查询</Button>
+        </SpaceItem>
+    </Space>
+
+    <Table TItem="SUserEntity" DataSource="@SUserEntities" Size=@TableSize.Small>
+        <ActionColumn>
+            <Space>
+                <SpaceItem>
+                </SpaceItem>
+            </Space>
+        </ActionColumn>
+        <Column Title="登录名" @bind-Field="@context.Username"></Column>
+        <Column Title="密码" @bind-Field="@context.Password"></Column>
+        <Column Title="昵称" @bind-Field="@context.Name"></Column>
+        <Column Title="头像" @bind-Field="@context.Avatar"></Column>
+        <Column Title="备注" @bind-Field="@context.Note"></Column>
+    </Table>
+
+</PageContainer>
 
 @code {
-
+    RenderFragment _filter =@<Icon Type="filter" />;
 }

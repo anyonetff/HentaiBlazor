@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,25 +8,21 @@ using System.Threading.Tasks;
 
 namespace HentaiBlazor.Data.Comic
 {
+    [Index(nameof(BookId), nameof(TagName), IsUnique = true)]
     [Table("c_book_tag")]
     public class CBookTagEntity : AbstractEntity
     {
         [Key]
         [Column("bt_id")]
-        public new string Id
-        {
-            get => base.Id;
-            set
-            {
-                base.Id = this.Id;
-            }
-        }
+        public override string Id { get; set; }
 
+        [Required]
         [Column("bt_book_id")]
-        public string bookId { get; set; }
+        public string BookId { get; set; }
 
+        [Required]
         [Column("bt_tag_name")]
-        public string tagName { get; set; }
+        public string TagName { get; set; }
 
     }
 }

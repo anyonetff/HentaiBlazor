@@ -30,7 +30,7 @@ namespace HentaiBlazor.Pages.Comic.Book
             }
             else
             {
-                bookEntity = await bookService.FindAsync(bookId);
+                bookEntity = await bookService.FindCloneAsync(bookId);
             }
 
             await base.OnInitializedAsync();

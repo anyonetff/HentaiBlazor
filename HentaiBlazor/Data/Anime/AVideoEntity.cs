@@ -1,4 +1,5 @@
 ﻿using HentaiBlazor.Data.Basic;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -8,23 +9,19 @@ using System.Threading.Tasks;
 
 namespace HentaiBlazor.Data.Anime
 {
+    [Index(nameof(Path), nameof(Name), IsUnique = true)]
     [Table("a_video")]
     public class AVideoEntity : AbstractEntity
     {
         [Key]
         [Column("v_id")]
-        public new string Id
-        {
-            get => base.Id;
-            set
-            {
-                base.Id = this.Id;
-            }
-        }
+        public override string Id { get; set; }
 
+        [Required]
         [Column("v_path")]
         public string Path { get; set; }
 
+        [Required]
         [Column("v_name")]
         public string Name { get; set; }
 
@@ -40,7 +37,7 @@ namespace HentaiBlazor.Data.Anime
         [Column("v_tags")]
         public string Tags { get; set; }
 
-        [Column("v_count")]
+        [Column("v_length")]
         public int Length { get; set; }
 
         [Column("v_cover")]

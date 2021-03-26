@@ -1,4 +1,5 @@
-﻿using HentaiBlazor.Data;
+﻿using HentaiBlazor.Common;
+using HentaiBlazor.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -39,17 +40,58 @@ namespace HentaiBlazor.Service
             return await this.dbContext.Set<T>().FindAsync(id);
         }
 
-        public T Find(string id) 
+        public async Task<T> FindCloneAsync(string id)
         {
-            return this.dbContext.Set<T>().Find(id);
+            return (T) (await this.dbContext.Set<T>().FindAsync(id)).Clone();
         }
-        
+
+        public T FindClone(string id) 
+        {
+            return (T) this.dbContext.Set<T>().Find(id).Clone();
+        }
+
+        public int Merge(T entity)
+        {
+            entity.XUpdate_ = DateTime.Now;
+
+            T exist = dbContext.Set<T>().Find(entity.Id);
+
+            if (exist == null)
+            {
+                Console.WriteLine("使用现有ID添加一条数据.");
+
+                return this.Add(entity);
+            }
+
+            dbContext.Entry(exist).CurrentValues.SetValues(entity);
+
+            return dbContext.SaveChanges();
+        }
+
+        public async Task<int> MergeAsync(T entity)
+        {
+            entity.XUpdate_ = DateTime.Now;
+
+            T exist = await dbContext.Set<T>().FindAsync(entity.Id);
+
+            if (exist == null)
+            {
+                Console.WriteLine("使用现有ID添加一条数据.");
+
+                return await this.AddAsync(entity);
+            }
+
+            dbContext.Entry(exist).CurrentValues.SetValues(entity);
+
+            return await dbContext.SaveChangesAsync();
+        }
+
         // 保存一个实体.
         // 如果实体不存在则新建，存在则更新.
         // 实体如果没有对主键赋值，则使用UUID生成主键.
         public T Save(T entity)
         {
-            if (entity.Id == null || entity.Id == "")
+            if (StringUtils.IsEmpty(entity.Id))
             {
                 Console.WriteLine("生成ID并添加一条数据.");
 
@@ -59,19 +101,7 @@ namespace HentaiBlazor.Service
                 return entity;
             }
 
-            T exist = dbContext.Set<T>().Find(entity.Id);
-
-            if (exist == null)
-            {
-                Console.WriteLine("使用现有ID添加一条数据.");
-
-                this.Add(entity);
-                return entity;
-            }
-
-            // TODO: 整个编辑的代码结构还需要优化
-            dbContext.Entry(exist).CurrentValues.SetValues(entity);
-            dbContext.SaveChanges();
+            this.Merge(entity);
             // other = entity;
             // this.Update(entity);
 
@@ -80,7 +110,7 @@ namespace HentaiBlazor.Service
 
         public async Task<T> SaveAsync(T entity)
         {
-            if (entity.Id == null || entity.Id == "")
+            if (StringUtils.IsEmpty(entity.Id))
             {
                 Console.WriteLine("生成ID并添加一条数据.");
 
@@ -91,20 +121,7 @@ namespace HentaiBlazor.Service
                 return entity;
             }
 
-            T exist = await dbContext.Set<T>().FindAsync(entity.Id);
-
-            if (exist == null)
-            {
-                Console.WriteLine("使用现有ID添加一条数据.");
-
-                await this.AddAsync(entity);
-
-                return entity;
-            }
-
-            // TODO: 整个编辑的代码结构还需要优化
-            dbContext.Entry(exist).CurrentValues.SetValues(entity);
-            await dbContext.SaveChangesAsync();
+            await this.MergeAsync(entity);
             //await this.UpdateAsync(entity);
 
             return entity;
@@ -141,12 +158,12 @@ namespace HentaiBlazor.Service
         {
             entity.XUpdate_ = DateTime.Now;
 
-            
-
             dbContext.Set<T>().Update(entity);
 
             return dbContext.SaveChanges();
         }
+
+        
 
         public async Task<int> UpdateAsync(T entity)
         {
@@ -156,6 +173,8 @@ namespace HentaiBlazor.Service
 
             return await dbContext.SaveChangesAsync();
         }
+
+
 
         // 删除一个实体
         public int Remove(T entity)

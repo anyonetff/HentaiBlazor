@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,20 +8,15 @@ using System.Threading.Tasks;
 
 namespace HentaiBlazor.Data.Security
 {
+    [Index(nameof(Username), IsUnique = true)]
     [Table("s_user")]
     public class SUserEntity : AbstractEntity
     {
         [Key]
         [Column("u_id")]
-        public new string Id
-        {
-            get => base.Id;
-            set
-            {
-                base.Id = this.Id;
-            }
-        }
+        public override string Id { get; set; }
 
+        [Required]
         [Column("u_username")]
         public string Username { get; set; }
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,19 +8,13 @@ using System.Threading.Tasks;
 
 namespace HentaiBlazor.Data.Basic
 {
+    [Index(nameof(Usage), nameof(Path), IsUnique = true)]
     [Table("b_catalog")]
     public class BCatalogEntity : AbstractEntity
     {
         [Key]
         [Column("c_id")]
-        public new string Id
-        {
-            get => base.Id;
-            set 
-            {
-                base.Id = this.Id;
-            } 
-        }
+        public override string Id { get; set; }
 
         [Required]
         [Column("c_usage")]

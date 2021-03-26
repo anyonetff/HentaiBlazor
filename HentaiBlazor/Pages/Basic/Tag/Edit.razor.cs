@@ -34,7 +34,7 @@ namespace HentaiBlazor.Pages.Basic.Tag
             }
             else 
             {
-                tagEntity = (BTagEntity) (await tagService.FindAsync(tagId)).Clone();
+                tagEntity = await tagService.FindCloneAsync(tagId);
             }
 
             await base.OnInitializedAsync();

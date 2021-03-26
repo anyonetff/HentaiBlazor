@@ -1,7 +1,39 @@
 ﻿@page "/security/function/list"
 
-<h3>List</h3>
+@using HentaiBlazor.Data.Security
+
+<PageContainer Title="菜单">
+
+    <Space Style="margin-bottom: 0.5rem">
+        <SpaceItem>
+            <Input Prefix="@_filter" Placeholder="关键字" Style="width: 12rem;"
+                   @bind-Value="searchKeyword" />
+        </SpaceItem>
+        <SpaceItem>
+            <Button Type="@ButtonType.Primary" @onclick="Search">查询</Button>
+            <Button Type="@ButtonType.Primary" OnClick="() => OpenEdit(null)">添加</Button>
+        </SpaceItem>
+    </Space>
+
+    <Table TItem="SFunctionEntity" DataSource="@SFunctionEntities" Size=@TableSize.Small>
+        <ActionColumn>
+            <Space>
+                <SpaceItem>
+                    <Button Type="@ButtonType.Primary" OnClick="() => OpenEdit(context.Id)">修改</Button>
+                    <Button Type="@ButtonType.Primary" Danger OnClick="() => OpenRemove(context.Id)">删除</Button>
+                </SpaceItem>
+            </Space>
+        </ActionColumn>
+        <Column Title="编号" @bind-Field="@context.Id"></Column>
+        <Column Title="上级编号" @bind-Field="@context.Parent"></Column>
+        <Column Title="名称" @bind-Field="@context.Name"></Column>
+        <Column Title="路径" @bind-Field="@context.Path"></Column>
+        <Column Title="图标" @bind-Field="@context.Icon"></Column>
+        <Column Title="备注" @bind-Field="@context.Note"></Column>
+    </Table>
+
+</PageContainer>
 
 @code {
-
+    RenderFragment _filter =@<Icon Type="filter" />;
 }

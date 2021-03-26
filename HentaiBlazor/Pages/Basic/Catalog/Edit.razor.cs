@@ -31,7 +31,7 @@ namespace HentaiBlazor.Pages.Basic.Catalog
             }
             else
             {
-                catalogEntity = await catalogService.FindAsync(catalogId);
+                catalogEntity = await catalogService.FindCloneAsync(catalogId);
             }
 
             await base.OnInitializedAsync();
