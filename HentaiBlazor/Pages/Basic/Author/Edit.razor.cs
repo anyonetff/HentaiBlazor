@@ -111,10 +111,9 @@ namespace HentaiBlazor.Pages.Basic.Author
             // StateHasChanged();
         }
 
-        private void OnFinishFailed(EditContext editContext)
+        private async Task OnFinishFailed(EditContext editContext)
         {
-            Console.WriteLine("编辑失败.");
-            //Console.WriteLine($"Failed:{JsonSerializer.Serialize(_model)}");
+            await Task.CompletedTask;
         }
     }
 }

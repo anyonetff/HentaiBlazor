@@ -92,8 +92,8 @@ namespace HentaiBlazor.Pages.Basic.Catalog
 
                 FileInfo file = files[i];
 
-                CBookEntity book = await saveBook(catalogEntity, file);
-                BAuthorEntity author = await saveAuthor(book.Author);
+                //CBookEntity book = await saveBook(catalogEntity, file);
+                //BAuthorEntity author = await saveAuthor(book.Author);
 
                 progress = (int) (((double) i) / total * 100.0);
 
@@ -106,12 +106,14 @@ namespace HentaiBlazor.Pages.Basic.Catalog
                     _percent = progress;
                     Console.WriteLine(" * " + _percent + "% * ");
 
-                    await Task.Delay(1000);
+                    await Task.Delay(5000);
 
                     StateHasChanged();
                 }
                 
             }
+
+            _percent = 100;
 
             Console.WriteLine("完成目录扫描");
 

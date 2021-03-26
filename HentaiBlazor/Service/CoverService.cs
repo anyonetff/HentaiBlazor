@@ -37,7 +37,7 @@ namespace HentaiBlazor.Service
                 return covers[book.Id];
             }
 
-            string c = await ReadAsync(book.Path + "\\" + book.Name);
+            string c = await ReadAsync(Path.Combine(book.Path, book.Name));
 
             covers.Add(book.Id, c);
 

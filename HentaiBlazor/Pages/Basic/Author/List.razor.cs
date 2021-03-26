@@ -35,8 +35,6 @@ namespace HentaiBlazor.Pages.Basic.Author
 
         public async Task Search()
         {
-            Console.WriteLine(" search: " + searchKeyword);
-
             BAuthorEntities = await authorService.SearchAsync(searchMode, searchKeyword);
         }
 

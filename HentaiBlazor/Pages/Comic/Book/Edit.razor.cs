@@ -43,9 +43,9 @@ namespace HentaiBlazor.Pages.Comic.Book
             await base.DrawerRef.CloseAsync("success");
         }
 
-        private void OnFinishFailed(EditContext editContext)
+        private async Task OnFinishFailed(EditContext editContext)
         {
-            //Console.WriteLine($"Failed:{JsonSerializer.Serialize(_model)}");
+            await Task.CompletedTask;
         }
 
     }

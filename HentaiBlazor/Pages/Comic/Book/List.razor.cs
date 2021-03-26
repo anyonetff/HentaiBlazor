@@ -42,8 +42,6 @@ namespace HentaiBlazor.Pages.Comic.Book
 
         public async Task Search()
         {
-            // Console.WriteLine(" search: " + searchKeyword);
-
             CBookEntities = await bookService.SearchAsync(searchCatalog, searchAuthor, searchKeyword);
         }
 

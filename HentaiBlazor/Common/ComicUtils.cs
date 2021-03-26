@@ -78,8 +78,12 @@ namespace HentaiBlazor.Common
             {
                 r = name.Substring(s + 1, e - s - 1).Trim();
             }
+            else
+            {
+                r = name.Substring(0, e).Trim();
+            }
 
-            Console.WriteLine("   [ " + s + " - " + e + " ] " + r);
+            // Console.WriteLine("   [ " + s + " - " + e + " ] " + r);
 
             return r;
         }

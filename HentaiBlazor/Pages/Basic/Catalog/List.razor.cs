@@ -52,10 +52,11 @@ namespace HentaiBlazor.Pages.Basic.Catalog
             modalConfig.Title = "扫描内容";
             modalConfig.Footer = null;
             modalConfig.Width = 640;
+            // modalConfig.MaskClosable = false;
 
             modalConfig.AfterClose = async () =>
             {
-                Console.WriteLine("AfterClose");
+                Console.WriteLine("关闭扫描对话框");
 
                 await Search();
                 StateHasChanged();

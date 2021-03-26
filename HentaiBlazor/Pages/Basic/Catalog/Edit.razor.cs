@@ -44,9 +44,9 @@ namespace HentaiBlazor.Pages.Basic.Catalog
             await base.ModalRef.CloseAsync();
         }
 
-        private void OnFinishFailed(EditContext editContext)
+        private async Task OnFinishFailed(EditContext editContext)
         {
-            //Console.WriteLine($"Failed:{JsonSerializer.Serialize(_model)}");
+            await Task.CompletedTask;
         }
     }
 }

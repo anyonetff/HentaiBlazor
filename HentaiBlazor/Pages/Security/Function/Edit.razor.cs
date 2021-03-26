@@ -82,11 +82,9 @@ namespace HentaiBlazor.Pages.Security.Function
             await base.ModalRef.CloseAsync();
         }
 
-        private void OnFinishFailed(EditContext editContext)
+        private async Task OnFinishFailed(EditContext editContext)
         {
-            Console.WriteLine("提交标签数据失败.");
-
-            //StateHasChanged();
+            await Task.CompletedTask;
         }
 
     }
