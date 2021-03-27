@@ -16,11 +16,11 @@
     </Space>
 
     <Table TItem="SFunctionEntity" DataSource="@SFunctionEntities" Size=@TableSize.Small>
-        <ActionColumn>
+        <ActionColumn Width="160">
             <Space>
                 <SpaceItem>
-                    <Button Type="@ButtonType.Primary" OnClick="() => OpenEdit(context.Id)">修改</Button>
                     <Button Type="@ButtonType.Primary" Danger OnClick="() => OpenRemove(context.Id)">删除</Button>
+                    <Button Type="@ButtonType.Primary" OnClick="() => OpenEdit(context.Id)">修改</Button>
                 </SpaceItem>
             </Space>
         </ActionColumn>

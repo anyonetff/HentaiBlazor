@@ -18,9 +18,16 @@ namespace HentaiBlazor.Service.Security
         public async Task<List<SUserEntity>> SearchAsync(string searchKeyword)
         {
             return await this.dbContext.Set<SUserEntity>()
-                .Where<SUserEntity>(f => StringUtils.IsBlank(searchKeyword) || f.Name.Contains(searchKeyword) || f.Username.Contains(searchKeyword))
-                .OrderBy(f => f.Username)
+                .Where<SUserEntity>(u => StringUtils.IsBlank(searchKeyword) || u.Name.Contains(searchKeyword) || u.Username.Contains(searchKeyword))
+                .OrderBy(u => u.Username)
                 .ToListAsync<SUserEntity>();
+        }
+
+        public async Task<SUserEntity> FindByUsernameAsync(string username)
+        {
+            return await this.dbContext.Set<SUserEntity>()
+                .Where<SUserEntity>(u => u.Username == username)
+                .FirstOrDefaultAsync<SUserEntity>();
         }
 
     }

@@ -76,7 +76,7 @@ namespace HentaiBlazor.Pages.Basic.Catalog
                 return;
             }
 
-            FileInfo[] files = root.GetFiles("*.zip");
+            FileInfo[] files = root.GetFiles();
 
             Console.WriteLine("找到[" + files.Length + "]个文件");
 
@@ -92,8 +92,13 @@ namespace HentaiBlazor.Pages.Basic.Catalog
 
                 FileInfo file = files[i];
 
-                //CBookEntity book = await saveBook(catalogEntity, file);
-                //BAuthorEntity author = await saveAuthor(book.Author);
+                if (!ComicUtils.IsArchive(file.Name))
+                {
+                    continue;
+                }
+
+                CBookEntity book = await saveBook(catalogEntity, file);
+                BAuthorEntity author = await saveAuthor(book.Author);
 
                 progress = (int) (((double) i) / total * 100.0);
 
@@ -106,7 +111,7 @@ namespace HentaiBlazor.Pages.Basic.Catalog
                     _percent = progress;
                     Console.WriteLine(" * " + _percent + "% * ");
 
-                    await Task.Delay(5000);
+                    // await Task.Delay(5000);
 
                     StateHasChanged();
                 }

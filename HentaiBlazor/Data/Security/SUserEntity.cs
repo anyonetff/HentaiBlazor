@@ -23,6 +23,15 @@ namespace HentaiBlazor.Data.Security
         [Column("u_password")]
         public string Password { get; set; }
 
+        [Required]
+        [NotMapped]
+        public string PasswordNew { get; set; }
+
+        [Required]
+        [NotMapped]
+        public string PasswordConfirm { get; set; }
+
+
         [Column("u_name")]
         public string Name { get; set; }
 

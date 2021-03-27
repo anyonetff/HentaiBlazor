@@ -1,5 +1,7 @@
 ﻿using HentaiBlazor.Common;
 using HentaiBlazor.Data.Comic;
+using SharpCompress.Archives;
+using SharpCompress.Readers;
 using System;
 using System.Collections.Generic;
 using System.Drawing.Imaging;
@@ -63,11 +65,12 @@ namespace HentaiBlazor.Service
                     return cover;
                 }
 
-                ZipArchive archive = ZipFile.OpenRead(file);
+                var archive = ArchiveFactory.Open(file);
 
-                foreach (ZipArchiveEntry entry in archive.Entries)
+
+                foreach (var entry in archive.Entries)
                 {
-                    if (ComicUtils.IsImage(entry.FullName))
+                    if (! entry.IsDirectory && ComicUtils.IsImage(entry.Key))
                     {
                         Console.WriteLine("找到了一个图片");
 

@@ -1,9 +1,9 @@
-﻿using System;
+﻿using SharpCompress.Archives;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using System.IO.Compression;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -12,7 +12,7 @@ namespace HentaiBlazor.Common
     public class ImageUtils
     {
 
-        public static string Preview(ZipArchiveEntry entry, 
+        public static string Preview(IArchiveEntry entry, 
             int width, int height, ImageFormat format)
         {
             Image source = Create(entry);
@@ -22,9 +22,9 @@ namespace HentaiBlazor.Common
             return Base64(target, format);
         }
 
-        public static string Read(ZipArchiveEntry entry)
+        public static string Read(IArchiveEntry entry)
         {
-            var stream = entry.Open();
+            var stream = entry.OpenEntryStream();
             // byte[] bytes;
             using (var ms = new MemoryStream())
             {
@@ -47,9 +47,9 @@ namespace HentaiBlazor.Common
             }
         }
 
-        public static Image Create(ZipArchiveEntry entry)
+        public static Image Create(IArchiveEntry entry)
         {
-            var stream = entry.Open();
+            var stream = entry.OpenEntryStream();
             // byte[] bytes;
             using (var ms = new MemoryStream())
             {

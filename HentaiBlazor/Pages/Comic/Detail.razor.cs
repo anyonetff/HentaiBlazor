@@ -4,10 +4,10 @@ using HentaiBlazor.Data.Comic;
 using HentaiBlazor.Ezcomp;
 using HentaiBlazor.Service.Comic;
 using Microsoft.AspNetCore.Components;
+using SharpCompress.Archives;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.IO.Compression;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -24,7 +24,7 @@ namespace HentaiBlazor.Pages.Comic
         public CBookEntity book;
 
 
-        private List<ZipArchiveEntry> entries;
+        private List<IArchiveEntry> entries;
 
         private string _Image = "";
 
@@ -39,16 +39,18 @@ namespace HentaiBlazor.Pages.Comic
 
             book = await bookService.FindAsync(Id);
 
-            StateHasChanged();
-
-            await preparing();
-
-            await reading();
-
-            
 
             //_Image = ImagePaginator.Paged().ToList().FirstOrDefault();
 
+        }
+
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            if (firstRender)
+            {
+                await preparing();
+                await reading();
+            }
         }
 
         public async Task _paging(PaginationEventArgs args)
@@ -110,14 +112,14 @@ namespace HentaiBlazor.Pages.Comic
                 return;
             }
 
-            ZipArchive archive = ZipFile.OpenRead(file);
+            var archive = ArchiveFactory.Open(file);
 
             entries = archive.Entries
-                    .Where(a => ComicUtils.IsImage(a.FullName))
-                    .OrderBy(a => a.FullName)
+                    .Where(a => (! a.IsDirectory && ComicUtils.IsImage(a.Key)))
+                    .OrderBy(a => a.Key)
                     .ToList();
 
-            
+            Console.WriteLine("找到[" + entries.Count + "]张图片");
 
             //Console.WriteLine
             await Task.CompletedTask;

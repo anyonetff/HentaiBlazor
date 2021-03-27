@@ -11,19 +11,19 @@
         </SpaceItem>
         <SpaceItem>
             <Button Type="@ButtonType.Primary" @onclick="Search">查询</Button>
-            <Button Type="@ButtonType.Primary" OnClick="()=>OpenEdit(null)">添加</Button>
+            <Button Type="@ButtonType.Primary" OnClick="() => OpenEdit(null)">添加</Button>
         </SpaceItem>
     </Space>
 
     <Table TItem="BCatalogEntity" DataSource="@BCatalogEntities" Size=@TableSize.Small>
-        <ActionColumn>
+        <ActionColumn Width="260">
             <Space>
                 <SpaceItem>
-                    <Button Type="@ButtonType.Primary" OnClick="()=>OpenScan(context.Id)">扫描</Button>
+                    <Button Type="@ButtonType.Primary" Danger OnClick="() => OpenRemove(context.Id)">删除</Button>
+                    <Button Type="@ButtonType.Primary" OnClick="() => OpenEdit(context.Id)">修改</Button>
                 </SpaceItem>
                 <SpaceItem>
-                    <Button Type="@ButtonType.Primary" OnClick="()=>OpenEdit(context.Id)">修改</Button>
-                    <Button Type="@ButtonType.Primary" Danger OnClick="()=>OpenRemove(context.Id)">删除</Button>
+                    <Button Type="@ButtonType.Primary" OnClick="() => OpenScan(context.Id)">扫描</Button>
                 </SpaceItem>
             </Space>
         </ActionColumn>

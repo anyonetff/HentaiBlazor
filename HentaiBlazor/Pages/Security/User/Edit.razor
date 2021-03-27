@@ -1,0 +1,39 @@
+﻿@using HentaiBlazor.Data.Basic;
+@using System.ComponentModel.DataAnnotations
+@using System.Text.Json
+
+@inherits ModalTemplate<string>
+
+<Form Model="@userEntity"
+      LabelCol="new ColLayoutParam { Span = 8 }"
+      WrapperCol="new ColLayoutParam { Span = 16 }"
+      OnFinish="OnFinish"
+      OnFinishFailed="OnFinishFailed">
+
+    <FormItem Label="用户名">
+        <Input @bind-Value="@context.Username" />
+    </FormItem>
+    
+    <FormItem Label="密码">
+        <InputPassword @bind-Value="@context.PasswordNew" />
+    </FormItem>
+    <FormItem Label="确认密码">
+        <InputPassword @bind-Value="@context.PasswordConfirm" />
+    </FormItem>
+
+    <FormItem Label="图标">
+        <Input @bind-Value="@context.Name" />
+    </FormItem>
+    <FormItem Label="备注">
+        <TextArea MinRows="2" MaxRows="6" @bind-Value="@context.Note" />
+    </FormItem>
+
+    <Divider />
+
+    <FormItem WrapperCol="new ColLayoutParam{ Offset = 8, Span = 16 }">
+        <Button Type="@ButtonType.Primary" HtmlType="submit">
+            提交
+        </Button>
+    </FormItem>
+
+</Form>

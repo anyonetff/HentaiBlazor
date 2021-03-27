@@ -16,17 +16,15 @@
             </Select>
         </SpaceItem>
         <SpaceItem>
-            <Button Type="primary" OnClick="()=>Search()">查询</Button>
+            <Button Type="@ButtonType.Primary" OnClick="()=>Search()">查询</Button>
         </SpaceItem>
     </Space>
     <Table TItem="BAuthorEntity" DataSource="@BAuthorEntities" Size=@TableSize.Small>
-        <ActionColumn>
+        <ActionColumn Width="160">
             <Space>
                 <SpaceItem>
-                    <Button Type="primary" Danger OnClick="()=>OpenRemove(context.Id)">删除</Button>
-                </SpaceItem>
-                <SpaceItem>
-                    <Button Type="primary" OnClick="()=>OpenEdit(context.Id)">修改</Button>
+                    <Button Type="@ButtonType.Primary" Danger OnClick="() => OpenRemove(context.Id)">删除</Button>
+                    <Button Type="@ButtonType.Primary" OnClick="() => OpenEdit(context.Id)">修改</Button>
                 </SpaceItem>
             </Space>
         </ActionColumn>

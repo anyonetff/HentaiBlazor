@@ -11,13 +11,16 @@
         </SpaceItem>
         <SpaceItem>
             <Button Type="@ButtonType.Primary" @onclick="Search">查询</Button>
+            <Button Type="@ButtonType.Primary" OnClick="() => OpenEdit(null)">添加</Button>
         </SpaceItem>
     </Space>
 
     <Table TItem="SUserEntity" DataSource="@SUserEntities" Size=@TableSize.Small>
-        <ActionColumn>
+        <ActionColumn Width="160">
             <Space>
                 <SpaceItem>
+                    <Button Type="@ButtonType.Primary" Danger OnClick="() => OpenRemove(context.Id)">删除</Button>
+                    <Button Type="@ButtonType.Primary" OnClick="() => OpenEdit(context.Id)">修改</Button>
                 </SpaceItem>
             </Space>
         </ActionColumn>
