@@ -1,12 +1,10 @@
 ﻿using HentaiBlazor.Common;
 using HentaiBlazor.Data.Comic;
 using SharpCompress.Archives;
-using SharpCompress.Readers;
 using System;
 using System.Collections.Generic;
 using System.Drawing.Imaging;
 using System.IO;
-using System.IO.Compression;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -25,23 +23,24 @@ namespace HentaiBlazor.Service
 
         private static int height = 400;
 
-        private Dictionary<string, string> covers;
+        // 封面缓存
+        private Dictionary<string, string> cache;
 
         public CoverService()
         {
-            covers = new Dictionary<string, string>();
+            cache = new Dictionary<string, string>();
         }
 
         public async Task<string> GetAsync(CBookEntity book)
         {
-            if (covers.ContainsKey(book.Id))
+            if (cache.ContainsKey(book.Id))
             {
-                return covers[book.Id];
+                return cache[book.Id];
             }
 
             string c = await ReadAsync(Path.Combine(book.Path, book.Name));
 
-            covers.Add(book.Id, c);
+            cache.Add(book.Id, c);
 
             return c;
         }

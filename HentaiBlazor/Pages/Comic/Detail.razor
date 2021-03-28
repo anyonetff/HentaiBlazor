@@ -1,15 +1,22 @@
-﻿@page "/comic/detail/{Id}"
+﻿@using HentaiBlazor.Data.Comic
+@using HentaiBlazor.Ezcomp
 
-<PageContainer Title="@book.Name">
+@inherits DrawerTemplate<string, string>
 
-    <div style="height: 90vh; background-color: gainsboro; text-align: center; margin-bottom: 0.5rem;">
-        <img src="@_Image" style="height: 100%" />
-    </div>
-    
-    <Pagination Total="ImagePaginator.Total"
-                PageSize="@(1)"
-                PageIndex="ImagePaginator.PageIndex"
-                OnPageIndexChange="_paging"
-                OnPageSizeChange="_sizing" />
-
-</PageContainer>
+<Descriptions Column="1" Bordered>
+    <DescriptionsItem Title="路径">
+        @bookEntity.Path
+    </DescriptionsItem>
+    <DescriptionsItem Title="文件">
+        @bookEntity.Name
+    </DescriptionsItem>
+    <DescriptionsItem Title="作者">
+        @bookEntity.Author
+    </DescriptionsItem>
+    <DescriptionsItem Title="语言">
+        <TextLanguage Language="@bookEntity.Language" />
+    </DescriptionsItem>
+    <DescriptionsItem Title="备注">
+        @bookEntity.Note
+    </DescriptionsItem>
+</Descriptions>

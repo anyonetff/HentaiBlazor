@@ -1,0 +1,15 @@
+﻿@page "/comic/viewer/{Id}"
+
+<PageContainer Title="@book.Name">
+
+    <div style="height: 90vh; background-color: gainsboro; text-align: center; margin-bottom: 0.5rem;">
+        <img src="@_Image" style="height: 100%" />
+    </div>
+    
+    <Pagination Total="ImagePaginator.Total"
+                PageSize="@(1)"
+                PageIndex="ImagePaginator.PageIndex"
+                OnPageIndexChange="_paging"
+                OnPageSizeChange="_sizing" />
+
+</PageContainer>

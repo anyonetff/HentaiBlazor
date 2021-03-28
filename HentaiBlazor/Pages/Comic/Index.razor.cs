@@ -1,5 +1,4 @@
 ﻿using AntDesign;
-using HentaiBlazor.Common;
 using HentaiBlazor.Data.Comic;
 using HentaiBlazor.Ezcomp;
 using HentaiBlazor.Service;
@@ -7,8 +6,6 @@ using HentaiBlazor.Service.Comic;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.IO.Compression;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -18,10 +15,13 @@ namespace HentaiBlazor.Pages.Comic
     {
 
         [Inject]
-        public NavigationManager mavigationManager { get; set; }
+        public NavigationManager NavigationManager { get; set; }
 
         [Inject]
         public BookService bookService { get; set; }
+
+        [Inject]
+        public DrawerService _drawer { get; set; }
 
         [Inject]
         public CoverService coverService { get; set; }
@@ -31,6 +31,8 @@ namespace HentaiBlazor.Pages.Comic
         private List<CBookEntity> _CBookEntities;
 
         private Paginator<CBookEntity> BookPaginator = new Paginator<CBookEntity>();
+
+        private DrawerRef<string> _detailRef;
 
         private string searchKeyword = "";
 
@@ -100,9 +102,28 @@ namespace HentaiBlazor.Pages.Comic
             }
         }
 
+        private async Task OpenDetail(string options, string title)
+        {
+            var _config = new DrawerOptions();
+
+            _config.Title = title;
+            _config.Width = 800;
+            //modalConfig.Footer = null;
+
+            _detailRef = await _drawer
+                .CreateAsync<Detail, string, string>(_config, options);
+
+            _detailRef.OnClosed = async (r) =>
+            {
+                Console.WriteLine(r);
+
+                await Task.CompletedTask;
+            };
+        }
+
         public void NavigateTo(string url)
         {
-            mavigationManager.NavigateTo(url);
+            NavigationManager.NavigateTo(url);
         }
 
     }

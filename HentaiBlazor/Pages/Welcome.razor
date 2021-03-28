@@ -1,5 +1,7 @@
 @page "/"
 
+@using HentaiBlazor.Ezcomp
+
 <PageContainer Title="欢迎">
     <Row Gutter="8">
         <Col Span="6">
@@ -8,7 +10,7 @@
                 <Statistic Title="漫画" Value="BookTotal" />
             </ChildContent>
             <ActionTemplate>
-                <CardAction><Icon Type="ellipsis"OnClick="@(()=>navTo("comic/index"))" /></CardAction>
+                <CardAction><Icon Type="ellipsis" OnClick="@(()=>navTo("comic/index"))" /></CardAction>
             </ActionTemplate>
         </Card>
         </Col>
@@ -31,4 +33,6 @@
         </Card>
         </Col>
     </Row>
+
+    <Shortcut />
 </PageContainer>

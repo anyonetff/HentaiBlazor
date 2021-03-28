@@ -2,8 +2,6 @@
 
 @using HentaiBlazor.Data.Comic
 
-@inject NavigationManager NavigationManager
-
 <PageContainer Title="漫画">
     <Space Style="margin-bottom: 0.5rem;">
         <SpaceItem>
@@ -34,7 +32,8 @@
                     <CardMeta Title="@context.Title" Description="@context.Author" />
                 </ChildContent>
                 <ActionTemplate>
-                    <CardAction><Icon Type="eye" OnClick="@(()=> NavigateTo("comic/detail/" + context.Id))" /></CardAction>
+                    <CardAction><Icon Type="info" OnClick="() => OpenDetail(context.Id, context.Title)" /></CardAction>
+                    <CardAction><Icon Type="eye" OnClick="@(()=> NavigateTo("comic/viewer/" + context.Id))" /></CardAction>
                 </ActionTemplate>
             </Card>
         </ListItem>
