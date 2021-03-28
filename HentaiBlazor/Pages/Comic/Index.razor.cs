@@ -30,7 +30,7 @@ namespace HentaiBlazor.Pages.Comic
 
         private List<CBookEntity> _CBookEntities;
 
-        private Paginator<CBookEntity> BookPaginator = new Paginator<CBookEntity>();
+        private Paginator<CBookEntity> BookPaginator = new Paginator<CBookEntity>(20);
 
         private DrawerRef<string> _detailRef;
 
@@ -48,8 +48,9 @@ namespace HentaiBlazor.Pages.Comic
             await Search();
 
             BookPaginator.DataSource = CBookEntities;
+            // BookPaginator.PageSize = 10;
             // BookPaginator.PagedDataSource = PagedCBookEntities;
-
+            
             _CBookEntities = BookPaginator.Paged().ToList();
 
             StateHasChanged();

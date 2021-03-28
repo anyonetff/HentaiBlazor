@@ -10,6 +10,16 @@ namespace HentaiBlazor.Ezcomp
     public class Paginator<TItem>
     {
 
+        public Paginator()
+        {
+
+        }
+
+        public Paginator(int pageSize)
+        {
+            this._pageSize = pageSize;
+        }
+
         //[Parameter]
         public IEnumerable<TItem> DataSource
         {

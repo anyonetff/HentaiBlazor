@@ -21,15 +21,15 @@
                 PageIndex="BookPaginator.PageIndex"
                 OnPageIndexChange="_paging"
                 OnPageSizeChange="_sizing"
-                Style="margin-bottom: 0.5rem;" />
+                Style="margin-bottom: 0.5rem; display: none;" />
 
     <AntList ItemLayout="ListItemLayout.Horizontal"
              Grid="gutter" DataSource="_CBookEntities">
         <ListItem Grid="gutter">
-            <Card Size="small" Hoverable Style="width: 240px;"
+            <Card Size="small" Hoverable
                   Cover="@coverTemplate(@context.Cover)">
                 <ChildContent>
-                    <CardMeta Title="@context.Title" Description="@context.Author" />
+                    <CardMeta Style="font-size: 0.75rem" Title="@context.Title" Description="@context.Author" />
                 </ChildContent>
                 <ActionTemplate>
                     <CardAction><Icon Type="info" OnClick="() => OpenDetail(context.Id, context.Title)" /></CardAction>
@@ -53,10 +53,10 @@
     RenderFragment _team =@<Icon Type="team" />;
     RenderFragment _filter =@<Icon Type="filter" />;
 
-    public ListGridType gutter = new ListGridType { Gutter = 8, Column = 5 };
+    public ListGridType gutter = new ListGridType { Gutter = 8, Column = 10 };
 
     private RenderFragment coverTemplate(string cover)
     {
-    return @<img alt="example" src="@cover" />;
+        return @<div style="height: 200px; overflow: hidden; background-color: gainsboro;"><Image Src="@cover" /></div>;
     }
 }

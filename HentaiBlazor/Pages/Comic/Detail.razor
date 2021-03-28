@@ -16,6 +16,22 @@
     <DescriptionsItem Title="语言">
         <TextLanguage Language="@bookEntity.Language" />
     </DescriptionsItem>
+    <DescriptionsItem Title="标签">
+        @foreach (var item in bookTagEntities)
+        {
+            <Tag @key="item" Color="orange-inverse" OnClose="()=>OnTagClose(item.Id)" Mode="closeable">@item.TagName</Tag>
+        }
+        @if (tagEdit)
+        {
+            <Input Style="width: 78px" Size="@InputSize.Small" @bind-Value="TagName" OnBlur="OnTagEdit" OnPressEnter="OnTagEdit" AutoFocus />
+        }
+        else
+        {
+            <Tag Class="site-tag-plus" OnClick="OpenTagEdit">
+                <Icon Type="plus" />
+            </Tag>
+        }
+    </DescriptionsItem>
     <DescriptionsItem Title="备注">
         @bookEntity.Note
     </DescriptionsItem>
