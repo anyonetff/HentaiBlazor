@@ -19,11 +19,14 @@ namespace HentaiBlazor.Service.Comic
         {
             //var Id = new SqlParameter("author", "%" + searchAuthor + "%");
 
-            return await this.dbContext.Set<CBookEntity>()
+            var query = this.dbContext.Set<CBookEntity>()
                 .Where<CBookEntity>(book => StringUtils.IsBlank(searchPath) || book.Path.Contains(searchPath))
                 .Where<CBookEntity>(book => StringUtils.IsBlank(searchAuthor) || book.Author.Contains(searchAuthor))
-                .Where<CBookEntity>(book => StringUtils.IsBlank(searchKeyword) || book.Title.Contains(searchKeyword) || book.Name.Contains(searchKeyword))
-                .ToListAsync<CBookEntity>();
+                .Where<CBookEntity>(book => StringUtils.IsBlank(searchKeyword) || book.Title.Contains(searchKeyword) || book.Name.Contains(searchKeyword));
+
+            query.OrderBy(book => book.Author).ThenBy(book => book.Title);
+
+            return await query.ToListAsync<CBookEntity>();
 
         }
 

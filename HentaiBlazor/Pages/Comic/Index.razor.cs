@@ -47,11 +47,11 @@ namespace HentaiBlazor.Pages.Comic
 
             await Search();
 
-            BookPaginator.DataSource = CBookEntities;
+            //BookPaginator.DataSource = CBookEntities;
             // BookPaginator.PageSize = 10;
             // BookPaginator.PagedDataSource = PagedCBookEntities;
             
-            _CBookEntities = BookPaginator.Paged().ToList();
+            //_CBookEntities = BookPaginator.Paged().ToList();
 
             StateHasChanged();
 
@@ -63,6 +63,9 @@ namespace HentaiBlazor.Pages.Comic
             Console.WriteLine(" search: " + searchKeyword);
 
             CBookEntities = await bookService.SearchAsync(searchCatalog, searchAuthor, searchKeyword);
+
+            BookPaginator.DataSource = CBookEntities;
+            _CBookEntities = BookPaginator.Paged().ToList();
         }
 
         public async Task _paging(PaginationEventArgs args)
@@ -74,6 +77,8 @@ namespace HentaiBlazor.Pages.Comic
             StateHasChanged();
 
             await Refresh();
+
+            // StateHasChanged();
         }
 
         public async Task _sizing(PaginationEventArgs args)
