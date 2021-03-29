@@ -40,6 +40,11 @@ namespace HentaiBlazor.Service
             return await this.dbContext.Set<T>().FindAsync(id);
         }
 
+        public T Find(string id)
+        {
+            return this.dbContext.Set<T>().Find(id);
+        }
+
         public async Task<T> FindCloneAsync(string id)
         {
             return (T) (await this.dbContext.Set<T>().FindAsync(id)).Clone();
@@ -189,6 +194,30 @@ namespace HentaiBlazor.Service
             dbContext.Set<T>().Remove(entity);
 
             return await dbContext.SaveChangesAsync();
+        }
+
+        public int Remove(string id)
+        {
+            T entity = this.Find(id);
+
+            if (entity == null)
+            {
+                return 0;
+            }
+
+            return this.Remove(entity);
+        }
+
+        public async Task<int> RemoveAsync(string id)
+        {
+            T entity = await this.FindAsync(id);
+
+            if (entity == null)
+            {
+                return 0;
+            }
+
+            return await this.RemoveAsync(entity);
         }
 
     }

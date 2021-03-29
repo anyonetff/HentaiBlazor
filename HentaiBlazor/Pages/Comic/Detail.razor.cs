@@ -82,12 +82,9 @@ namespace HentaiBlazor.Pages.Comic
 
         private async Task OnTagClose(string Id)
         {
-            CBookTagEntity bookTagEntity = await this.bookTagService.FindAsync(Id);
+            Console.WriteLine("删除标签");
 
-            if (bookTagEntity != null)
-            {
-                await this.bookTagService.RemoveAsync(bookTagEntity);
-            }
+            await this.bookTagService.RemoveAsync(Id);
 
             bookTagEntities = await bookTagService.ListByBookAsync(bookId);
         }
