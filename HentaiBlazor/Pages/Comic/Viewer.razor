@@ -2,14 +2,15 @@
 
 <PageContainer Title="@book.Name">
 
-    <div style="height: 90vh; background-color: gainsboro; text-align: center; margin-bottom: 0.5rem;">
-        <img src="@_Image" style="height: 100%" />
+    <div style="height: 90vh; background-color: gainsboro; text-align: center; vertical-align: middle; margin-bottom: 0.5rem;">
+        <img src="@_Image" style="max-height: 100%; max-width: 100%; margin: auto;" />
     </div>
     
-    <Pagination Total="ImagePaginator.Total"
-                PageSize="@(1)"
-                PageIndex="ImagePaginator.PageIndex"
+    <Pagination Total="EntryPaginator.Total"
+                PageSize="EntryPaginator.PageSize"
+                PageIndex="EntryPaginator.PageIndex"
                 OnPageIndexChange="_paging"
-                OnPageSizeChange="_sizing" />
+                OnPageSizeChange="_sizing"
+                ShowQuickJumper />
 
 </PageContainer>

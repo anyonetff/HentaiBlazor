@@ -26,11 +26,14 @@ namespace HentaiBlazor.Pages.Comic
 
         private List<IArchiveEntry> entries;
 
+        private List<IArchiveEntry> entry;
+
+
         private string _Image = "";
 
-        private List<string> Images = new List<string>();
+        // private List<string> Images = new List<string>();
 
-        private Paginator<string> ImagePaginator = new Paginator<string>();
+        private Paginator<IArchiveEntry> EntryPaginator = new Paginator<IArchiveEntry>(1);
 
 
         protected override async Task OnInitializedAsync()
@@ -55,43 +58,35 @@ namespace HentaiBlazor.Pages.Comic
 
         public async Task _paging(PaginationEventArgs args)
         {
-            await ImagePaginator.HandlePageIndexChange(args);
+            await EntryPaginator.HandlePageIndexChange(args);
 
-            _Image = ImagePaginator.Paged().ToList().FirstOrDefault();
+            entry = EntryPaginator.Paged().ToList();
 
-            //Console.WriteLine(_Image);
+            Console.WriteLine(entry.First().Key);
+
+            await reading();
 
             StateHasChanged();
-
-            //await Refresh();
         }
 
         public async Task _sizing(PaginationEventArgs args)
         {
-            await ImagePaginator.HandlePageSizeChange(args);
+            await EntryPaginator.HandlePageSizeChange(args);
 
-            _Image = ImagePaginator.Paged().FirstOrDefault();
-
-            Console.WriteLine(_Image);
+            entry = EntryPaginator.Paged().ToList();
 
             StateHasChanged();
-
-            //await Refresh();
         }
 
         private async Task reading()
         {
-            foreach (var entry in entries)
+            foreach (var e in entry)
             {
 
-                Images.Add("data:image/*;base64," + ImageUtils.Read(entry));
+                _Image = "data:image/*;base64," + ImageUtils.Read(e);
 
                 // StateHasChanged();
             }
-
-            ImagePaginator.DataSource = Images;
-
-            _Image = ImagePaginator.Paged().ToList().FirstOrDefault();
 
             StateHasChanged();
 
@@ -102,7 +97,7 @@ namespace HentaiBlazor.Pages.Comic
         {
             Console.WriteLine("识别文件中的有效图片.");
 
-            string file = book.Path + "\\" + book.Name;
+            string file = Path.Combine(book.Path, book.Name);
 
             FileInfo f = new FileInfo(file);
 
@@ -114,12 +109,16 @@ namespace HentaiBlazor.Pages.Comic
 
             var archive = ArchiveFactory.Open(file);
 
+            // 过滤不是图片的压缩包文件，并按文件名排序
             entries = archive.Entries
                     .Where(a => (! a.IsDirectory && ComicUtils.IsImage(a.Key)))
                     .OrderBy(a => a.Key)
                     .ToList();
 
             Console.WriteLine("找到[" + entries.Count + "]张图片");
+
+            EntryPaginator.DataSource = entries;
+            entry = EntryPaginator.Paged().ToList();
 
             //Console.WriteLine
             await Task.CompletedTask;
