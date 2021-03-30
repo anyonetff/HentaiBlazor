@@ -2,25 +2,38 @@
 
 DELETE FROM s_function;
 
-INSERT INTO s_function (f_id, f_parent, f_path, f_name, f_icon, f_note, x_insert_, x_update_)
-VALUES ('10', '0', '/', '欢迎', 'appstore', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO s_function (f_id, f_parent, f_leaf, f_path, f_name, f_icon, f_note, x_insert_, x_update_)
+VALUES ('10', '0', true, '/', '欢迎', 'appstore', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
-INSERT INTO s_function (f_id, f_parent, f_path, f_name, f_icon, f_note, x_insert_, x_update_)
-VALUES ('20', '0', '/anime/video/list', '动画', 'play-square', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-INSERT INTO s_function (f_id, f_parent, f_path, f_name, f_icon, f_note, x_insert_, x_update_)
-VALUES ('30', '0', '/comic/book/list', '漫画', 'picture', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO s_function (f_id, f_parent, f_leaf, f_path, f_name, f_icon, f_note, x_insert_, x_update_)
+VALUES ('20', '0', true, '/anime/index', '动画', 'play-square', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
-INSERT INTO s_function (f_id, f_parent, f_path, f_name, f_icon, f_note, x_insert_, x_update_)
-VALUES ('50', '0', '/basic/catalog/list', '目录', 'folder', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-INSERT INTO s_function (f_id, f_parent, f_path, f_name, f_icon, f_note, x_insert_, x_update_)
-VALUES ('60', '0', '/basic/author/list', '作者', 'team', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-INSERT INTO s_function (f_id, f_parent, f_path, f_name, f_icon, f_note, x_insert_, x_update_)
-VALUES ('65', '0', '/basic/tag/list', '标签', 'tags', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO s_function (f_id, f_parent, f_leaf, f_path, f_name, f_icon, f_note, x_insert_, x_update_)
+VALUES ('30', '0', true, '/comic/index', '漫画', 'picture', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
-INSERT INTO s_function (f_id, f_parent, f_path, f_name, f_icon, f_note, x_insert_, x_update_)
-VALUES ('80', '0', '/security/function/list', '菜单', 'bars', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-INSERT INTO s_function (f_id, f_parent, f_path, f_name, f_icon, f_note, x_insert_, x_update_)
-VALUES ('85', '0', '/security/user/list', '用户', 'idcard', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+INSERT INTO s_function (f_id, f_parent, f_leaf, f_path, f_name, f_icon, f_note, x_insert_, x_update_)
+VALUES ('60', '0', false, '', '内容维护', 'appstore', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+INSERT INTO s_function (f_id, f_parent, f_leaf, f_path, f_name, f_icon, f_note, x_insert_, x_update_)
+VALUES ('6010', '60', true, '/basic/catalog/list', '档案目录', 'folder', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+INSERT INTO s_function (f_id, f_parent, f_leaf, f_path, f_name, f_icon, f_note, x_insert_, x_update_)
+VALUES ('6020', '60', true, '/anime/video/list', '动画管理', 'play-square', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO s_function (f_id, f_parent, f_leaf, f_path, f_name, f_icon, f_note, x_insert_, x_update_)
+VALUES ('6030', '60', true, '/comic/book/list', '漫画管理', 'picture', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+INSERT INTO s_function (f_id, f_parent, f_leaf, f_path, f_name, f_icon, f_note, x_insert_, x_update_)
+VALUES ('6060', '60', true, '/basic/author/list', '作品作者', 'team', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO s_function (f_id, f_parent, f_leaf, f_path, f_name, f_icon, f_note, x_insert_, x_update_)
+VALUES ('6070', '60', true, '/basic/tag/list', '标签分类', 'tags', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+INSERT INTO s_function (f_id, f_parent, f_leaf, f_path, f_name, f_icon, f_note, x_insert_, x_update_)
+VALUES ('80', '0', false, '', '系统设置', 'appstore', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO s_function (f_id, f_parent, f_leaf, f_path, f_name, f_icon, f_note, x_insert_, x_update_)
+VALUES ('8010', '80', true, '/security/function/list', '功能菜单', 'bars', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO s_function (f_id, f_parent, f_leaf, f_path, f_name, f_icon, f_note, x_insert_, x_update_)
+VALUES ('8050', '80', true, '/security/user/list', '用户管理', 'idcard', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 -- 写入标签数据
 

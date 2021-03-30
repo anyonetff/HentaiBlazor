@@ -21,6 +21,10 @@ namespace HentaiBlazor.Data.Security
         [Column("f_parent")]
         public string Parent { get; set; }
 
+        [Required]
+        [Column("f_leaf", TypeName = "BOOLEAN")]
+        public bool Leaf { get; set; }
+
         [Column("f_path")]
         public string Path { get; set; }
 

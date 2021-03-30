@@ -23,5 +23,14 @@ namespace HentaiBlazor.Service.Security
                 .ToListAsync<SFunctionEntity>();
         }
 
+        public async Task<List<SFunctionEntity>> ListByParentAsync(string parent)
+        {
+            return await this.dbContext.Set<SFunctionEntity>()
+                .Where<SFunctionEntity>(f => f.Parent == parent)
+                .OrderBy(f => f.Id)
+                .ToListAsync<SFunctionEntity>();
+        }
+
+
     }
 }

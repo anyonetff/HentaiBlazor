@@ -19,24 +19,51 @@ namespace HentaiBlazor
 
         protected override async Task OnInitializedAsync()
         {
-            List<SFunctionEntity> results = await service.ListAsync();
+            List<SFunctionEntity> roots = await service.ListByParentAsync("0");
 
             List<MenuDataItem> data = new List<MenuDataItem>();
 
-            foreach (var r in results) 
+            foreach (var r in roots) 
             {
-                MenuDataItem m = new MenuDataItem();
+                MenuDataItem m = Create(r);
 
-                m.Key = r.Id;
-                m.Name = r.Name;
-                m.Path = r.Path;
-                m.Icon = r.Icon;
+                if (! r.Leaf)
+                {
+                    List<MenuDataItem> data2 = new List<MenuDataItem>();
+
+                    List<SFunctionEntity> children = await service.ListByParentAsync(r.Id);
+
+                    foreach (var c in children)
+                    {
+                        MenuDataItem n = Create(c);
+
+                        data2.Add(n);
+                    }
+
+                    if (data2.Any())
+                    {
+                        m.Children = data2.ToArray();
+                    }
+                }
 
                 data.Add(m);
             }
 
             Menus = data.ToArray();
         }
+
+        private MenuDataItem Create(SFunctionEntity f)
+        {
+            MenuDataItem m = new MenuDataItem();
+
+            m.Key = f.Id;
+            m.Name = f.Name;
+            m.Path = f.Path;
+            m.Icon = f.Icon;
+
+            return m;
+        }
+
 
     }
 }
