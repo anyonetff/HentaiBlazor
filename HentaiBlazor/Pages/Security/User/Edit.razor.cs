@@ -38,6 +38,11 @@ namespace HentaiBlazor.Pages.Security.User
             else 
             {
                 userEntity = await userService.FindCloneAsync(userId);
+
+                // 如果是修改的情况这里要装假数据
+                // 不然验证通不过
+                userEntity.PasswordNew = "******";
+                userEntity.PasswordConfirm = userEntity.PasswordNew;
             }
 
             await base.OnInitializedAsync();
@@ -83,7 +88,10 @@ namespace HentaiBlazor.Pages.Security.User
                 return;
             }
 
-            userEntity.Password = DigestUtils.Md5Hex(userEntity.PasswordNew);
+            if (StringUtils.IsBlank(userId))
+            {
+                userEntity.Password = DigestUtils.Md5Hex(userEntity.PasswordNew);
+            }
 
             await this.userService.SaveAsync(userEntity);
 
@@ -92,6 +100,8 @@ namespace HentaiBlazor.Pages.Security.User
 
         private async Task OnFinishFailed(EditContext editContext)
         {
+            Console.WriteLine("验证未通过");
+
             await Task.CompletedTask;
         }
 

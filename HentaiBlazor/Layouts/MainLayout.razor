@@ -1,23 +1,24 @@
-﻿@namespace HentaiBlazor
+﻿
 @inherits LayoutComponentBase
 
-<AntDesign.Pro.Layout.BasicLayout Logo="@("/logo.png")"
+<BasicLayout Logo="@("/logo.png")"
                                   Title="Hentai Blazor"
                                   MenuData="@Menus">
     <RightContentRender>
-        <!--
-        <HentaiBlazor.Components.RightContent />
-        -->
+        <div>
+            <Text>Handsome</Text>
+            <Avatar Icon="user" />
+        </div>
     </RightContentRender>
     <FooterRender>
-        <p style="text-align: right; margin: 0.5rem; padding: 0.5rem; color: darkgray;">
+        <p style="text-align: right; margin: 0.25rem; padding: 0.25rem; color: darkgray;">
             Copyright &copy; Handsome All Rights Not Reserved.
         </p>
     </FooterRender>
     <ChildContent>
         @Body
     </ChildContent>
-</AntDesign.Pro.Layout.BasicLayout>
+</BasicLayout>
 <!--
 <SettingDrawer />
 -->

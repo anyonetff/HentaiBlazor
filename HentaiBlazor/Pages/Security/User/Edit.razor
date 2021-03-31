@@ -1,4 +1,5 @@
-﻿@using HentaiBlazor.Data.Basic;
+﻿@using HentaiBlazor.Common
+@using HentaiBlazor.Data.Basic;
 @using System.ComponentModel.DataAnnotations
 @using System.Text.Json
 
@@ -13,15 +14,18 @@
     <FormItem Label="用户名">
         <Input @bind-Value="@context.Username" />
     </FormItem>
-    
-    <FormItem Label="密码">
-        <InputPassword @bind-Value="@context.PasswordNew" />
-    </FormItem>
-    <FormItem Label="确认密码">
-        <InputPassword @bind-Value="@context.PasswordConfirm" />
-    </FormItem>
 
-    <FormItem Label="图标">
+    @if (StringUtils.IsBlank(context.Id))
+    {
+        <FormItem Label="密码">
+            <InputPassword @bind-Value="@context.PasswordNew" />
+        </FormItem>
+        <FormItem Label="确认密码">
+            <InputPassword @bind-Value="@context.PasswordConfirm" />
+        </FormItem>
+    }
+
+    <FormItem Label="昵称">
         <Input @bind-Value="@context.Name" />
     </FormItem>
     <FormItem Label="备注">

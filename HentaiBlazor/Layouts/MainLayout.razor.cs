@@ -8,9 +8,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace HentaiBlazor
+namespace HentaiBlazor.Layouts
 {
-    public partial class BasicLayout
+    public partial class MainLayout
     {
         private MenuDataItem[] Menus;
 
