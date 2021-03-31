@@ -3,13 +3,13 @@
 DELETE FROM s_function;
 
 INSERT INTO s_function (f_id, f_parent, f_leaf, f_path, f_name, f_icon, f_note, x_insert_, x_update_)
-VALUES ('10', '0', true, '/', '欢迎', 'appstore', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+VALUES ('10', '0', true, '/', '欢迎首页', 'home', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO s_function (f_id, f_parent, f_leaf, f_path, f_name, f_icon, f_note, x_insert_, x_update_)
-VALUES ('20', '0', true, '/anime/index', '动画', 'play-square', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+VALUES ('20', '0', true, '/anime/index', '里番动画', 'play-square', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO s_function (f_id, f_parent, f_leaf, f_path, f_name, f_icon, f_note, x_insert_, x_update_)
-VALUES ('30', '0', true, '/comic/index', '漫画', 'picture', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+VALUES ('30', '0', true, '/comic/index', '热辣漫画', 'read', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 
 INSERT INTO s_function (f_id, f_parent, f_leaf, f_path, f_name, f_icon, f_note, x_insert_, x_update_)
@@ -19,9 +19,9 @@ INSERT INTO s_function (f_id, f_parent, f_leaf, f_path, f_name, f_icon, f_note, 
 VALUES ('6010', '60', true, '/basic/catalog/list', '档案目录', 'folder', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO s_function (f_id, f_parent, f_leaf, f_path, f_name, f_icon, f_note, x_insert_, x_update_)
-VALUES ('6020', '60', true, '/anime/video/list', '动画管理', 'play-square', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+VALUES ('6020', '60', true, '/anime/video/list', '动画管理', 'video-camera', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 INSERT INTO s_function (f_id, f_parent, f_leaf, f_path, f_name, f_icon, f_note, x_insert_, x_update_)
-VALUES ('6030', '60', true, '/comic/book/list', '漫画管理', 'picture', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+VALUES ('6030', '60', true, '/comic/book/list', '漫画管理', 'book', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO s_function (f_id, f_parent, f_leaf, f_path, f_name, f_icon, f_note, x_insert_, x_update_)
 VALUES ('6060', '60', true, '/basic/author/list', '作品作者', 'team', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
@@ -29,7 +29,7 @@ INSERT INTO s_function (f_id, f_parent, f_leaf, f_path, f_name, f_icon, f_note, 
 VALUES ('6070', '60', true, '/basic/tag/list', '标签分类', 'tags', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO s_function (f_id, f_parent, f_leaf, f_path, f_name, f_icon, f_note, x_insert_, x_update_)
-VALUES ('80', '0', false, '', '系统设置', 'appstore', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+VALUES ('80', '0', false, '', '系统设置', 'setting', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 INSERT INTO s_function (f_id, f_parent, f_leaf, f_path, f_name, f_icon, f_note, x_insert_, x_update_)
 VALUES ('8010', '80', true, '/security/function/list', '功能菜单', 'bars', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 INSERT INTO s_function (f_id, f_parent, f_leaf, f_path, f_name, f_icon, f_note, x_insert_, x_update_)

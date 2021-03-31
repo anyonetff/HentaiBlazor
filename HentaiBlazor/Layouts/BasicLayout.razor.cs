@@ -14,45 +14,46 @@ namespace HentaiBlazor
     {
         private MenuDataItem[] Menus;
 
+        private int _maxDepth = 3;
+
         [Inject]
         public FunctionService service { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
-            List<SFunctionEntity> roots = await service.ListByParentAsync("0");
+            Menus = await CreateMenu(null, 1);
+        }
 
-            List<MenuDataItem> data = new List<MenuDataItem>();
+        private async Task<MenuDataItem[]> CreateMenu(MenuDataItem parent, int depth)
+        {
+            string _parent = (parent == null) ? "0" : parent.Key;
 
-            foreach (var r in roots) 
+            List<MenuDataItem> items = new List<MenuDataItem>();
+
+            List<SFunctionEntity> roots = await service.ListByParentAsync(_parent);
+
+            foreach (var r in roots)
             {
-                MenuDataItem m = Create(r);
+                MenuDataItem mi = CreateMenuItem(r);
 
-                if (! r.Leaf)
+                // 当前节点不是叶子节点，并且小于最大递归深度
+                if (!r.Leaf && depth < _maxDepth)
                 {
-                    List<MenuDataItem> data2 = new List<MenuDataItem>();
+                    MenuDataItem[] children = await CreateMenu(mi, depth + 1);
 
-                    List<SFunctionEntity> children = await service.ListByParentAsync(r.Id);
-
-                    foreach (var c in children)
+                    if (children.Any())
                     {
-                        MenuDataItem n = Create(c);
-
-                        data2.Add(n);
-                    }
-
-                    if (data2.Any())
-                    {
-                        m.Children = data2.ToArray();
+                        mi.Children = children;
                     }
                 }
 
-                data.Add(m);
+                items.Add(mi);
             }
 
-            Menus = data.ToArray();
+            return items.ToArray();
         }
 
-        private MenuDataItem Create(SFunctionEntity f)
+        private MenuDataItem CreateMenuItem(SFunctionEntity f)
         {
             MenuDataItem m = new MenuDataItem();
 
