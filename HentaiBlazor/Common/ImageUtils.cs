@@ -11,7 +11,7 @@ namespace HentaiBlazor.Common
 {
     public class ImageUtils
     {
-
+        // 通过压缩流生成预览图片
         public static string Preview(IArchiveEntry entry, 
             int width, int height, ImageFormat format)
         {
@@ -22,6 +22,7 @@ namespace HentaiBlazor.Common
             return Base64(target, format);
         }
 
+        // 将压缩流还原成图片的base64数据
         public static string Read(IArchiveEntry entry)
         {
             var stream = entry.OpenEntryStream();
@@ -35,6 +36,8 @@ namespace HentaiBlazor.Common
             }
         }
 
+        // 将图片编码成base64数据
+        // 如果要拼接成dataURL，可以自己在前面加
         public static string Base64(Image image, ImageFormat format)
         {
             using (var ms = new MemoryStream())
@@ -47,6 +50,7 @@ namespace HentaiBlazor.Common
             }
         }
 
+        // 通过压缩流创建图片
         public static Image Create(IArchiveEntry entry)
         {
             var stream = entry.OpenEntryStream();
@@ -60,6 +64,7 @@ namespace HentaiBlazor.Common
             }
         }
 
+        // 这是一个终止回调函数
         public static bool ThumbnailCallback()
         {
             Console.WriteLine("纳尼?");
@@ -67,6 +72,7 @@ namespace HentaiBlazor.Common
             return false;
         }
 
+        // 生成指定尺寸的缩略图
         public static Image Thumbnail(Image source, int width, int height)
         {
             Image.GetThumbnailImageAbort callback =
@@ -75,6 +81,7 @@ namespace HentaiBlazor.Common
             return source.GetThumbnailImage(width, height, callback, IntPtr.Zero);
         }
 
+        // 适应宽度生成缩略图
         public static Image ThumbnailWidth(Image source, int width)
         {
             float ratio = ((float) source.Width) / ((float) width);
@@ -85,6 +92,7 @@ namespace HentaiBlazor.Common
             return Thumbnail(source, _width, _height);
         }
 
+        // 适应高度生成缩略图
         public static Image ThumbnailHeight(Image source, int height)
         {
             float ratio = ((float)source.Height) / ((float)height);
@@ -95,30 +103,34 @@ namespace HentaiBlazor.Common
             return Thumbnail(source, _width, _height);
         }
 
-        public static Image ThumbnailFit(Image source, int width, int height)
+        // 自动判定高宽比率，生成缩略图
+        // 填满在指定高宽内
+        public static Image ThumbnailFit(Image source, int minWidth, int minHeight)
         {
             float ratio = (float)source.Width / (float)source.Height;
-            float _ratio = (float)width / (float)height;
+            float _ratio = (float)minWidth / (float)minHeight;
 
             if (ratio > _ratio)
             {
-                return ThumbnailHeight(source, height);
+                return ThumbnailHeight(source, minHeight);
             }
 
-            return ThumbnailWidth(source, width);
+            return ThumbnailWidth(source, minWidth);
         }
 
-        public static Image ThumbnailIn(Image source, int width, int height)
+        // 自动判定高宽比率，生成缩略图
+        // 包含在指定高宽内
+        public static Image ThumbnailIn(Image source, int maxWidth, int maxHeight)
         {
             float ratio = (float)source.Width / (float)source.Height;
-            float _ratio = (float)width / (float)height;
+            float _ratio = (float)maxWidth / (float)maxHeight;
 
             if (ratio > _ratio)
             {
-                return ThumbnailWidth(source, width);
+                return ThumbnailWidth(source, maxWidth);
             }
 
-            return ThumbnailHeight(source, height);
+            return ThumbnailHeight(source, maxHeight);
         }
 
     }

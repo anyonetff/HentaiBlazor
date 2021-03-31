@@ -27,6 +27,9 @@
                 </SpaceItem>
             </Space>
         </ActionColumn>
+        <Column Title="最爱" Width="60" @bind-Field="@context.Favorite">
+            <Icon Type="heart" Theme="@(context.Favorite ? "fill" : "outline")" />
+        </Column>
         <Column Title="标题" @bind-Field="@context.Title">
             <Tooltip Placement="@PlacementType.TopLeft" Title="@context.Name">
                 <NavLink href="@("/comic/detail/" + context.Id)">

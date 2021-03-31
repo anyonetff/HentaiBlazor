@@ -46,6 +46,9 @@ namespace HentaiBlazor.Data.Anime
         [Column("v_subtitle")]
         public string Subtitle { get; set; }
 
+        [Column("v_favorite", TypeName = "BOOLEAN")]
+        public bool Favorite { get; set; }
+
         [Column("v_note")]
         public string Note { get; set; }
     }

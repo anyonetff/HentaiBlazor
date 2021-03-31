@@ -52,6 +52,9 @@ namespace HentaiBlazor.Data.Comic
         [Column("b_preview")]
         public string Preview { get; set; }
 
+        [Column("b_favorite", TypeName = "BOOLEAN")]
+        public bool Favorite { get; set; }
+
         [Column("b_note")]
         public string Note { get; set; }
 

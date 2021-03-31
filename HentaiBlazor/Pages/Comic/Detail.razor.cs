@@ -89,5 +89,14 @@ namespace HentaiBlazor.Pages.Comic
             bookTagEntities = await bookTagService.ListByBookAsync(bookId);
         }
 
+        private async Task OnFavorite()
+        {
+            Console.WriteLine("添加/取消收藏");
+
+            bookEntity.Favorite = !bookEntity.Favorite;
+
+            await bookService.UpdateAsync(bookEntity);
+        }
+
     }
 }

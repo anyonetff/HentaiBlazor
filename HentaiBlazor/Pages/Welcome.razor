@@ -6,12 +6,8 @@
     <Row Gutter="8">
         <Col Span="6">
         <Card>
-            <ChildContent>
-                <Statistic Title="漫画" Value="BookTotal" />
-            </ChildContent>
-            <ActionTemplate>
-                <CardAction><Icon Type="ellipsis" OnClick="@(()=>navTo("comic/index"))" /></CardAction>
-            </ActionTemplate>
+            <Statistic Title="漫画" Value="BookTotal" />
+            <NavLink href="comic/index">全部</NavLink>
         </Card>
         </Col>
         <Col Span="6">
