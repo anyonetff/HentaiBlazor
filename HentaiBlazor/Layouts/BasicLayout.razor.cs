@@ -24,6 +24,10 @@ namespace HentaiBlazor
             Menus = await CreateMenu(null, 1);
         }
 
+        // 递归查询生成菜单
+        // 这个写法在本应用中影响不大，毕竟菜单较少
+        // 在大型项目中，这个肯定不可取
+        // 大型项目要么异步加载菜单，要么一次全部提取后在应用中还原成树结构
         private async Task<MenuDataItem[]> CreateMenu(MenuDataItem parent, int depth)
         {
             string _parent = (parent == null) ? "0" : parent.Key;
