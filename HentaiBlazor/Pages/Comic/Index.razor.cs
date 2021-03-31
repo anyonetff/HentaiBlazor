@@ -42,20 +42,17 @@ namespace HentaiBlazor.Pages.Comic
 
         protected override async Task OnInitializedAsync()
         {
-
-            // _model.Pagination.Pagination.PageSize = 16;
-
             await Search();
+        }
 
-            //BookPaginator.DataSource = CBookEntities;
-            // BookPaginator.PageSize = 10;
-            // BookPaginator.PagedDataSource = PagedCBookEntities;
-            
-            //_CBookEntities = BookPaginator.Paged().ToList();
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            if (firstRender)
+            {
+                StateHasChanged();
 
-            StateHasChanged();
-
-            await Refresh();
+                await Refresh();
+            }
         }
 
         public async Task Search()
@@ -70,6 +67,11 @@ namespace HentaiBlazor.Pages.Comic
 
         public async Task _paging(PaginationEventArgs args)
         {
+            foreach (var b in _CBookEntities)
+            {
+                b.Cover = null;
+            }
+
             await BookPaginator.HandlePageIndexChange(args);
 
             _CBookEntities = BookPaginator.Paged().ToList();

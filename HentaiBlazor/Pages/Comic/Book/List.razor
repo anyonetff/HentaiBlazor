@@ -7,11 +7,12 @@
 
     <Space Style="margin-bottom: 0.5rem">
         <SpaceItem>
-            <InputGroup Compact>
-                <Input Prefix="@_folder" Placeholder="目录" Style="width: 15rem;" @bind-Value="searchCatalog" />
-                <Input Prefix="@_team" Placeholder="作者" Style="width: 15rem;" @bind-Value="searchAuthor" />
-                <Input Prefix="@_filter" Placeholder="关键词" Style="width: 15rem;" @bind-Value="searchKeyword" />
-            </InputGroup>
+            <Input Prefix="@_filter" Placeholder="关键字" Style="width: 12rem;"
+                   @bind-Value="searchKeyword" />
+            <Input Prefix="@_folder" Placeholder="目录" Style="width: 12rem;"
+                   @bind-Value="searchCatalog" />
+            <Input Prefix="@_team" Placeholder="作者" Style="width: 12rem;"
+                   @bind-Value="searchAuthor" />
         </SpaceItem>
         <SpaceItem>
             <Button Type="@ButtonType.Primary" OnClick="()=>Search()">查询</Button>

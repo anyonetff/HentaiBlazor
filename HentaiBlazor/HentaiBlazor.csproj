@@ -2,10 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <UserSecretsId>77051af4-b27a-4797-a4c4-7d7b584fcd79</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AntDesign" Version="0.7.2" />
+    <PackageReference Include="AntDesign" Version="0.7.3" />
     <PackageReference Include="AntDesign.Charts" Version="0.2.0-*" />
     <PackageReference Include="AntDesign.Pro.Layout" Version="0.1.0-*" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.4" />

@@ -3,11 +3,11 @@
 @using HentaiBlazor.Data.Basic
 
 <PageContainer Title="作者维护">
+
     <Space Style="margin-bottom: 0.5rem">
         <SpaceItem>
-            <Input Placeholder="关键词" Style="width: 12rem;" @bind-Value="searchKeyword">
-            <Prefix><Icon Type="filter" /></Prefix>
-            </Input>
+            <Input Prefix="@_filter" Placeholder="关键字" Style="width: 12rem;"
+                   @bind-Value="searchKeyword" />
             <Select @bind-Value="@searchMode" Style="width: 8rem;" TItemValue="string" TItem="string">
                 <SelectOptions>
                     <SelectOption TItemValue="string" TItem="string" Value="@("ALL")" Label="全部数据" />
@@ -19,6 +19,7 @@
             <Button Type="@ButtonType.Primary" OnClick="()=>Search()">查询</Button>
         </SpaceItem>
     </Space>
+
     <Table TItem="BAuthorEntity" DataSource="@BAuthorEntities" Size=@TableSize.Small>
         <ActionColumn Width="160">
             <Space>
@@ -35,4 +36,9 @@
         <Column Title="备注" @bind-Field="@context.Note"></Column>
     </Table>
 </PageContainer>
+
+@code
+{
+    RenderFragment _filter =@<Icon Type="filter" />;
+}
 

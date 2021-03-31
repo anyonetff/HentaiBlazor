@@ -16,6 +16,10 @@ namespace HentaiBlazor.Common
             int width, int height, ImageFormat format)
         {
             Image source = Create(entry);
+            if (source == null)
+            {
+                return "";
+            }
 
             Image target = ThumbnailOut(source, width, height);
 
@@ -25,7 +29,7 @@ namespace HentaiBlazor.Common
         // 将压缩流还原成图片的base64数据
         public static string Read(IArchiveEntry entry)
         {
-            var stream = entry.OpenEntryStream();
+            using var stream = entry.OpenEntryStream();
             // byte[] bytes;
             using (var ms = new MemoryStream())
             {
@@ -53,15 +57,33 @@ namespace HentaiBlazor.Common
         // 通过压缩流创建图片
         public static Image Create(IArchiveEntry entry)
         {
-            var stream = entry.OpenEntryStream();
-            // byte[] bytes;
-            using (var ms = new MemoryStream())
-            {
-                stream.CopyTo(ms);
-                // bytes = ms.ToArray();
+            
 
-                return Image.FromStream(ms);
+            try
+            {
+                if (entry.IsEncrypted)
+                {
+                    return null;
+                }
+
+                using (var stream = entry.OpenEntryStream()) 
+                {
+                    using (var ms = new MemoryStream())
+                    {
+                        stream.CopyTo(ms);
+                        // bytes = ms.ToArray();
+
+                        return Image.FromStream(ms);
+                    }
+                }
             }
+            catch (Exception e)
+            {
+                Console.WriteLine("创建图片出现异常:");
+                Console.WriteLine(e);
+            }
+
+            return null;
         }
 
         // 这是一个终止回调函数

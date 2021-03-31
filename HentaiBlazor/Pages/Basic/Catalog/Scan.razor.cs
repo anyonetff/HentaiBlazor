@@ -27,9 +27,6 @@ namespace HentaiBlazor.Pages.Basic.Catalog
         public CatalogService catalogService { get; set; }
 
         [Inject]
-        public BookService bookService { get; set; }
-
-        [Inject]
         public AuthorService authorService { get; set; }
 
         protected override async Task OnInitializedAsync()
@@ -61,104 +58,32 @@ namespace HentaiBlazor.Pages.Basic.Catalog
                 return;
             }
 
-            Console.WriteLine("开始扫描文件目录...");
-
             _scaning = true;
-            _percent = 0;
 
-            DirectoryInfo root = new DirectoryInfo(catalogEntity.Path);
+            StateHasChanged();
 
-            if (! root.Exists)
+            switch (catalogEntity.Usage)
             {
-                Console.WriteLine("目录不存在");
-                // 文件目录不存在
-                // TODO: 这里应该有个报警.
-                return;
-            }
-
-            FileInfo[] files = root.GetFiles();
-
-            Console.WriteLine("找到[" + files.Length + "]个文件");
-
-            int progress = 0;
-            double total = files.Length;
-
-            for (int i = 0; i < files.Length; i ++)
-            {
-                if (!_scaning)
-                {
+                case "COMIC":
+                    Console.WriteLine("漫画目录:");
+                    await this.DiscoveryComic(catalogEntity.Path, catalogEntity.Children);
                     break;
-                }
 
-                FileInfo file = files[i];
+                case "ANIME":
+                    Console.WriteLine("动画目录:");
+                    await this.DiscoveryAnime(catalogEntity.Path, catalogEntity.Children);
+                    break;
 
-                if (!ComicUtils.IsArchive(file.Name))
-                {
-                    continue;
-                }
-
-                CBookEntity book = await saveBook(catalogEntity, file);
-                BAuthorEntity author = await saveAuthor(book.Author);
-
-                progress = (int) (((double) i) / total * 100.0);
-
-                catalogEntity.Items = i;
-
-                // Console.WriteLine(progress);
-
-                if (_percent != progress)
-                {
-                    _percent = progress;
-                    Console.WriteLine(" * " + _percent + "% * ");
-
-                    // await Task.Delay(5000);
-
-                    StateHasChanged();
-                }
-                
+                default:
+                    Console.WriteLine("所选目录用途不明");
+                    break;
             }
-
-            _percent = 100;
-
-            Console.WriteLine("完成目录扫描");
 
             _scaning = false;
         }
 
-        private async Task<CBookEntity> saveBook(BCatalogEntity catalog, FileInfo file)
-        {
-            CBookEntity book = await bookService.FindByNameAsync(file.DirectoryName, file.Name);
 
-            if (book != null)
-            {
-                return book;
-            }
-
-            Console.WriteLine(" - " + file.FullName);
-
-            book = new CBookEntity();
-
-            //book.Id = Guid.NewGuid().ToString();
-            //book.Catalog = catalog;
-
-            book.Path = file.DirectoryName;
-            book.Name = file.Name;
-
-            book.Author = ComicUtils.ParseAuthor(book.Name);
-            book.Title = ComicUtils.ParseTitle(book.Name);
-            book.Language = ComicUtils.ParseLanguage(book.Name);
-
-            book.Length = file.Length;
-
-            book.XInsert_ = file.CreationTime;
-            book.XUpdate_ = file.LastWriteTime;
-
-            book = await bookService.SaveAsync(book);
-
-            return book;
-        }
-
-        private async Task<BAuthorEntity> saveAuthor(string name)
+        private async Task<BAuthorEntity> CreateAuthor(string name)
         {
             if (name == null || name == "")
             {

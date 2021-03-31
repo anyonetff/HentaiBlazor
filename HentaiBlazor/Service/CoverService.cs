@@ -64,16 +64,16 @@ namespace HentaiBlazor.Service
                     return cover;
                 }
 
-                var archive = ArchiveFactory.Open(file);
-
-
-                foreach (var entry in archive.Entries)
+                using (var archive = ArchiveFactory.Open(file))
                 {
-                    if (! entry.IsDirectory && ComicUtils.IsImage(entry.Key))
+                    foreach (var entry in archive.Entries)
                     {
-                        Console.WriteLine("找到了一个图片");
+                        if (!entry.IsDirectory && ComicUtils.IsImage(entry.Key))
+                        {
+                            Console.WriteLine("找到了一个图片");
 
-                        return base64 + ImageUtils.Preview(entry, width, height, ImageFormat.Png);
+                            return base64 + ImageUtils.Preview(entry, width, height, ImageFormat.Png);
+                        }
                     }
                 }
 
