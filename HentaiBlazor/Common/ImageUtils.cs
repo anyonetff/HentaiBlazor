@@ -17,7 +17,7 @@ namespace HentaiBlazor.Common
         {
             Image source = Create(entry);
 
-            Image target = ThumbnailFit(source, width, height);
+            Image target = ThumbnailOut(source, width, height);
 
             return Base64(target, format);
         }
@@ -105,7 +105,7 @@ namespace HentaiBlazor.Common
 
         // 自动判定高宽比率，生成缩略图
         // 填满在指定高宽内
-        public static Image ThumbnailFit(Image source, int minWidth, int minHeight)
+        public static Image ThumbnailOut(Image source, int minWidth, int minHeight)
         {
             float ratio = (float)source.Width / (float)source.Height;
             float _ratio = (float)minWidth / (float)minHeight;
