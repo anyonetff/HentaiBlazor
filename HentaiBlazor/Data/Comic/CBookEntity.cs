@@ -49,6 +49,9 @@ namespace HentaiBlazor.Data.Comic
         [Column("b_cover")]
         public string Cover { get; set; }
 
+        [NotMapped]
+        public string Cover_ { get; set; }
+
         [Column("b_preview")]
         public string Preview { get; set; }
 

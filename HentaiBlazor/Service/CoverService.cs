@@ -15,7 +15,7 @@ namespace HentaiBlazor.Service
     // 不过这里没有编写回收算法
     public class CoverService
     {
-        private static string cover = "/book/cover.jpg";
+        private static string none = "/book/none.svg";
 
         private static string base64 = "data:image/*;base64,";
 
@@ -37,7 +37,7 @@ namespace HentaiBlazor.Service
             {
                 return cache[book.Id];
             }
-
+            //string cover = "";
             string c = await ReadAsync(Path.Combine(book.Path, book.Name));
 
             cache.Add(book.Id, c);
@@ -61,7 +61,7 @@ namespace HentaiBlazor.Service
                 if (!f.Exists)
                 {
                     Console.WriteLine("文件不存在...");
-                    return cover;
+                    return none;
                 }
 
                 using (var archive = ArchiveFactory.Open(file))
@@ -71,13 +71,14 @@ namespace HentaiBlazor.Service
                         if (!entry.IsDirectory && ComicUtils.IsImage(entry.Key))
                         {
                             Console.WriteLine("找到了一个图片");
+                            string preview = ImageUtils.Preview(entry, width, height, ImageFormat.Png);
 
-                            return base64 + ImageUtils.Preview(entry, width, height, ImageFormat.Png);
+                            return (StringUtils.IsBlank(preview)) ? none : base64 + preview;
                         }
                     }
                 }
 
-                return cover;
+                return none;
             });
         }
 

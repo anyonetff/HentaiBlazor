@@ -1,12 +1,38 @@
 ﻿
 @inherits LayoutComponentBase
 
-<BasicLayout Logo="@("/logo.png")"
-                                  Title="Hentai Blazor"
-                                  MenuData="@Menus">
+<BasicLayout Logo="@("/logo.png")" Title="Hentai Blazor"
+             MenuData="@Menus">
     <RightContentRender>
         <div>
-            <Text>Handsome</Text>
+            <Dropdown>
+                <Overlay>
+                    <Menu>
+                        <MenuItem>
+                            <NavLink href="/security/profile">
+                                个人资料
+                            </NavLink>
+                        </MenuItem>
+                        <MenuItem>
+                            <NavLink href="/security/password">
+                                修改密码
+                            </NavLink>
+                        </MenuItem>
+                        <MenuDivider />
+                        <MenuItem>
+                            <a target="_blank" rel="noopener noreferrer" href="http://www.tmall.com/">
+                                退出系统
+                            </a>
+                        </MenuItem>
+                    </Menu>
+                </Overlay>
+                <ChildContent>
+                    <a class="ant-dropdown-link" @onclick:preventDefault>
+                        Handsome <Icon Type="down" />
+                    </a>
+                </ChildContent>
+            </Dropdown>
+
             <Avatar Icon="user" />
         </div>
     </RightContentRender>

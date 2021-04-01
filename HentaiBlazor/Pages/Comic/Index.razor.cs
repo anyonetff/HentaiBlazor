@@ -49,8 +49,6 @@ namespace HentaiBlazor.Pages.Comic
         {
             if (firstRender)
             {
-                StateHasChanged();
-
                 await Refresh();
             }
         }
@@ -65,11 +63,20 @@ namespace HentaiBlazor.Pages.Comic
             _CBookEntities = BookPaginator.Paged().ToList();
         }
 
+        public async Task ReSearch()
+        {
+            await Search();
+
+            StateHasChanged();
+
+            await Refresh();
+        }
+
         public async Task _paging(PaginationEventArgs args)
         {
             foreach (var b in _CBookEntities)
             {
-                b.Cover = null;
+                b.Cover_ = null;
             }
 
             await BookPaginator.HandlePageIndexChange(args);
@@ -79,8 +86,6 @@ namespace HentaiBlazor.Pages.Comic
             StateHasChanged();
 
             await Refresh();
-
-            // StateHasChanged();
         }
 
         public async Task _sizing(PaginationEventArgs args)
@@ -104,7 +109,7 @@ namespace HentaiBlazor.Pages.Comic
             {
                 CBookEntity _book = _CBookEntities.ElementAt(i);
 
-                _book.Cover = await coverService.GetAsync(_book);
+                _book.Cover_ = await coverService.GetAsync(_book);
 
                 StateHasChanged();
             }
