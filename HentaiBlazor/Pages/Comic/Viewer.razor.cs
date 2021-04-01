@@ -28,6 +28,7 @@ namespace HentaiBlazor.Pages.Comic
 
         private List<IArchiveEntry> entry;
 
+        private bool _Scale = true;
 
         private string _Image = "";
 
@@ -55,6 +56,30 @@ namespace HentaiBlazor.Pages.Comic
                 await reading();
             }
         }
+
+        public async Task Previous()
+        {
+            Console.WriteLine("上一页");
+
+            if (EntryPaginator.PageIndex == 1)
+                return;
+
+            await _paging(new PaginationEventArgs { PageIndex = EntryPaginator.PageIndex - 1 });
+            
+        }
+
+        public async Task Next()
+        {
+            Console.WriteLine("下一页");
+
+            if (EntryPaginator.PageIndex == EntryPaginator.Total)
+                return;
+
+            await _paging(new PaginationEventArgs { PageIndex = EntryPaginator.PageIndex + 1 });
+
+        }
+
+
 
         public async Task _paging(PaginationEventArgs args)
         {

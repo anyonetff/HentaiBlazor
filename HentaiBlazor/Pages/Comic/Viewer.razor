@@ -1,16 +1,33 @@
 ﻿@page "/comic/viewer/{Id}"
 
 <PageContainer Title="@book.Name">
-
-    <div style="height: 90vh; background-color: gainsboro; text-align: center; vertical-align: middle; margin-bottom: 0.5rem;">
-        <img src="@_Image" style="max-height: 100%; max-width: 100%; margin: auto;" />
+    <div style="float: right;">
+        @if (_Scale)
+        {
+            <Icon Type="fullscreen" Style="font-size: 2rem;" OnClick="() => { _Scale = !_Scale; }" />
+        }
+        else
+        {
+            <Icon Type="fullscreen-exit" Style="font-size: 2rem;" OnClick="() => { _Scale = !_Scale; }" />
+        }
     </div>
-    
-    <Pagination Total="EntryPaginator.Total"
+    <Pagination Style="margin-bottom: 0.5rem;" Total="EntryPaginator.Total"
                 PageSize="EntryPaginator.PageSize"
                 PageIndex="EntryPaginator.PageIndex"
                 OnPageIndexChange="_paging"
                 OnPageSizeChange="_sizing"
                 ShowQuickJumper />
+
+    <div style="@(@_Scale ? "height: 95vh;" : "") background-color: gainsboro; text-align: center; vertical-align: middle; overflow: hidden;">
+        <div style="height: calc(100% - 120px); width: 50%; position: absolute; left: 0px;"
+             @onclick="Previous">
+            <!-- 上一页，这里高度是扣减出来的，其实拿不到图片或外部元素的高度 -->
+        </div>
+        <div style="height: calc(100% - 120px); width: 50%; position: absolute; right: 0px;"
+             @onclick="Next">
+            <!-- 下一页，这里高度是扣减出来的，其实拿不到图片或外部元素的高度 -->
+        </div>
+        <img src="@_Image" style="@(@_Scale ? "max-height: 100%;" : "") max-width: 100%; margin: auto;" />
+    </div>
 
 </PageContainer>
