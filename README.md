@@ -20,7 +20,11 @@
 
 ## 软件架构
 
-本应用使用了.NET的新一代前后端框架，主要包含以下技术要点：
+本应用使用了.NET的新一代前后端框架：
+<p align="center">
+  <img src="Document/Architecture.png">
+</p>
+主要包含以下技术要点：
 
 1.  dotnet - 巨硬的应用开发框架
 2.  Blazor Server - 巨硬的新一代前端开发框架，是继WebForm、JSF、GWT后的又一次前后端一体化框架技术路线尝试
