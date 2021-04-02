@@ -40,7 +40,11 @@
                 </ChildContent>
                 <ActionTemplate>
                     <CardAction><Icon Type="info" OnClick="() => OpenDetail(context.Id, context.Title)" /></CardAction>
-                    <CardAction><Icon Type="eye" OnClick="@(()=> NavigateTo("comic/viewer/" + context.Id))" /></CardAction>
+                    <CardAction>
+                        <a href="@("comic/viewer/" + context.Id)" target="_blank">
+                            <Icon Type="eye" />
+                        </a>
+                    </CardAction>
                 </ActionTemplate>
             </Card>
         </ListItem>
@@ -55,16 +59,27 @@
 
 </PageContainer>
 
-@code
-{
+@code{
     RenderFragment _folder =@<Icon Type="folder" />;
     RenderFragment _team =@<Icon Type="team" />;
     RenderFragment _filter =@<Icon Type="filter" />;
 
-    public ListGridType gutter = new ListGridType { Gutter = 8, Column = 10 };
+    public ListGridType gutter = new ListGridType {
+        Gutter = 8,
+        Xs = 2,
+        Sm = 2,
+        Md = 4,
+        Lg = 4,
+        Xl = 5,
+        Xxl = 5,
+        Column = 10
+    };
 
     private RenderFragment coverTemplate(string cover)
     {
         return @<div style="height: 200px; overflow: hidden;"><Image PreviewSrc="@cover" Src="@cover" /></div>;
     }
+
+    
+
 }

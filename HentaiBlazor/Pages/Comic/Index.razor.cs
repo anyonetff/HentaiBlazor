@@ -4,6 +4,7 @@ using HentaiBlazor.Ezcomp;
 using HentaiBlazor.Service;
 using HentaiBlazor.Service.Comic;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
 using System.Linq;
