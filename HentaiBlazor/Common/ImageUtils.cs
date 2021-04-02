@@ -29,15 +29,31 @@ namespace HentaiBlazor.Common
         // 将压缩流还原成图片的base64数据
         public static string Read(IArchiveEntry entry)
         {
-            using var stream = entry.OpenEntryStream();
-            // byte[] bytes;
-            using (var ms = new MemoryStream())
+            try
             {
-                stream.CopyTo(ms);
-                // bytes = ms.ToArray();
+                if (entry.IsEncrypted)
+                {
+                    return null;
+                }
 
-                return Convert.ToBase64String(ms.ToArray());
+                using (var stream = entry.OpenEntryStream())
+                {
+                    using (var ms = new MemoryStream())
+                    {
+                        stream.CopyTo(ms);
+                        // bytes = ms.ToArray();
+
+                        return Convert.ToBase64String(ms.ToArray());
+                    }
+                }
             }
+            catch (Exception e)
+            {
+                Console.WriteLine("创建图片出现异常:");
+                Console.WriteLine(e);
+            }
+
+            return null;
         }
 
         // 将图片编码成base64数据

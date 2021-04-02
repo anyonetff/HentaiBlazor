@@ -2,6 +2,10 @@
 
 <PageContainer Title="@book.Name">
     <div style="float: right;">
+        <Icon Type="expand" Style="font-size: 2rem;" />
+        <Icon Type="column-width" Style="font-size: 2rem; color: gray;" />
+        <Icon Type="column-width" Style="font-size: 2rem; color: gray;" Rotate="90" />
+
         @if (_Scale)
         {
             <Icon Type="fullscreen" Style="font-size: 2rem;" OnClick="() => { _Scale = !_Scale; }" />
@@ -18,16 +22,17 @@
                 OnPageSizeChange="_sizing"
                 ShowQuickJumper />
 
-    <div style="@(@_Scale ? "height: 95vh;" : "") background-color: gainsboro; text-align: center; vertical-align: middle; overflow: hidden;">
-        <div style="height: calc(100% - 120px); width: 50%; position: absolute; left: 0px;"
-             @onclick="Previous">
-            <!-- 上一页，这里高度是扣减出来的，其实拿不到图片或外部元素的高度 -->
+    <div class="viewer-contained">
+
+        <!-- 父级元素要设为：relative，以确定内里块的高宽 -->
+        <div class="viewer-left" @onclick="Previous">
+            <!-- 上一页 -->
         </div>
-        <div style="height: calc(100% - 120px); width: 50%; position: absolute; right: 0px;"
-             @onclick="Next">
-            <!-- 下一页，这里高度是扣减出来的，其实拿不到图片或外部元素的高度 -->
+        <div class="viewer-right" @onclick="Next">
+            <!-- 下一页 -->
         </div>
-        <img src="@_Image" style="@(@_Scale ? "max-height: 100%;" : "") max-width: 100%; margin: auto;" />
+
+        <img src="@_Image" class="viewer-content viewer-content-fit" />
     </div>
 
 </PageContainer>

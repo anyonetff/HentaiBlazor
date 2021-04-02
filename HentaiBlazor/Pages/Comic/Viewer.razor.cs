@@ -28,6 +28,14 @@ namespace HentaiBlazor.Pages.Comic
 
         private List<IArchiveEntry> entry;
 
+        private string ModeFit = "fit";
+
+        private string ModeWidth = "width";
+
+        private string ModeHeight = "heigth";
+
+        private string _Mode = "fit";
+
         private bool _Scale = true;
 
         private string _Image = "";
@@ -79,7 +87,10 @@ namespace HentaiBlazor.Pages.Comic
 
         }
 
-
+        public void OnMode(string mode) 
+        {
+            _Mode = mode;
+        }
 
         public async Task _paging(PaginationEventArgs args)
         {

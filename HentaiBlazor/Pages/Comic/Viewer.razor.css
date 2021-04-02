@@ -1,0 +1,41 @@
+﻿
+.viewer-contained {
+    height: 95vh;
+    background-color: gainsboro;
+    position: relative;
+    text-align: center;
+}
+.viewer-fullscreen {
+    background-color: gainsboro;
+}
+
+.viewer-content {
+    margin: auto;
+}
+
+.viewer-content-fit {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.viewer-content-height {
+    max-height: 100%;
+}
+
+.viewer-content-width {
+    max-width: 100%;
+} 
+
+.viewer-left {
+    height: 100%;
+    width: 50%;
+    position: absolute;
+    left: 0px;
+}
+
+.viewer-right {
+    height: 100%;
+    width: 50%;
+    position: absolute;
+    right: 0px;
+}
