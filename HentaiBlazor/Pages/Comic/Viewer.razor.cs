@@ -21,6 +21,11 @@ namespace HentaiBlazor.Pages.Comic
         [Inject]
         public BookService bookService { get; set; }
 
+
+        [Inject] 
+        public MessageService _message { get; set; }
+
+
         public CBookEntity book;
 
 
@@ -43,6 +48,7 @@ namespace HentaiBlazor.Pages.Comic
         // private List<string> Images = new List<string>();
 
         private Paginator<IArchiveEntry> EntryPaginator = new Paginator<IArchiveEntry>(1);
+
 
 
         protected override async Task OnInitializedAsync()
@@ -69,8 +75,12 @@ namespace HentaiBlazor.Pages.Comic
         {
             Console.WriteLine("上一页");
 
-            if (EntryPaginator.PageIndex == 1)
+            if (EntryPaginator.PageIndex == 1) 
+            {
+                await _message.Warning("已经是第一页了");
+
                 return;
+            }
 
             await _paging(new PaginationEventArgs { PageIndex = EntryPaginator.PageIndex - 1 });
             
@@ -81,7 +91,11 @@ namespace HentaiBlazor.Pages.Comic
             Console.WriteLine("下一页");
 
             if (EntryPaginator.PageIndex == EntryPaginator.Total)
+            {
+                await _message.Warning("已经是最末页了");
+
                 return;
+            }
 
             await _paging(new PaginationEventArgs { PageIndex = EntryPaginator.PageIndex + 1 });
 
@@ -90,6 +104,11 @@ namespace HentaiBlazor.Pages.Comic
         public void OnMode(string mode) 
         {
             _Mode = mode;
+        }
+
+        public void OnScale()
+        {
+            _Scale = ! _Scale;
         }
 
         public async Task _paging(PaginationEventArgs args)

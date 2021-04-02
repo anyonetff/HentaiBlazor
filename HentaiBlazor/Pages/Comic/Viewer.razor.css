@@ -1,4 +1,13 @@
 ﻿
+.viewer-tool {
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+.viewer-tool:hover {
+    color: darkblue;
+}
+
 .viewer-contained {
     height: 95vh;
     background-color: gainsboro;
@@ -10,6 +19,11 @@
 }
 
 .viewer-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
     margin: auto;
 }
 

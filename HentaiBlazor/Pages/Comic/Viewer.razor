@@ -1,29 +1,35 @@
 ﻿@page "/comic/viewer/{Id}"
 
 <PageContainer Title="@book.Name">
-    <div style="float: right;">
-        <Icon Type="expand" Style="font-size: 2rem;" />
-        <Icon Type="column-width" Style="font-size: 2rem; color: gray;" />
-        <Icon Type="column-width" Style="font-size: 2rem; color: gray;" Rotate="90" />
+    <Affix OffsetTop="0">
+        <Space Style="float: right; background-color: rgba(255,255,255,0.3);">
+            <SpaceItem>
+                <Icon Type="expand" Class="viewer-tool" Style="@("font-size: 2rem;" + CurrentModeStyle(ModeFit))" OnClick="() => OnMode(ModeFit)" />
+                <Icon Type="column-width" Class="viewer-tool" Style="@("font-size: 2rem;" + CurrentModeStyle(ModeWidth))" OnClick="() => OnMode(ModeWidth)" />
+                <Icon Type="column-width" Class="viewer-tool" Style="@("font-size: 2rem;" + CurrentModeStyle(ModeHeight))" Rotate="90" OnClick="() => OnMode(ModeHeight)" />
+            </SpaceItem>
+            <SpaceItem>
+                @if (_Scale)
+                {
+                    <Icon Type="fullscreen" Style="font-size: 2rem;" OnClick="OnScale" />
+                }
+                else
+                {
+                    <Icon Type="fullscreen-exit" Style="font-size: 2rem;" OnClick="OnScale" />
+                }
+            </SpaceItem>
+        </Space>
 
-        @if (_Scale)
-        {
-            <Icon Type="fullscreen" Style="font-size: 2rem;" OnClick="() => { _Scale = !_Scale; }" />
-        }
-        else
-        {
-            <Icon Type="fullscreen-exit" Style="font-size: 2rem;" OnClick="() => { _Scale = !_Scale; }" />
-        }
-    </div>
-    <Pagination Style="margin-bottom: 0.5rem;" Total="EntryPaginator.Total"
-                PageSize="EntryPaginator.PageSize"
-                PageIndex="EntryPaginator.PageIndex"
-                OnPageIndexChange="_paging"
-                OnPageSizeChange="_sizing"
-                ShowQuickJumper />
+        <Pagination Style="margin-bottom: 0.5rem; background-color: rgba(255,255,255,0.3);" Total="EntryPaginator.Total"
+                    PageSize="EntryPaginator.PageSize"
+                    PageIndex="EntryPaginator.PageIndex"
+                    OnPageIndexChange="_paging"
+                    OnPageSizeChange="_sizing"
+                    ShowQuickJumper />
+    </Affix>
 
     <div class="viewer-contained">
-
+        <img src="@_Image" class="viewer-content viewer-content-fit" />
         <!-- 父级元素要设为：relative，以确定内里块的高宽 -->
         <div class="viewer-left" @onclick="Previous">
             <!-- 上一页 -->
@@ -31,8 +37,13 @@
         <div class="viewer-right" @onclick="Next">
             <!-- 下一页 -->
         </div>
-
-        <img src="@_Image" class="viewer-content viewer-content-fit" />
     </div>
 
 </PageContainer>
+
+@code { 
+    string CurrentModeStyle(string mode)
+    {
+        return mode == _Mode ? "" : " color: gray;";
+    }
+}
