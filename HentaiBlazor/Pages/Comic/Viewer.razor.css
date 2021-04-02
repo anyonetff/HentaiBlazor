@@ -18,6 +18,13 @@
     background-color: gainsboro;
 }
 
+.viewer-contain {
+    position: relative;
+    text-align: center;
+    background-color: gainsboro;
+}
+
+
 .viewer-content {
     position: absolute;
     top: 0;
@@ -38,13 +45,14 @@
 
 .viewer-content-width {
     max-width: 100%;
-} 
+}
 
 .viewer-left {
     height: 100%;
     width: 50%;
     position: absolute;
     left: 0px;
+    cursor: url(/arrow-left.svg), pointer;
 }
 
 .viewer-right {
@@ -52,4 +60,5 @@
     width: 50%;
     position: absolute;
     right: 0px;
+    cursor: url(/arrow-right.svg), pointer;
 }

@@ -4,9 +4,12 @@
     <Affix OffsetTop="0">
         <Space Style="float: right; background-color: rgba(255,255,255,0.3);">
             <SpaceItem>
-                <Icon Type="expand" Class="viewer-tool" Style="@("font-size: 2rem;" + CurrentModeStyle(ModeFit))" OnClick="() => OnMode(ModeFit)" />
-                <Icon Type="column-width" Class="viewer-tool" Style="@("font-size: 2rem;" + CurrentModeStyle(ModeWidth))" OnClick="() => OnMode(ModeWidth)" />
-                <Icon Type="column-width" Class="viewer-tool" Style="@("font-size: 2rem;" + CurrentModeStyle(ModeHeight))" Rotate="90" OnClick="() => OnMode(ModeHeight)" />
+                <Icon Type="expand" Style="@("font-size: 2rem;" + CurrentModeStyle(ModeFit))" 
+                      OnClick="() => OnMode(ModeFit)" />
+                <Icon Type="column-width" Style="@("font-size: 2rem;" + CurrentModeStyle(ModeWidth))" 
+                      OnClick="() => OnMode(ModeWidth)" />
+                <Icon Type="column-width" Style="@("font-size: 2rem;" + CurrentModeStyle(ModeHeight))" Rotate="90" 
+                      OnClick="() => OnMode(ModeHeight)" />
             </SpaceItem>
             <SpaceItem>
                 @if (_Scale)
@@ -28,8 +31,7 @@
                     ShowQuickJumper />
     </Affix>
 
-    <div class="viewer-contained">
-        <img src="@_Image" class="viewer-content viewer-content-fit" />
+    <div class="viewer-contain" style="@CurrentContainStyle()">
         <!-- 父级元素要设为：relative，以确定内里块的高宽 -->
         <div class="viewer-left" @onclick="Previous">
             <!-- 上一页 -->
@@ -37,6 +39,8 @@
         <div class="viewer-right" @onclick="Next">
             <!-- 下一页 -->
         </div>
+
+        <img src="@_Image" style="@CurrentContentStyle()" />
     </div>
 
 </PageContainer>
@@ -46,4 +50,33 @@
     {
         return mode == _Mode ? "" : " color: gray;";
     }
+
+    string CurrentContainStyle()
+    {
+        if (_Mode == ModeWidth)
+        {
+            return "";
+        }
+        if (_Mode == ModeHeight)
+        {
+            return "height: 100vh;";
+        }
+
+        return "height: 95vh;";
+    }
+
+    string CurrentContentStyle()
+    {
+        if (_Mode == ModeWidth)
+        {
+            return "max-width: 100%;";
+        }
+        if (_Mode == ModeHeight)
+        {
+            return "max-height: 100%;";
+        }
+
+        return "max-width: 100%; max-height: 100%;";
+    }
+
 }
