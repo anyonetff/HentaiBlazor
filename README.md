@@ -33,7 +33,9 @@
 5.  Ant Design Blazor Pro - 纳尼？居然有人把这套UI封成了razor组件库！
 
 编写本应用的主要目的是通过.NET技术实践了三层开发的基本思想：
-
+<p align="center">
+  <img src="Document/Hierarchical.png">
+</p>
 1.  通过ORM框架实现数据访问层，并将数据库操作服务封装为DAO层；
 2.  通过razor页面的背板代码实现业务层，它面向业务外观，将多个DAO层组织起来实现相关功能；
 3.  通过razor页面的前端标记库实现表现层，它调用背板代码提供的对象实现数据绑定。
