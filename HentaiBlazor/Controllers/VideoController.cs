@@ -14,8 +14,6 @@ namespace HentaiBlazor.Controllers
 {
     public class VideoController : Controller
     {
-
-        // [Inject]
         private readonly VideoService videoService;
 
         public VideoController(VideoService videoService)
