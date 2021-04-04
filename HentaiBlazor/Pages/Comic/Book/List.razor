@@ -3,7 +3,7 @@
 @using HentaiBlazor.Data.Comic
 @using HentaiBlazor.Ezcomp
 
-<PageContainer Title="漫画">
+<PageContainer Title="漫画管理">
 
     <Space Style="margin-bottom: 0.5rem">
         <SpaceItem>
@@ -33,9 +33,9 @@
         </Column>
         <Column Title="标题" @bind-Field="@context.Title">
             <Tooltip Placement="@PlacementType.TopLeft" Title="@context.Name">
-                <NavLink href="@("/comic/detail/" + context.Id)">
+                <a href="@("comic/viewer/" + context.Id)" target="_blank">
                     @context.Title
-                </NavLink>
+                </a>
             </Tooltip>
         </Column>
         <Column Title="作者" @bind-Field="@context.Author"></Column>

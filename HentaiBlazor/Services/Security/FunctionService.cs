@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace HentaiBlazor.Service.Security
+namespace HentaiBlazor.Services.Security
 {
     public class FunctionService : AbstractService<SFunctionEntity>
     {

@@ -1,0 +1,24 @@
+﻿@page "/anime/player/{Id}"
+
+<PageContainer Title="@video.Name">
+
+    <video id="video">
+        <source src="@source()" />
+    </video>
+
+</PageContainer>
+
+@code
+{
+
+    string source()
+    {
+        string r = "file:///";
+
+        r = r + video.Path.Replace("\\", "/");
+        r = r + "/" + video.Name;
+
+        return r;
+    }
+
+}

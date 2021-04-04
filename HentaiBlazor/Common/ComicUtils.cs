@@ -105,7 +105,7 @@ namespace HentaiBlazor.Common
         }
 
         // 可能是中文的关键词
-        private static string[] _Zh = { "中国", "中文", "汉化", "漢化" };
+        private static string[] _Zh = { "中国", "中文", "汉化", "漢化", "風的工房", "掃圖組" };
 
         // 可能是英语的关键词
         private static string[] _En = { "English" };

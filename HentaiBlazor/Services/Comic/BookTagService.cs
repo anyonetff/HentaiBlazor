@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace HentaiBlazor.Service.Comic
+namespace HentaiBlazor.Services.Comic
 {
     public class BookTagService : AbstractService<CBookTagEntity>
     {

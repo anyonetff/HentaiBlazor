@@ -8,7 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace HentaiBlazor.Service
+namespace HentaiBlazor.Services
 {
     // 用于封面预览的类
     // 这是一个单例模型可以缓存最近翻页查询过的封面

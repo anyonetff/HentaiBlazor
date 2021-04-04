@@ -2,7 +2,7 @@
 using HentaiBlazor.Common;
 using HentaiBlazor.Data.Comic;
 using HentaiBlazor.Ezcomp;
-using HentaiBlazor.Service.Comic;
+using HentaiBlazor.Services.Comic;
 using Microsoft.AspNetCore.Components;
 using SharpCompress.Archives;
 using System;

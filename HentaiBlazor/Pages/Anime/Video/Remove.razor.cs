@@ -1,41 +1,44 @@
 ﻿using AntDesign;
-using HentaiBlazor.Data.Security;
-using HentaiBlazor.Services.Security;
+using HentaiBlazor.Data.Anime;
+using HentaiBlazor.Data.Comic;
+using HentaiBlazor.Services.Anime;
+using HentaiBlazor.Services.Comic;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace HentaiBlazor.Pages.Security.User
+namespace HentaiBlazor.Pages.Anime.Video
 {
     public partial class Remove
     {
-        private string userId;
+        private string videoId;
 
-        private SUserEntity userEntity;
+        private AVideoEntity videoEntity;
 
         [Inject]
-        public UserService userService { get; set; }
+        public VideoService videoService { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
-            userId = base.Options;
+            videoId = base.Options;
 
-            userEntity = await userService.FindAsync(userId);
+            videoEntity = await videoService.FindAsync(videoId);
 
             await base.OnInitializedAsync();
         }
 
         public override async Task OkAsync(ModalClosingEventArgs args)
         {
-            Console.WriteLine("删除用户[" + userEntity.Id + "]");
+            Console.WriteLine("删除视频[" + videoEntity.Id + "]");
 
             ConfirmRef.Config.OkButtonProps.Loading = true;
 
-            await userService.RemoveAsync(userEntity);
+            await videoService.RemoveAsync(videoEntity);
 
             await base.OkAsync(args);
         }
+
     }
 }

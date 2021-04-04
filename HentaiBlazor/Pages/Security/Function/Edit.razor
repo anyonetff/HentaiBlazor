@@ -16,6 +16,9 @@
     <FormItem Label="上级">
         <Input @bind-Value="@context.Parent" />
     </FormItem>
+    <FormItem Label="叶子">
+        <InputCheckbox @bind-Value="@context.Leaf"/>
+    </FormItem>
     <FormItem Label="名称">
         <Input @bind-Value="@context.Name" />
     </FormItem>

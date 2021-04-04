@@ -1,6 +1,6 @@
 ﻿using HentaiBlazor.Common;
 using HentaiBlazor.Data.Comic;
-using HentaiBlazor.Service.Comic;
+using HentaiBlazor.Services.Comic;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using System;

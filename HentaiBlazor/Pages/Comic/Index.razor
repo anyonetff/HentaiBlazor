@@ -1,8 +1,9 @@
 ﻿@page "/comic/index"
 
 @using HentaiBlazor.Data.Comic
+@using HentaiBlazor.Ezcomp
 
-<PageContainer Title="漫画">
+<PageContainer Title="热辣漫画">
 
     <div style="float: right;">
         <Button Size="small">
@@ -36,10 +37,16 @@
             <Card Size="small" Hoverable
                   Cover="@coverTemplate(@context.Cover_)">
                 <ChildContent>
+                    <div>
+                        <Icon Type="heart" Style="color: orangered;" Theme="@(context.Favorite ? "fill" : "outline")" />
+                        <TextLanguage Language="@context.Language" />
+                    </div>
                     <CardMeta Style="font-size: 0.75rem" Title="@context.Title" Description="@context.Author" />
                 </ChildContent>
                 <ActionTemplate>
-                    <CardAction><Icon Type="info" OnClick="() => OpenDetail(context.Id, context.Title)" /></CardAction>
+                    <CardAction>
+                        <Icon Type="info" OnClick="() => OpenDetail(context.Id, context.Title)" />
+                    </CardAction>
                     <CardAction>
                         <a href="@("comic/viewer/" + context.Id)" target="_blank">
                             <Icon Type="eye" />
@@ -59,19 +66,18 @@
 
 </PageContainer>
 
-@code{
+@code
+{
     RenderFragment _folder =@<Icon Type="folder" />;
     RenderFragment _team =@<Icon Type="team" />;
     RenderFragment _filter =@<Icon Type="filter" />;
 
-    public ListGridType gutter = new ListGridType {
+    public ListGridType gutter = new ListGridType
+    {
         Gutter = 8,
-        Xs = 2,
-        Sm = 2,
-        Md = 4,
-        Lg = 4,
-        Xl = 5,
-        Xxl = 5,
+        Xs = 2, Sm = 2,
+        Md = 4, Lg = 4,
+        Xl = 5, Xxl = 5,
         Column = 10
     };
 
@@ -79,7 +85,5 @@
     {
         return @<div style="height: 200px; overflow: hidden;"><Image PreviewSrc="@cover" Src="@cover" /></div>;
     }
-
-    
 
 }

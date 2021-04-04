@@ -1,5 +1,5 @@
 ﻿using HentaiBlazor.Data.Security;
-using HentaiBlazor.Service.Security;
+using HentaiBlazor.Services.Security;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;

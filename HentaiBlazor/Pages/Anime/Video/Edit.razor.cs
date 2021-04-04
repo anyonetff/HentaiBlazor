@@ -1,7 +1,6 @@
-﻿using AntDesign;
-using HentaiBlazor.Common;
-using HentaiBlazor.Data.Basic;
-using HentaiBlazor.Services.Basic;
+﻿using HentaiBlazor.Common;
+using HentaiBlazor.Data.Anime;
+using HentaiBlazor.Services.Anime;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using System;
@@ -9,29 +8,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace HentaiBlazor.Pages.Basic.Catalog
+namespace HentaiBlazor.Pages.Anime.Video
 {
     public partial class Edit
     {
 
-        private string catalogId;
+        private string videoId;
 
-        private BCatalogEntity catalogEntity;
+        private AVideoEntity videoEntity;
 
         [Inject]
-        public CatalogService catalogService { get; set; }
+        public VideoService videoService { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
-            catalogId = base.Options ?? null;
+            videoId = base.Options ?? null;
 
-            if (StringUtils.IsBlank(catalogId))
+            if (StringUtils.IsBlank(videoId))
             {
-                catalogEntity = new BCatalogEntity();
+                videoEntity = new AVideoEntity();
             }
             else
             {
-                catalogEntity = await catalogService.FindCloneAsync(catalogId);
+                videoEntity = await videoService.FindCloneAsync(videoId);
             }
 
             await base.OnInitializedAsync();
@@ -39,14 +38,15 @@ namespace HentaiBlazor.Pages.Basic.Catalog
 
         private async Task OnFinish(EditContext editContext)
         {
-            await this.catalogService.SaveAsync(catalogEntity);
+            await videoService.SaveAsync(videoEntity);
 
-            await base.ModalRef.CloseAsync();
+            await base.DrawerRef.CloseAsync("success");
         }
 
         private async Task OnFinishFailed(EditContext editContext)
         {
             await Task.CompletedTask;
         }
+
     }
 }

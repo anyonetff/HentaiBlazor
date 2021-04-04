@@ -7,7 +7,7 @@ namespace HentaiBlazor.Common
 {
     public class AnimeUtils
     {
-        private static string[] _media = { ".mp4", ".wma", ".avi" };
+        private static string[] _media = { ".mp4", ".wma", ".avi", ".mkv", ".rmvb", ".rm" };
 
         public static bool IsMedia(string name)
         {
@@ -26,6 +26,28 @@ namespace HentaiBlazor.Common
 
             return false;
         }
+
+        public static string ParseTitle(string name)
+        {
+            string r = "";
+
+            int s = name.IndexOf("]");
+            int e = name.LastIndexOf(".");
+
+            if (s > -1 && e > 1)
+            {
+                r = name.Substring(s + 1, e - s - 1).Trim();
+            }
+            else
+            {
+                r = name.Substring(0, e).Trim();
+            }
+
+            // Console.WriteLine("   [ " + s + " - " + e + " ] " + r);
+
+            return r;
+        }
+
 
     }
 }

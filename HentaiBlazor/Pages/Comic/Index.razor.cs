@@ -1,8 +1,8 @@
 ﻿using AntDesign;
 using HentaiBlazor.Data.Comic;
 using HentaiBlazor.Ezcomp;
-using HentaiBlazor.Service;
-using HentaiBlazor.Service.Comic;
+using HentaiBlazor.Services;
+using HentaiBlazor.Services.Comic;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System;

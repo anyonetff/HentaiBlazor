@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace HentaiBlazor.Service.Comic
+namespace HentaiBlazor.Services.Comic
 {
     public class BookService : AbstractService<CBookEntity>
     {
@@ -22,9 +22,8 @@ namespace HentaiBlazor.Service.Comic
             var query = this.dbContext.Set<CBookEntity>()
                 .Where<CBookEntity>(book => StringUtils.IsBlank(searchPath) || book.Path.Contains(searchPath))
                 .Where<CBookEntity>(book => StringUtils.IsBlank(searchAuthor) || book.Author.Contains(searchAuthor))
-                .Where<CBookEntity>(book => StringUtils.IsBlank(searchKeyword) || book.Title.Contains(searchKeyword) || book.Name.Contains(searchKeyword));
-
-            query.OrderBy(book => book.Author).ThenBy(book => book.Title);
+                .Where<CBookEntity>(book => StringUtils.IsBlank(searchKeyword) || book.Title.Contains(searchKeyword) || book.Name.Contains(searchKeyword))
+                .OrderBy(book => book.Author).ThenBy(book => book.Title);
 
             return await query.ToListAsync<CBookEntity>();
 

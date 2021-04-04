@@ -37,8 +37,8 @@ namespace HentaiBlazor.Data.Anime
         [Column("v_tags")]
         public string Tags { get; set; }
 
-        [Column("v_length")]
-        public int Length { get; set; }
+        [Column("v_length", TypeName = "BIGINT")]
+        public long Length { get; set; }
 
         [Column("v_cover")]
         public string Cover { get; set; }

@@ -1,7 +1,7 @@
 ﻿using AntDesign.Pro.Layout;
 using HentaiBlazor.Common;
 using HentaiBlazor.Data.Security;
-using HentaiBlazor.Service.Security;
+using HentaiBlazor.Services.Security;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
@@ -16,12 +16,18 @@ namespace HentaiBlazor.Layouts
 
         private int _maxDepth = 3;
 
+        // private BasicLayout Layout;
+
         [Inject]
         public FunctionService service { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
             Menus = await CreateMenu(null, 1);
+
+            // Console.WriteLine(Layout.ColSize + "|" + Layout.IsMobile);
+
+            
         }
 
         // 递归查询生成菜单

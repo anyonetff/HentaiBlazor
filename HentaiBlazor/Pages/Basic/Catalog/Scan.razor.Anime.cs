@@ -1,5 +1,6 @@
 ﻿using HentaiBlazor.Common;
-using HentaiBlazor.Service.Anime;
+using HentaiBlazor.Data.Anime;
+using HentaiBlazor.Services.Anime;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
@@ -47,10 +48,39 @@ namespace HentaiBlazor.Pages.Basic.Catalog
                     continue;
                 }
 
-                //CBookEntity book = await CreateBook(file);
+                AVideoEntity video = await CreateVideo(file);
                 //BAuthorEntity author = await CreateAuthor(book.Author);
             }
         }
 
+        private async Task<AVideoEntity> CreateVideo(FileInfo file)
+        {
+            AVideoEntity video = await videoService.FindByNameAsync(file.DirectoryName, file.Name);
+
+            if (video != null)
+            {
+                Console.WriteLine("文件已存在...");
+
+                return video;
+            }
+
+            video = new AVideoEntity();
+
+            video.Path = file.DirectoryName;
+            video.Name = file.Name;
+
+            video.Author = "";
+            video.Title = AnimeUtils.ParseTitle(video.Name);
+            video.Language = "ja";
+
+            video.Length = file.Length;
+
+            video.XInsert_ = file.CreationTime;
+            video.XUpdate_ = file.LastWriteTime;
+
+            video = await videoService.SaveAsync(video);
+
+            return video;
+        }
     }
 }

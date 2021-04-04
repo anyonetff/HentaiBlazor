@@ -1,6 +1,6 @@
 ﻿using AntDesign;
 using HentaiBlazor.Data.Anime;
-using HentaiBlazor.Service.Anime;
+using HentaiBlazor.Services.Anime;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
@@ -12,17 +12,71 @@ namespace HentaiBlazor.Pages.Anime.Video
     public partial class List
     {
         [Inject]
-        public VideoService service { get; set; }
+        public VideoService videoService { get; set; }
+
+        [Inject]
+        public DrawerService _drawer { get; set; }
 
         [Inject]
         public ModalService _modal { get; set; }
 
-        List<AVideoEntity> AVideoEntities;
+        private DrawerRef<string> _editRef;
+
+        private ConfirmRef _removeRef;
+
+        private List<AVideoEntity> AVideoEntities;
+
+        private string searchKeyword;
+
+        private string searchCatalog;
+
+        private string searchAuthor;
+
         protected override async Task OnInitializedAsync()
         {
-            AVideoEntities = await service.ListAsync();
+            await Search();
         }
 
+        public async Task Search()
+        {
+            AVideoEntities = await videoService.SearchAsync(searchCatalog, searchAuthor, searchKeyword);
+        }
 
+        private async Task OpenEdit(string options)
+        {
+            var _config = new DrawerOptions();
+
+            _config.Title = "编辑数据";
+            _config.Width = 800;
+            //modalConfig.Footer = null;
+
+            _editRef = await _drawer
+                .CreateAsync<Edit, string, string>(_config, options);
+
+            _editRef.OnClosed = async (r) =>
+            {
+                Console.WriteLine(r);
+
+                await Search();
+                StateHasChanged();
+            };
+        }
+
+        private async Task OpenRemove(string options)
+        {
+            var _config = new ConfirmOptions();
+
+            _config.Title = "删除数据";
+
+            _config.OnOk = async (r) =>
+            {
+                Console.WriteLine("关闭删除确认后刷新数据...");
+
+                await Search();
+                StateHasChanged();
+            };
+
+            _removeRef = await _modal.CreateConfirmAsync<Remove, string, string>(_config, options);
+        }
     }
 }

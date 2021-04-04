@@ -13,11 +13,11 @@ using Microsoft.Extensions.Hosting;
 using AntDesign.Pro.Layout;
 using HentaiBlazor.Data;
 using Microsoft.EntityFrameworkCore;
-using HentaiBlazor.Service.Basic;
-using HentaiBlazor.Service.Comic;
-using HentaiBlazor.Service.Security;
-using HentaiBlazor.Service.Anime;
-using HentaiBlazor.Service;
+using HentaiBlazor.Services.Basic;
+using HentaiBlazor.Services.Comic;
+using HentaiBlazor.Services.Security;
+using HentaiBlazor.Services.Anime;
+using HentaiBlazor.Services;
 
 namespace HentaiBlazor
 {

@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace HentaiBlazor.Service.Basic
+namespace HentaiBlazor.Services.Basic
 {
     public class TagService : AbstractService<BTagEntity>
     {

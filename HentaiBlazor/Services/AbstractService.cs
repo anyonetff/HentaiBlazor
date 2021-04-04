@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace HentaiBlazor.Service
+namespace HentaiBlazor.Services
 {
     /**
      * 增删改查服务基类.

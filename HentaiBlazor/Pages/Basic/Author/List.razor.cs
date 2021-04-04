@@ -1,6 +1,6 @@
 ﻿using AntDesign;
 using HentaiBlazor.Data.Basic;
-using HentaiBlazor.Service.Basic;
+using HentaiBlazor.Services.Basic;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
