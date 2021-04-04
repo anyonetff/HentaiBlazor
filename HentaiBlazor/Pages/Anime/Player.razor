@@ -3,22 +3,7 @@
 <PageContainer Title="@video.Name">
 
     <video id="video">
-        <source src="@source()" />
+        <source src="@("api/Video/Playback?id=" + @video.Id)" />
     </video>
 
 </PageContainer>
-
-@code
-{
-
-    string source()
-    {
-        string r = "file:///";
-
-        r = r + video.Path.Replace("\\", "/");
-        r = r + "/" + video.Name;
-
-        return r;
-    }
-
-}
