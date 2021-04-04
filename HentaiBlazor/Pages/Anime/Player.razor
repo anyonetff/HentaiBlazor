@@ -1,9 +1,10 @@
 ﻿@page "/anime/player/{Id}"
 
 <PageContainer Title="@video.Name">
-
-    <video id="video">
-        <source src="@("api/Video/Playback?id=" + @video.Id)" />
-    </video>
+    <div style="max-width: 1280px; max-height: 720px; background-color: gainsboro; text-align: center;">
+        <video id="video" controls>
+            <source src="@("api/Video/Playback?id=" + @video.Id)" />
+        </video>
+    </div>
 
 </PageContainer>
