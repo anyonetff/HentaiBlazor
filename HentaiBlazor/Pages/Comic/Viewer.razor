@@ -3,24 +3,30 @@
 <PageContainer Title="@book.Name">
     <Affix OffsetTop="0">
         <Space Style="float: right; background-color: rgba(255,255,255,0.3);">
-            <SpaceItem>
-                <Icon Type="expand" Style="@("font-size: 2rem;" + CurrentModeStyle(ModeFit))" 
-                      OnClick="() => OnMode(ModeFit)" />
-                <Icon Type="column-width" Style="@("font-size: 2rem;" + CurrentModeStyle(ModeWidth))" 
-                      OnClick="() => OnMode(ModeWidth)" />
-                <Icon Type="column-width" Style="@("font-size: 2rem;" + CurrentModeStyle(ModeHeight))" Rotate="90" 
-                      OnClick="() => OnMode(ModeHeight)" />
-            </SpaceItem>
-            <SpaceItem>
-                @if (_Scale)
-                {
-                    <Icon Type="fullscreen" Style="font-size: 2rem;" OnClick="OnScale" />
-                }
-                else
-                {
-                    <Icon Type="fullscreen-exit" Style="font-size: 2rem;" OnClick="OnScale" />
-                }
-            </SpaceItem>
+            @if (_Paged)
+            {
+                <SpaceItem>
+                    <Icon Type="select" Style="font-size: 2rem;" OnClick="OnPreview" />
+                </SpaceItem>
+                <SpaceItem>
+                    <Icon Type="expand" Style="@("font-size: 2rem;" + CurrentModeStyle(ModeFit))"
+                          OnClick="() => OnMode(ModeFit)" />
+                    <Icon Type="column-width" Style="@("font-size: 2rem;" + CurrentModeStyle(ModeWidth))"
+                          OnClick="() => OnMode(ModeWidth)" />
+                    <Icon Type="column-width" Style="@("font-size: 2rem;" + CurrentModeStyle(ModeHeight))" Rotate="90"
+                          OnClick="() => OnMode(ModeHeight)" />
+                </SpaceItem>
+                <SpaceItem>
+                    @if (_Scale)
+                    {
+                        <Icon Type="fullscreen" Style="font-size: 2rem;" OnClick="OnScale" />
+                    }
+                    else
+                    {
+                        <Icon Type="fullscreen-exit" Style="font-size: 2rem;" OnClick="OnScale" />
+                    }
+                </SpaceItem>
+            }
         </Space>
 
         <Pagination Style="margin-bottom: 0.5rem; background-color: rgba(255,255,255,0.3);" Total="EntryPaginator.Total"
@@ -31,21 +37,48 @@
                     ShowQuickJumper />
     </Affix>
 
-    <div class="viewer-contain" style="@CurrentContainStyle()">
-        <!-- 父级元素要设为：relative，以确定内里块的高宽 -->
-        <div class="viewer-left" @onclick="Previous">
-            <!-- 上一页 -->
-        </div>
-        <div class="viewer-right" @onclick="Next">
-            <!-- 下一页 -->
-        </div>
+    @if (_Paged)
+    {
+        <div class="viewer-contain" style="@CurrentContainStyle()">
+            <!-- 父级元素要设为：relative，以确定内里块的高宽 -->
+            <div class="viewer-left" @onclick="Previous">
+                <!-- 上一页 -->
+            </div>
+            <div class="viewer-right" @onclick="Next">
+                <!-- 下一页 -->
+            </div>
 
-        <img src="@_Image" style="@CurrentContentStyle()" />
-    </div>
+            <img src="@_Image" style="@CurrentContentStyle()" />
+        </div>
+    }
+    else
+    {
+        <AntList ItemLayout="ListItemLayout.Horizontal"
+                 Grid="gutter" DataSource="@entry">
+            <ListItem Grid="gutter" Style="text-align:center;" OnClick="() => OnRead(context.Key)">
+                <img alt="@context.Key" src="@_Cache.GetValueOrDefault(context.Key)" 
+                     class="viewer-content-preview" />
+            </ListItem>
+        </AntList>
+    }
+
 
 </PageContainer>
 
-@code { 
+@code {
+
+    public ListGridType gutter = new ListGridType
+    {
+        Gutter = 8,
+        Xs = 2,
+        Sm = 2,
+        Md = 4,
+        Lg = 4,
+        Xl = 5,
+        Xxl = 5,
+        Column = 5
+    };
+
     string CurrentModeStyle(string mode)
     {
         return mode == _Mode ? "" : " color: gray;";

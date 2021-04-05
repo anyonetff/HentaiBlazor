@@ -155,7 +155,7 @@ namespace HentaiBlazor.Ezcomp
 
             if (OnPageSizeChange.HasDelegate)
             {
-                await OnPageSizeChange .InvokeAsync(args);
+                await OnPageSizeChange.InvokeAsync(args);
             }
         }
 

@@ -1,5 +1,7 @@
 ﻿using HentaiBlazor.Common;
 using HentaiBlazor.Data.Comic;
+using HentaiBlazor.Services.Comic;
+using Microsoft.AspNetCore.Components;
 using SharpCompress.Archives;
 using System;
 using System.Collections.Generic;
@@ -15,7 +17,8 @@ namespace HentaiBlazor.Services
     // 不过这里没有编写回收算法
     public class CoverService
     {
-        private static string none = "/book/none.svg";
+        
+        private static byte [] none = new byte [0];
 
         private static string base64 = "data:image/*;base64,";
 
@@ -24,21 +27,36 @@ namespace HentaiBlazor.Services
         private static int height = 400;
 
         // 封面缓存
-        private Dictionary<string, string> cache;
+        // private Dictionary<string, string> cache;
+
+        private Dictionary<string, byte []> cache;
 
         public CoverService()
         {
-            cache = new Dictionary<string, string>();
+            cache = new Dictionary<string, byte []>();
         }
 
-        public async Task<string> GetAsync(CBookEntity book)
+        public byte[] GetCached(string id)
         {
+            if (cache.ContainsKey(id))
+            {
+                return cache[id];
+            }
+
+            return null;
+        }
+
+        public async Task<byte[]> GetAsync(CBookEntity book)
+        {
+            //lock(this);
+
             if (cache.ContainsKey(book.Id))
             {
                 return cache[book.Id];
             }
             //string cover = "";
-            string c = await ReadAsync(Path.Combine(book.Path, book.Name));
+
+            byte[] c = await ReadAsync(Path.Combine(book.Path, book.Name));
 
             cache.Add(book.Id, c);
 
@@ -52,9 +70,9 @@ namespace HentaiBlazor.Services
             await Task.CompletedTask;
         }
 
-        private async Task<string> ReadAsync(string file)
+        private async Task<byte[]> ReadAsync(string file)
         {
-            return await Task<string>.Run(() =>
+            return await Task<byte[]>.Run(() =>
             {
                 FileInfo f = new FileInfo(file);
 
@@ -63,7 +81,7 @@ namespace HentaiBlazor.Services
                     Console.WriteLine("文件不存在...");
                     return none;
                 }
-
+                
                 using (var archive = ArchiveFactory.Open(file))
                 {
                     foreach (var entry in archive.Entries)
@@ -71,9 +89,10 @@ namespace HentaiBlazor.Services
                         if (!entry.IsDirectory && ComicUtils.IsImage(entry.Key))
                         {
                             Console.WriteLine("找到了一个图片");
-                            string preview = ImageUtils.Preview(entry, width, height, ImageFormat.Png);
+                            byte [] preview = ImageUtils.PreviewBuffer(entry, width, height, ImageFormat.Png);
 
-                            return (StringUtils.IsBlank(preview)) ? none : base64 + preview;
+                            // return (StringUtils.IsBlank(preview)) ? none : base64 + preview;
+                            return preview;
                         }
                     }
                 }

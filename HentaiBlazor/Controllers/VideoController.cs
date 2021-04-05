@@ -10,11 +10,14 @@ using System.Threading.Tasks;
 
 namespace HentaiBlazor.Controllers
 {
-    [ApiController]
+    // 视频服务控制器
     [Route("api/[controller]")]
+    [ApiController]
     public class VideoController : ControllerBase
     {
         private readonly VideoService videoService;
+
+        private readonly static int bufferSize = 1024;
 
         public VideoController(VideoService videoService)
         {
@@ -32,7 +35,7 @@ namespace HentaiBlazor.Controllers
             {
                 return;
             }
-
+            
             using (Stream stream = this.Response.BodyWriter.AsStream())
             {
                 await WriteToStream(stream, Path.Combine(video.Path, video.Name));
@@ -43,10 +46,7 @@ namespace HentaiBlazor.Controllers
 
         public async Task WriteToStream(Stream outputStream, string file)
         {
-            //path of file which we have to read//  
-            // var filePath = "M:\\Animes\\[9月][芒果Ⅱ字幕组][旧番填坑]聖操奴隷 あやつりにんぎょう 全2话[MP4+MKV]\\[Mango.sub]聖操奴隷 第1话(960×720 x264 AAC).mp4";
-            //here set the size of buffer, you can set any size  
-            int bufferSize = 1000;
+
             byte[] buffer = new byte[bufferSize];
             //here we re using FileStream to read file from server//  
             using (var fileStream = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.Read))

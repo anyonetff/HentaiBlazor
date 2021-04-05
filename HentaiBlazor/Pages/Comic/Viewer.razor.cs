@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Components;
 using SharpCompress.Archives;
 using System;
 using System.Collections.Generic;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -41,14 +42,19 @@ namespace HentaiBlazor.Pages.Comic
 
         private string _Mode = "fit";
 
+        private bool _Paged = true;
+
         private bool _Scale = true;
 
         private string _Image = "";
 
+        // private List<string> _Images = new List<string>();
+
+        private Dictionary<string, string> _Cache = new Dictionary<string, string>();
+
         // private List<string> Images = new List<string>();
 
         private Paginator<IArchiveEntry> EntryPaginator = new Paginator<IArchiveEntry>(1);
-
 
 
         protected override async Task OnInitializedAsync()
@@ -56,10 +62,6 @@ namespace HentaiBlazor.Pages.Comic
             Console.WriteLine("读取漫画详情");
 
             book = await bookService.FindAsync(Id);
-
-
-            //_Image = ImagePaginator.Paged().ToList().FirstOrDefault();
-
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -101,6 +103,49 @@ namespace HentaiBlazor.Pages.Comic
 
         }
 
+        public async Task OnPreview()
+        {
+            _Paged = false;
+
+            var args = new PaginationEventArgs { PageSize = 20, PageIndex = 1 };
+
+            await EntryPaginator.HandlePageSizeChange(args);
+            await EntryPaginator.HandlePageIndexChange(args);
+
+            entry = EntryPaginator.Paged().ToList();
+
+            StateHasChanged();
+
+            await reading();
+        }
+
+        public async Task OnRead(string key)
+        {
+            _Paged = true;
+
+            for (int i = 0; i < entries.Count; i++)
+            {
+                var e = entries[i];
+                if (StringUtils.IsEqual(key, e.Key))
+                {
+                    Console.WriteLine("快速定位页面[" + i + "]");
+
+                    var args = new PaginationEventArgs { PageSize = 1, PageIndex = i + 1 };
+
+                    await EntryPaginator.HandlePageSizeChange(args);
+                    await EntryPaginator.HandlePageIndexChange(args);
+
+                    break;
+                }
+            }
+
+            entry = EntryPaginator.Paged().ToList();
+
+            StateHasChanged();
+
+            await reading();
+        }
+
         public void OnMode(string mode) 
         {
             _Mode = mode;
@@ -109,6 +154,7 @@ namespace HentaiBlazor.Pages.Comic
         public void OnScale()
         {
             _Scale = ! _Scale;
+            
         }
 
         public async Task _paging(PaginationEventArgs args)
@@ -119,9 +165,9 @@ namespace HentaiBlazor.Pages.Comic
 
             Console.WriteLine(entry.First().Key);
 
-            await reading();
-
             StateHasChanged();
+
+            await reading();
         }
 
         public async Task _sizing(PaginationEventArgs args)
@@ -131,21 +177,44 @@ namespace HentaiBlazor.Pages.Comic
             entry = EntryPaginator.Paged().ToList();
 
             StateHasChanged();
+
+            await reading();
         }
+
 
         private async Task reading()
         {
+            _Image = "";
+            // _Images.Clear();
+
             foreach (var e in entry)
             {
+                if (_Paged)
+                {
+                    _Image = await dataURL(e);
+                }
+                else 
+                {
+                    if (! _Cache.ContainsKey(e.Key))
+                    {
+                        _Cache.Add(e.Key, await dataURL(e));
+                    }
+                }
 
-                _Image = "data:image/*;base64," + ImageUtils.Read(e);
-
-                // StateHasChanged();
+                StateHasChanged();
             }
+        }
 
-            StateHasChanged();
+        private async Task<string> dataURL(IArchiveEntry e) {
+            return await Task<string>.Run(() =>
+            {
+                if (_Paged)
+                {
+                    return "data:image/*;base64," + ImageUtils.Read(e);
+                }
 
-            await Task.CompletedTask;
+                return "data:image/*;base64," + ImageUtils.PreviewBase64(e, 200, 200, ImageFormat.Png);
+            });
         }
 
         private async Task preparing()

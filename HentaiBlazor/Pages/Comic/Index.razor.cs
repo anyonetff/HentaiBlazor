@@ -41,16 +41,12 @@ namespace HentaiBlazor.Pages.Comic
 
         private string searchAuthor = "";
 
-        protected override async Task OnInitializedAsync()
-        {
-            await Search();
-        }
-
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             if (firstRender)
             {
-                await Refresh();
+                await Search();
+                StateHasChanged();
             }
         }
 
@@ -64,15 +60,6 @@ namespace HentaiBlazor.Pages.Comic
             _CBookEntities = BookPaginator.Paged().ToList();
         }
 
-        public async Task ReSearch()
-        {
-            await Search();
-
-            StateHasChanged();
-
-            await Refresh();
-        }
-
         public async Task _paging(PaginationEventArgs args)
         {
             foreach (var b in _CBookEntities)
@@ -84,9 +71,9 @@ namespace HentaiBlazor.Pages.Comic
 
             _CBookEntities = BookPaginator.Paged().ToList();
 
-            StateHasChanged();
+            //StateHasChanged();
 
-            await Refresh();
+            //await Refresh();
         }
 
         public async Task _sizing(PaginationEventArgs args)
@@ -94,27 +81,8 @@ namespace HentaiBlazor.Pages.Comic
             await BookPaginator.HandlePageSizeChange(args);
 
             _CBookEntities = BookPaginator.Paged().ToList();
-
-            StateHasChanged();
-
-            await Refresh();
         }
 
-        private async Task Refresh()
-        {
-            Console.WriteLine("刷新当页封面");
-
-            //_CBookEntities = BookPaginator.Paged().ToList();
-
-            for (int i = 0; i < _CBookEntities.Count; i++)
-            {
-                CBookEntity _book = _CBookEntities.ElementAt(i);
-
-                _book.Cover_ = await coverService.GetAsync(_book);
-
-                StateHasChanged();
-            }
-        }
 
         private async Task OpenDetail(string options, string title)
         {

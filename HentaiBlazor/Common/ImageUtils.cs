@@ -12,7 +12,7 @@ namespace HentaiBlazor.Common
     public class ImageUtils
     {
         // 通过压缩流生成预览图片
-        public static string Preview(IArchiveEntry entry, 
+        public static string PreviewBase64(IArchiveEntry entry, 
             int width, int height, ImageFormat format)
         {
             Image source = Create(entry);
@@ -23,8 +23,23 @@ namespace HentaiBlazor.Common
 
             Image target = ThumbnailOut(source, width, height);
 
-            return Base64(target, format);
+            return WriteToBase64(target, format);
         }
+
+        public static byte [] PreviewBuffer(IArchiveEntry entry,
+            int width, int height, ImageFormat format)
+        {
+            Image source = Create(entry);
+            if (source == null)
+            {
+                return null;
+            }
+
+            Image target = ThumbnailOut(source, width, height);
+
+            return WriteToBuffer(target, format);
+        }
+
 
         // 将压缩流还原成图片的base64数据
         public static string Read(IArchiveEntry entry)
@@ -58,7 +73,7 @@ namespace HentaiBlazor.Common
 
         // 将图片编码成base64数据
         // 如果要拼接成dataURL，可以自己在前面加
-        public static string Base64(Image image, ImageFormat format)
+        public static string WriteToBase64(Image image, ImageFormat format)
         {
             using (var ms = new MemoryStream())
             {
@@ -70,11 +85,31 @@ namespace HentaiBlazor.Common
             }
         }
 
+        public static byte[] WriteToBuffer(Image image, ImageFormat format)
+        {
+            using (var ms = new MemoryStream())
+            {
+                image.Save(ms, format);
+
+                // byte[] bytes = ms.ToArray();
+
+                return ms.ToArray();
+            }
+        }
+
+        public static Stream WriteToStream(Image image, ImageFormat format)
+        {
+            using (var ms = new MemoryStream())
+            {
+                image.Save(ms, format);
+
+                return ms;
+            }
+        }
+
         // 通过压缩流创建图片
         public static Image Create(IArchiveEntry entry)
         {
-            
-
             try
             {
                 if (entry.IsEncrypted)

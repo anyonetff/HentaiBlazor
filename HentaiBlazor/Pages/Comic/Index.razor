@@ -27,7 +27,7 @@
                    @bind-Value="searchAuthor" />
         </SpaceItem>
         <SpaceItem>
-            <Button Type="@ButtonType.Primary" @onclick="ReSearch">查询</Button>
+            <Button Type="@ButtonType.Primary" @onclick="Search">查询</Button>
         </SpaceItem>
     </Space>
 
@@ -35,7 +35,7 @@
              Grid="gutter" DataSource="_CBookEntities">
         <ListItem Grid="gutter">
             <Card Size="small" Hoverable
-                  Cover="@coverTemplate(@context.Cover_)">
+                  Cover="@coverTemplate(@context.Id)">
                 <ChildContent>
                     <div>
                         <Icon Type="heart" Style="color: orangered;" Theme="@(context.Favorite ? "fill" : "outline")" />
@@ -81,9 +81,9 @@
         Column = 10
     };
 
-    private RenderFragment coverTemplate(string cover)
+    private RenderFragment coverTemplate(string id)
     {
-        return @<div style="height: 200px; overflow: hidden;"><Image PreviewSrc="@cover" Src="@cover" /></div>;
+        return @<div style="height: 200px; overflow: hidden;"><Image PreviewSrc="@("/api/Book/Cover/" + id)" Src="@("/api/Book/Cover/" + id)" /></div>;
     }
 
 }
