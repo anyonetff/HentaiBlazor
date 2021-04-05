@@ -34,6 +34,9 @@ namespace HentaiBlazor
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddControllers();
+
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddAntDesign();
@@ -90,9 +93,7 @@ namespace HentaiBlazor
                 endpoints.MapBlazorHub();
                 endpoints.MapFallbackToPage("/_Host");
 
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "api/{controller=Index}/{action=Index}/{id?}");
+                endpoints.MapControllers();
             });
         }
     }

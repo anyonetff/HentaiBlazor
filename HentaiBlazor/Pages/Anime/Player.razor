@@ -3,7 +3,7 @@
 <PageContainer Title="@video.Name">
     <div style="max-width: 1280px; max-height: 720px; background-color: gainsboro; text-align: center;">
         <video id="video" controls>
-            <source src="@("api/Video/Playback?id=" + @video.Id)" />
+            <source src="@("api/Video/Playback/" + @video.Id)" />
         </video>
     </div>
 </PageContainer>

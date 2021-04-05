@@ -1,18 +1,18 @@
 ﻿using HentaiBlazor.Data.Anime;
 using HentaiBlazor.Services.Anime;
-using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace HentaiBlazor.Controllers
 {
-    public class VideoController : Controller
+    [ApiController]
+    [Route("api/[controller]")]
+    public class VideoController : ControllerBase
     {
         private readonly VideoService videoService;
 
@@ -21,6 +21,7 @@ namespace HentaiBlazor.Controllers
             this.videoService = videoService;
         }
 
+        [HttpGet("Playback/{id}")]
         public async Task Playback(string id)
         {
             Console.WriteLine("开始播放视频文件[" + id + "].");
