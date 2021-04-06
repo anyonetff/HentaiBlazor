@@ -344,3 +344,7 @@ hentai.db
 hentaidb.db
 *.db-shm
 *.db-wal
+
+# node
+node_modules
+dist

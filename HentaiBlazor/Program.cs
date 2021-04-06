@@ -24,7 +24,7 @@ namespace HentaiBlazor
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>()
-                    .UseUrls("http://*:5000;https://*:5001");
+                        .UseUrls("http://*:5000;https://*:5001"); // ¼àÌıËùÓĞIPµØÖ·
                 });
     }
 }
