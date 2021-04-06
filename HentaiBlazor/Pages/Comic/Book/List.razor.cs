@@ -46,19 +46,15 @@ namespace HentaiBlazor.Pages.Comic.Book
             Sortables.Add(Sortable.Of(0, nameof(CBookEntity.Author), "作者"));
             Sortables.Add(Sortable.Of(0, nameof(CBookEntity.Path), "目录"));
             Sortables.Add(Sortable.Of(0, nameof(CBookEntity.Name), "文件"));
-            Sortables.Add(Sortable.Of(0, nameof(CBookEntity.XInsert_), "时间"));
+            Sortables.Add(Sortable.Of(-1, nameof(CBookEntity.XInsert_), "时间"));
 
             await Search();
         }
 
         public async Task Search()
         {
-            CBookEntities = await bookService.SearchAsync(searchCatalog, searchAuthor, searchKeyword,
-                Sortable.Asc(nameof(CBookEntity.Author)));
-        }
+            Console.WriteLine("搜索数据.");
 
-        private async Task OnSort()
-        {
             CBookEntities = await bookService.SearchAsync(searchCatalog, searchAuthor, searchKeyword,
                 Sortables);
         }

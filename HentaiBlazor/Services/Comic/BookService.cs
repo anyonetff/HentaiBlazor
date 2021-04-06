@@ -24,32 +24,23 @@ namespace HentaiBlazor.Services.Comic
                 .Where<CBookEntity>(book => StringUtils.IsBlank(searchAuthor) || book.Author.Contains(searchAuthor))
                 .Where<CBookEntity>(book => StringUtils.IsBlank(searchKeyword) || book.Title.Contains(searchKeyword) || book.Name.Contains(searchKeyword));
 
-            IOrderedQueryable<CBookEntity> _query = null;
+            var _query = OrderUtils.Sort<CBookEntity>(query, sortables);
 
-            foreach (Sortable sortable in sortables)
+            if (_query == null)
             {
-                if (sortable.Mode != 0)
-                {
-                    //var p = Expression.Parameter(typeof(CBookEntity));
-                   // typeof(CBookEntity).GetProperty(sortable.Name);
-                    //var t = typeof(CBookEntity).GetField(sortable.Name).GetType();
-
-                   // Type t = Type.GetType()
-                    //var f = Expression.Lambda<Func<CBookEntity, >(Expression.PropertyOrField(p, sortable.Name));
-                    
-                    if (_query == null)
-                    {
-                        _query = query.OrderBy(o => o.Author);
-                    }
-                    else
-                    {
-                        _query = _query.ThenBy(o => o.Title);
-                    }
-                }
+                Console.WriteLine("没有任何排序.");
+                return await query.ToListAsync<CBookEntity>();
             }
 
-            return await query.ToListAsync<CBookEntity>();
+            return await _query.ToListAsync<CBookEntity>();
         }
+
+        private Expression<Func<CBookEntity, TResult>> GetExpression<TResult>(string name)
+        {
+
+            return null;
+        }
+
 
         public async Task<List<CBookEntity>> SearchAsync(string searchPath, string searchAuthor, string searchKeyword, Sortable sortable)
         {
