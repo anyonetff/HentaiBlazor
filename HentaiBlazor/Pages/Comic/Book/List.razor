@@ -5,6 +5,12 @@
 
 <PageContainer Title="漫画管理">
 
+    <Space Style="float: right;">
+        <SpaceItem>
+            <SortableList Sortables="@Sortables" OnSort="() => OnSort()" />
+        </SpaceItem>
+    </Space>
+
     <Space Style="margin-bottom: 0.5rem">
         <SpaceItem>
             <Input Prefix="@_filter" Placeholder="关键字" Style="width: 12rem;"

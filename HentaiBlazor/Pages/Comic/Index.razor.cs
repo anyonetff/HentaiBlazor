@@ -1,4 +1,5 @@
 ﻿using AntDesign;
+using HentaiBlazor.Common;
 using HentaiBlazor.Data.Comic;
 using HentaiBlazor.Ezcomp;
 using HentaiBlazor.Services;
@@ -41,6 +42,9 @@ namespace HentaiBlazor.Pages.Comic
 
         private string searchAuthor = "";
 
+        private Sortable sortable = Sortable.Desc(nameof(CBookEntity.XInsert_));
+
+
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             if (firstRender)
@@ -50,11 +54,28 @@ namespace HentaiBlazor.Pages.Comic
             }
         }
 
+        public async Task Sort(string name)
+        {
+            Console.WriteLine(" name: " + name);
+
+            if (StringUtils.IsEqual(name, sortable.Name))
+            {
+                sortable.Mode = sortable.Mode * -1;
+            }
+            else 
+            {
+                sortable.Name = name;
+            }
+
+            await Search();
+        }
+
         public async Task Search()
         {
             Console.WriteLine(" search: " + searchKeyword);
 
-            CBookEntities = await bookService.SearchAsync(searchCatalog, searchAuthor, searchKeyword);
+            CBookEntities = await bookService.SearchAsync(searchCatalog, searchAuthor, searchKeyword,
+                sortable);
 
             BookPaginator.DataSource = CBookEntities;
             _CBookEntities = BookPaginator.Paged().ToList();

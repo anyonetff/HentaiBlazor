@@ -1,0 +1,15 @@
+﻿
+<Button Size="small" @onclick="(e) => OnClear(e)">
+    清除排序
+</Button>
+
+@foreach (var item in Sortables)
+{
+<Button Size="small" 
+        Type="@item._Type()" Icon="@item._Icon()" @onclick="(e) => OnClick(e, item)">
+    @item.Text
+</Button>
+
+}
+
+

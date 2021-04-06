@@ -1,6 +1,8 @@
 ﻿using AntDesign;
+using HentaiBlazor.Common;
 using HentaiBlazor.Data.Basic;
 using HentaiBlazor.Data.Comic;
+using HentaiBlazor.Ezcomp;
 using HentaiBlazor.Services.Basic;
 using HentaiBlazor.Services.Comic;
 using Microsoft.AspNetCore.Components;
@@ -35,14 +37,30 @@ namespace HentaiBlazor.Pages.Comic.Book
 
         private string searchAuthor;
 
+        private List<Sortable> Sortables = new List<Sortable>();
+
+
         protected override async Task OnInitializedAsync()
         {
+            Sortables.Add(Sortable.Of(0, nameof(CBookEntity.Title), "标题"));
+            Sortables.Add(Sortable.Of(0, nameof(CBookEntity.Author), "作者"));
+            Sortables.Add(Sortable.Of(0, nameof(CBookEntity.Path), "目录"));
+            Sortables.Add(Sortable.Of(0, nameof(CBookEntity.Name), "文件"));
+            Sortables.Add(Sortable.Of(0, nameof(CBookEntity.XInsert_), "时间"));
+
             await Search();
         }
 
         public async Task Search()
         {
-            CBookEntities = await bookService.SearchAsync(searchCatalog, searchAuthor, searchKeyword);
+            CBookEntities = await bookService.SearchAsync(searchCatalog, searchAuthor, searchKeyword,
+                Sortable.Asc(nameof(CBookEntity.Author)));
+        }
+
+        private async Task OnSort()
+        {
+            CBookEntities = await bookService.SearchAsync(searchCatalog, searchAuthor, searchKeyword,
+                Sortables);
         }
 
         private async Task OpenEdit(string options)
