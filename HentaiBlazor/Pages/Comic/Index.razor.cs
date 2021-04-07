@@ -25,9 +25,6 @@ namespace HentaiBlazor.Pages.Comic
         [Inject]
         public DrawerService _drawer { get; set; }
 
-        [Inject]
-        public CoverService coverService { get; set; }
-
         private List<CBookEntity> CBookEntities;
 
         private List<CBookEntity> _CBookEntities;
@@ -63,6 +60,7 @@ namespace HentaiBlazor.Pages.Comic
                 Sortable.ToOrders());
 
             BookPaginator.DataSource = CBookEntities;
+
             _CBookEntities = BookPaginator.Paged().ToList();
         }
 
@@ -95,7 +93,7 @@ namespace HentaiBlazor.Pages.Comic
             var _config = new DrawerOptions();
 
             _config.Title = title;
-            _config.Width = 800;
+            _config.Width = 720;
             //modalConfig.Footer = null;
 
             _detailRef = await _drawer

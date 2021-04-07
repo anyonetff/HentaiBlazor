@@ -31,7 +31,7 @@
                   Cover="@coverTemplate(@context.Id)">
                 <ChildContent>
                     <div>
-                        <Icon Type="heart" Style="color: orangered;" Theme="@(context.Favorite ? "fill" : "outline")" />
+                        <IconFavorite Favorite="@context.Favorite" />
                         <TextLanguage Language="@context.Language" />
                     </div>
                     <CardMeta Style="font-size: 0.75rem" Title="@context.Title" Description="@context.Author" />
