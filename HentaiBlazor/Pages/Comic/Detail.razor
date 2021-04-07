@@ -33,7 +33,7 @@
         }
     </DescriptionsItem>
     <DescriptionsItem Title="最爱">
-        <Icon Type="heart" OnClick="OnFavorite" Theme="@(bookEntity.Favorite ? "fill" : "outline")" />
+        <IconFavorite OnClick="OnFavorite" Favorite="@bookEntity.Favorite" />
     </DescriptionsItem>
     <DescriptionsItem Title="备注">
         @bookEntity.Note

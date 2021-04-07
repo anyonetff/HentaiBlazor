@@ -35,7 +35,7 @@
             </Space>
         </ActionColumn>
         <Column Title="最爱" Width="60" @bind-Field="@context.Favorite">
-            <Icon Type="heart" Theme="@(context.Favorite ? "fill" : "outline")" />
+            <IconFavorite Favorite="context.Favorite" />
         </Column>
         <Column Title="标题" @bind-Field="@context.Title">
             <Tooltip Placement="@PlacementType.TopLeft" Title="@context.Name">
@@ -59,6 +59,6 @@
 @code
 {
     RenderFragment _folder =@<Icon Type="folder" />;
-RenderFragment _team =@<Icon Type="team" />;
-RenderFragment _filter =@<Icon Type="filter" />;
+    RenderFragment _team =@<Icon Type="team" />;
+    RenderFragment _filter =@<Icon Type="filter" />;
 }
