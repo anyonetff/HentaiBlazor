@@ -1,13 +1,19 @@
 ﻿
-<Button Size="small" @onclick="(e) => OnClear(e)">
-    清除排序
+<Button Size="small" Icon="reload"
+        @onclick="(e) => OnClear(e)" Style="margin-left: 5px;">
+    清除
 </Button>
 
-@foreach (var item in Sortables)
+@foreach (var item in Sortable.SortableItems)
 {
-<Button Size="small" 
-        Type="@item._Type()" Icon="@item._Icon()" @onclick="(e) => OnClick(e, item)">
-    @item.Text
+<Button Size="small"
+        Type="@item._Type()" Icon="@item._Icon()" @onclick="(e) => OnChange(e, item.Name)">
+    @(item.Text + " ")
+    
+    @if (item.Index > 0)
+    {
+        <sup>@item.Index</sup>
+    }
 </Button>
 
 }

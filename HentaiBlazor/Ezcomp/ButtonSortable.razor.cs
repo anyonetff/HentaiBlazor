@@ -15,7 +15,7 @@ namespace HentaiBlazor.Ezcomp
     {
 
         [Parameter]
-        public Sortable Sortable { get; set; }
+        public SortableItem Sortable { get; set; }
 
         [Parameter]
         public string Name { get; set; }

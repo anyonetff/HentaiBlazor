@@ -11,8 +11,7 @@ namespace HentaiBlazor.Ezcomp
     {
 
         [Parameter]
-        public IEnumerable<Sortable> Sortables { get; set; }
-
+        public Sortable Sortable { get; set; }
 
         [Parameter]
         public EventCallback<MouseEventArgs> OnSort { get; set; }
@@ -27,29 +26,14 @@ namespace HentaiBlazor.Ezcomp
 
         private async Task OnClear(MouseEventArgs args)
         {
-            if (Sortables == null || !Sortables.Any())
-            {
-                return;
-            }
-
-            foreach (var item in Sortables)
-            {
-                item.Mode = 0;
-            }
+            Sortable.Clear();
 
             await HandleOnSort(args);
         }
 
-        private async Task OnClick(MouseEventArgs args, Sortable item)
+        private async Task OnChange(MouseEventArgs args, string name)
         {
-            if (item.Mode == 0)
-            {
-                item.Mode = 1;
-            }
-            else
-            {
-                item.Mode = item.Mode * -1;
-            }
+            Sortable.Order(name);
 
             await HandleOnSort(args);
         }

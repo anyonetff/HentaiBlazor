@@ -17,7 +17,7 @@ namespace HentaiBlazor.Services.Comic
         {
         }
 
-        public async Task<List<CBookEntity>> SearchAsync(string searchPath, string searchAuthor, string searchKeyword, IEnumerable<Sortable> sortables)
+        public async Task<List<CBookEntity>> SearchAsync(string searchPath, string searchAuthor, string searchKeyword, IEnumerable<SortableItem> sortables)
         {
             var query = this.dbContext.Set<CBookEntity>()
                 .Where<CBookEntity>(book => StringUtils.IsBlank(searchPath) || book.Path.Contains(searchPath))
@@ -42,7 +42,7 @@ namespace HentaiBlazor.Services.Comic
         }
 
 
-        public async Task<List<CBookEntity>> SearchAsync(string searchPath, string searchAuthor, string searchKeyword, Sortable sortable)
+        public async Task<List<CBookEntity>> SearchAsync(string searchPath, string searchAuthor, string searchKeyword, SortableItem sortable)
         {
             //var Id = new SqlParameter("author", "%" + searchAuthor + "%");
 

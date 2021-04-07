@@ -1,5 +1,4 @@
-﻿using AntDesign;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,45 +7,93 @@ namespace HentaiBlazor.Ezcomp
 {
     public class Sortable
     {
-        //public bool Mode { get; set; } = true;
 
-        public int Mode { get; set; }
+        public List<SortableItem> SortableItems { get; set; }
 
-        public string Name { get; set; }
+        private static readonly int _None = 0;
 
-        public string Text { get; set; }
+        private static readonly int _Asc = 1;
 
-        public static Sortable Of(int mode, string name)
+        private static readonly int _Desc = - 1;
+
+        public Sortable()
         {
-            return new Sortable { Mode = mode, Name = name };
+            SortableItems = new List<SortableItem>();
         }
 
-        public static Sortable Of(int mode, string name, string text)
+        public void AddAsc(string name, string text) 
         {
-            return new Sortable { Mode = mode, Name = name, Text = text };
+            Add(SortableItem.Of(_Asc, name, text));
         }
 
-        public static Sortable Asc(string name)
+        public void AddDesc(string name, string text)
         {
-            return Of(1, name);
+            Add(SortableItem.Of(_Desc, name, text));
         }
 
-        public static Sortable Desc(string name)
+        public void Add(string name, string text)
         {
-            return Of(-1, name);
+            Add(SortableItem.Of(_None, name, text));
         }
 
-        public string _Type()
+        private void Add(SortableItem item)
         {
-            return Mode == 0 ? ButtonType.Default : ButtonType.Primary;
+            if (Contains(item))
+            {
+                return;
+            }
+
+            if (item.Mode != _None)
+            {
+                item.Index = Count() + 1;
+            }
+
+            SortableItems.Add(item);
         }
 
-        public string _Icon()
+        public bool Contains(SortableItem item)
         {
-            if (Mode == 0)
-                return "";
+            return SortableItems.Where(i => i.Name == item.Name).Any();
+        }
 
-            return (Mode > 0) ? "caret-up" : "caret-down";
+        public int Count()
+        {
+            return SortableItems.Where(i => i.Mode != _None).Count();
+        }
+
+        public void Clear()
+        {
+            foreach (var item in SortableItems)
+            {
+                item.Index = _None;
+                item.Mode = _None;
+            }
+        }
+
+        public void Order(string name)
+        {
+            foreach (var item in SortableItems)
+            {
+                if (name == item.Name)
+                {
+                    if (item.Index == 0)
+                    {
+                        item.Index = Count() + 1;
+                        item.Mode = _Asc;
+                    }
+                    else
+                    {
+                        item.Mode = -1 * item.Mode;
+                    }
+                }
+            }
+        }
+
+        public List<SortableItem> ToOrders()
+        {
+            return SortableItems
+                .Where(i => i.Mode != _None)
+                .OrderBy(i => i.Index).ToList();
         }
 
     }

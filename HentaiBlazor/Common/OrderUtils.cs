@@ -10,11 +10,11 @@ namespace HentaiBlazor.Common
     public class OrderUtils
     {
 
-        public static IOrderedQueryable<T> Sort<T>(IQueryable<T> query, IEnumerable<Sortable> sortables)
+        public static IOrderedQueryable<T> Sort<T>(IQueryable<T> query, IEnumerable<SortableItem> sortables)
         {
             IOrderedQueryable<T> _query = null;
 
-            foreach (Sortable sortable in sortables)
+            foreach (SortableItem sortable in sortables)
             {
                 if (sortable.Mode != 0)
                 {
@@ -32,15 +32,8 @@ namespace HentaiBlazor.Common
                             {
                                 var l = Expression.Lambda<Func<T, string>>(f, p);
 
-                                // By(query, _query, sortable.Mode, l);
-                                if (_query == null)
-                                {
-                                    _query = (sortable.Mode > 0) ? query.OrderBy(l) : query.OrderByDescending(l);
-                                }
-                                else
-                                {
-                                    _query = (sortable.Mode > 0) ? _query.ThenBy(l) : _query.ThenByDescending(l);
-                                }
+                                By(ref query, ref _query, sortable.Mode, l);
+                                
 
                                 break;
                             }
@@ -48,6 +41,8 @@ namespace HentaiBlazor.Common
                             {
                                 var l = Expression.Lambda<Func<T, DateTime>>(f, p);
 
+                                By(ref query, ref _query, sortable.Mode, l);
+                                /*
                                 if (_query == null)
                                 {
                                     _query = (sortable.Mode > 0) ? query.OrderBy(l) : query.OrderByDescending(l);
@@ -56,7 +51,7 @@ namespace HentaiBlazor.Common
                                 {
                                     _query = (sortable.Mode > 0) ? _query.ThenBy(l) : _query.ThenByDescending(l);
                                 }
-
+                                */
                                 break;
                             }
                         default:
@@ -65,12 +60,12 @@ namespace HentaiBlazor.Common
                 }
             }
 
-            Console.WriteLine("完成排序组装" + _query);
+            Console.WriteLine("完成排序组装");
 
             return _query;
         }
 
-        private static void By<T>(IQueryable<T> query, IOrderedQueryable<T> _query, int mode, Expression<Func<T, string>> l)
+        private static void By<T>(ref IQueryable<T> query, ref IOrderedQueryable<T> _query, int mode, Expression<Func<T, string>> l)
         {
             Console.WriteLine("排序字符串");
 

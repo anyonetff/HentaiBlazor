@@ -42,7 +42,7 @@ namespace HentaiBlazor.Pages.Comic
 
         private string searchAuthor = "";
 
-        private Sortable sortable = Sortable.Desc(nameof(CBookEntity.XInsert_));
+        private SortableItem sortable = SortableItem.Desc(nameof(CBookEntity.XInsert_));
 
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
