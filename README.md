@@ -19,7 +19,8 @@ For the people, who want to learn the blazor, the textbook like CRUD examples ca
 5.  2021-03-27 Improve the comic loading by OnAfterRenderAsync method. Replace the archive library to SharpCompress, which support rar, 7z, zip, etc.
 6.  2021-03-30 Fix a pagination problem in comic reading function.
 7.  2021-04-02 Add next page, previous page, fit width, fit height operation, improve the operation in comic reading function.
-7.  2021-04-04 Make a prototype of the anime playback.
+8.  2021-04-04 Make a prototype of the anime playback.
+9.  2021-04-07 Add sortable to comic & anime.
 
 ## Architecture
 
