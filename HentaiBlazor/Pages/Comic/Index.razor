@@ -6,12 +6,7 @@
 <PageContainer Title="热辣漫画">
     <Space Style="float: right;">
         <SpaceItem>
-            <ButtonSortable Sortable="sortable" Name="@nameof(CBookEntity.XInsert_)" Text="加入时间"
-                            @onclick="() => Sort(nameof(CBookEntity.XInsert_))"/>
-            <ButtonSortable Sortable="sortable" Name="@nameof(CBookEntity.Author)" Text="作者作品"
-                            @onclick="() => Sort(nameof(CBookEntity.Author))"/>
-            <ButtonSortable Sortable="sortable" Name="@nameof(CBookEntity.Name)" Text="文件路径"
-                            @onclick="() => Sort(nameof(CBookEntity.Name))"/>
+            <SortableList Sortable="@Sortable" OnSort="() => Search()" />
         </SpaceItem>
     </Space>
 

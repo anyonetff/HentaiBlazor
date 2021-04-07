@@ -42,30 +42,15 @@ namespace HentaiBlazor.Pages.Comic
 
         private string searchAuthor = "";
 
-        private SortableItem sortable = SortableItem.Desc(nameof(CBookEntity.XInsert_));
+        private Sortable Sortable = new Sortable();
 
-
-        protected override async Task OnAfterRenderAsync(bool firstRender)
+        protected override async Task OnInitializedAsync()
         {
-            if (firstRender)
-            {
-                await Search();
-                StateHasChanged();
-            }
-        }
-
-        public async Task Sort(string name)
-        {
-            Console.WriteLine(" name: " + name);
-
-            if (StringUtils.IsEqual(name, sortable.Name))
-            {
-                sortable.Mode = sortable.Mode * -1;
-            }
-            else 
-            {
-                sortable.Name = name;
-            }
+            Sortable.Add(nameof(CBookEntity.Title), "标题");
+            Sortable.Add(nameof(CBookEntity.Author), "作者");
+            Sortable.Add(nameof(CBookEntity.Path), "目录");
+            Sortable.Add(nameof(CBookEntity.Name), "文件");
+            Sortable.AddDesc(nameof(CBookEntity.XInsert_), "时间");
 
             await Search();
         }
@@ -75,7 +60,7 @@ namespace HentaiBlazor.Pages.Comic
             Console.WriteLine(" search: " + searchKeyword);
 
             CBookEntities = await bookService.SearchAsync(searchCatalog, searchAuthor, searchKeyword,
-                sortable);
+                Sortable.ToOrders());
 
             BookPaginator.DataSource = CBookEntities;
             _CBookEntities = BookPaginator.Paged().ToList();

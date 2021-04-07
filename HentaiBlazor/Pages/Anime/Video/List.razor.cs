@@ -1,5 +1,6 @@
 ﻿using AntDesign;
 using HentaiBlazor.Data.Anime;
+using HentaiBlazor.Ezcomp;
 using HentaiBlazor.Services.Anime;
 using Microsoft.AspNetCore.Components;
 using System;
@@ -32,14 +33,24 @@ namespace HentaiBlazor.Pages.Anime.Video
 
         private string searchAuthor;
 
+        private Sortable Sortable = new Sortable();
+
+
         protected override async Task OnInitializedAsync()
         {
+            Sortable.Add(nameof(AVideoEntity.Title), "标题");
+            Sortable.Add(nameof(AVideoEntity.Author), "作者");
+            Sortable.Add(nameof(AVideoEntity.Path), "目录");
+            Sortable.Add(nameof(AVideoEntity.Name), "文件");
+            Sortable.AddDesc(nameof(AVideoEntity.XInsert_), "时间");
+
             await Search();
         }
 
         public async Task Search()
         {
-            AVideoEntities = await videoService.SearchAsync(searchCatalog, searchAuthor, searchKeyword);
+            AVideoEntities = await videoService.SearchAsync(searchCatalog, searchAuthor, searchKeyword,
+                Sortable.ToOrders());
         }
 
         private async Task OpenEdit(string options)
