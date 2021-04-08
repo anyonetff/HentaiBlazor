@@ -88,7 +88,7 @@ namespace HentaiBlazor.Services
                     {
                         if (!entry.IsDirectory && ComicUtils.IsImage(entry.Key))
                         {
-                            Console.WriteLine("找到了一个图片");
+                            Console.WriteLine("找到了一个图片: {0}", entry.Key);
                             byte [] preview = ImageUtils.PreviewBuffer(entry, width, height, ImageFormat.Png);
 
                             // return (StringUtils.IsBlank(preview)) ? none : base64 + preview;

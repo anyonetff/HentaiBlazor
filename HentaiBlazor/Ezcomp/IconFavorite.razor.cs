@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace HentaiBlazor.Ezcomp
 {
+    // 搜藏按钮组件.
     public partial class IconFavorite
     {
         [Parameter]
