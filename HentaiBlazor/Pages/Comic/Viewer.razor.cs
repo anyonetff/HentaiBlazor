@@ -213,7 +213,7 @@ namespace HentaiBlazor.Pages.Comic
                     return "data:image/*;base64," + ImageUtils.Read(e);
                 }
 
-                return "data:image/*;base64," + ImageUtils.PreviewBase64(e, 200, 200, ImageFormat.Png);
+                return "data:image/*;base64," + ImageUtils.PreviewBase64(e, 200, 200);
             });
         }
 

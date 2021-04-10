@@ -1,0 +1,44 @@
+﻿@using HentaiBlazor.Data.Comic
+@using HentaiBlazor.Ezcomp
+
+@inherits DrawerTemplate<string, string>
+
+<Descriptions Column="1" Bordered>
+    <DescriptionsItem Title="路径">
+        @videoEntity.Path
+    </DescriptionsItem>
+    <DescriptionsItem Title="文件">
+        @videoEntity.Name
+    </DescriptionsItem>
+    <DescriptionsItem Title="作者">
+        @videoEntity.Author
+    </DescriptionsItem>
+    <DescriptionsItem Title="语言">
+        <TextLanguage Language="@videoEntity.Language" />
+    </DescriptionsItem>
+    <DescriptionsItem Title="标签">
+        @foreach (var item in videoTagEntities)
+        {
+            <Tag @key="item" Color="orange-inverse" OnClose="() => OnTagClose(item.Id)" Mode="closeable">@item.TagName</Tag>
+        }
+        @if (tagEdit)
+        {
+            <Input Style="width: 78px" Size="@InputSize.Small" @bind-Value="TagName" OnBlur="OnTagEdit" OnPressEnter="OnTagEdit" AutoFocus />
+        }
+        else
+        {
+            <Tag Class="site-tag-plus" OnClick="OpenTagEdit">
+                <Icon Type="plus" />
+            </Tag>
+        }
+    </DescriptionsItem>
+    <DescriptionsItem Title="最爱">
+        <IconFavorite OnClick="OnFavorite" Favorite="@videoEntity.Favorite" />
+    </DescriptionsItem>
+    <DescriptionsItem Title="备注">
+        @videoEntity.Note
+    </DescriptionsItem>
+    <DescriptionsItem Title="创建时间">
+        @videoEntity.XInsert_
+    </DescriptionsItem>
+</Descriptions>

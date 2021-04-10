@@ -1,4 +1,5 @@
 ﻿using HentaiBlazor.Data.Anime;
+using HentaiBlazor.Services;
 using HentaiBlazor.Services.Anime;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -17,11 +18,34 @@ namespace HentaiBlazor.Controllers
     {
         private readonly VideoService videoService;
 
+        private readonly PreviewService previewService;
+
         private readonly static int bufferSize = 1024;
 
-        public VideoController(VideoService videoService)
+        public VideoController(
+            VideoService videoService, 
+            PreviewService previewService)
         {
             this.videoService = videoService;
+            this.previewService = previewService;
+        }
+
+        [HttpGet("Preview/{id}")]
+        public async Task Preview(string id)
+        {
+            byte[] preview = previewService.GetCached(id);
+
+            if (preview == null)
+            {
+                AVideoEntity video = await videoService.FindAsync(id);
+
+                preview = await previewService.GetAsync(video);
+            }
+
+            using (Stream stream = this.Response.BodyWriter.AsStream())
+            {
+                await stream.WriteAsync(preview, 0, preview.Length);
+            }
         }
 
         [HttpGet("Playback/{id}")]

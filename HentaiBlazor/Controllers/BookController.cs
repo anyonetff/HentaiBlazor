@@ -41,6 +41,11 @@ namespace HentaiBlazor.Controllers
                 cover = await coverService.GetAsync(book);
             }
 
+            if (cover == null || cover.Length == 0)
+            {
+                return;
+            }
+
             using (Stream stream = this.Response.BodyWriter.AsStream())
             {
                 await stream.WriteAsync(cover, 0, cover.Length);

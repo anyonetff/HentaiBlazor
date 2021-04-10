@@ -1,8 +1,8 @@
 ﻿using SharpCompress.Archives;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Processing;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,7 +13,7 @@ namespace HentaiBlazor.Common
     {
         // 通过压缩流生成预览图片
         public static string PreviewBase64(IArchiveEntry entry, 
-            int width, int height, ImageFormat format)
+            int width, int height)
         {
             Image source = Create(entry);
             if (source == null)
@@ -23,11 +23,11 @@ namespace HentaiBlazor.Common
 
             Image target = ThumbnailOut(source, width, height);
 
-            return WriteToBase64(target, format);
+            return WriteToBase64(target);
         }
 
         public static byte [] PreviewBuffer(IArchiveEntry entry,
-            int width, int height, ImageFormat format)
+            int width, int height)
         {
             Image source = Create(entry);
             if (source == null)
@@ -37,7 +37,7 @@ namespace HentaiBlazor.Common
 
             Image target = ThumbnailOut(source, width, height);
 
-            return WriteToBuffer(target, format);
+            return WriteToBuffer(target);
         }
 
 
@@ -73,11 +73,11 @@ namespace HentaiBlazor.Common
 
         // 将图片编码成base64数据
         // 如果要拼接成dataURL，可以自己在前面加
-        public static string WriteToBase64(Image image, ImageFormat format)
+        public static string WriteToBase64(Image image)
         {
             using (var ms = new MemoryStream())
             {
-                image.Save(ms, format);
+                image.SaveAsPng(ms);
 
                 //byte[] bytes = ms.ToArray();
 
@@ -85,23 +85,21 @@ namespace HentaiBlazor.Common
             }
         }
 
-        public static byte[] WriteToBuffer(Image image, ImageFormat format)
+        public static byte[] WriteToBuffer(Image image)
         {
             using (var ms = new MemoryStream())
             {
-                image.Save(ms, format);
-
-                // byte[] bytes = ms.ToArray();
+                image.SaveAsPng(ms);
 
                 return ms.ToArray();
             }
         }
 
-        public static Stream WriteToStream(Image image, ImageFormat format)
+        public static Stream WriteToStream(Image image)
         {
             using (var ms = new MemoryStream())
             {
-                image.Save(ms, format);
+                image.SaveAsPng(ms);
 
                 return ms;
             }
@@ -118,15 +116,18 @@ namespace HentaiBlazor.Common
                 }
 
                 using (var stream = entry.OpenEntryStream()) 
+                using (var ms = new MemoryStream())
                 {
-                    using (var ms = new MemoryStream())
-                    {
-                        stream.CopyTo(ms);
-                        // bytes = ms.ToArray();
+                    stream.CopyTo(ms);
+                    // bytes = ms.ToArray();
 
-                        return Image.FromStream(ms);
-                    }
+                    //return Image.FromStream(ms);
+                    //var format = Image.DetectFormat(ms);
+                    //Console.WriteLine(format);
+                    // return Image.Load(ms);
+                    return Image.Load(ms.ToArray());
                 }
+                
             }
             catch (Exception e)
             {
@@ -138,20 +139,25 @@ namespace HentaiBlazor.Common
         }
 
         // 这是一个终止回调函数
-        public static bool ThumbnailCallback()
-        {
-            Console.WriteLine("纳尼?");
+        //public static bool ThumbnailCallback()
+        //{
+        //    Console.WriteLine("纳尼?");
 
-            return false;
-        }
+        //    return false;
+        //}
 
         // 生成指定尺寸的缩略图
         public static Image Thumbnail(Image source, int width, int height)
         {
-            Image.GetThumbnailImageAbort callback =
-                new Image.GetThumbnailImageAbort(ThumbnailCallback);
 
-            return source.GetThumbnailImage(width, height, callback, IntPtr.Zero);
+            source.Mutate(x => x.Resize(width, height));
+
+            return source;
+
+            //Image.GetThumbnailImageAbort callback =
+            //    new Image.GetThumbnailImageAbort(ThumbnailCallback);
+
+            //return source.GetThumbnailImage(width, height, callback, IntPtr.Zero);
         }
 
         // 适应宽度生成缩略图

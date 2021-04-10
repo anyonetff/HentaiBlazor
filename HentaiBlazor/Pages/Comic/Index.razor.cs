@@ -66,18 +66,9 @@ namespace HentaiBlazor.Pages.Comic
 
         public async Task _paging(PaginationEventArgs args)
         {
-            foreach (var b in _CBookEntities)
-            {
-                b.Cover_ = null;
-            }
-
             await BookPaginator.HandlePageIndexChange(args);
 
             _CBookEntities = BookPaginator.Paged().ToList();
-
-            //StateHasChanged();
-
-            //await Refresh();
         }
 
         public async Task _sizing(PaginationEventArgs args)

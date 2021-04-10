@@ -20,8 +20,6 @@ namespace HentaiBlazor.Services
         
         private static byte [] none = new byte [0];
 
-        private static string base64 = "data:image/*;base64,";
-
         private static int width = 200;
 
         private static int height = 400;
@@ -89,7 +87,7 @@ namespace HentaiBlazor.Services
                         if (!entry.IsDirectory && ComicUtils.IsImage(entry.Key))
                         {
                             Console.WriteLine("找到了一个图片");
-                            byte [] preview = ImageUtils.PreviewBuffer(entry, width, height, ImageFormat.Png);
+                            byte [] preview = ImageUtils.PreviewBuffer(entry, width, height);
 
                             // return (StringUtils.IsBlank(preview)) ? none : base64 + preview;
                             return preview;

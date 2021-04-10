@@ -1,7 +1,87 @@
 ﻿@page "/anime/index"
 
+@using HentaiBlazor.Data.Comic
+@using HentaiBlazor.Ezcomp
+
 <PageContainer Title="里番动画">
 
+    <Space Style="float: right;">
+        <SpaceItem>
+            <SortableList Sortable="@Sortable" OnSort="() => Search()" />
+        </SpaceItem>
+    </Space>
 
+    <Space Style="margin-bottom: 0.5rem;">
+        <SpaceItem>
+            <Input Prefix="@_filter" Placeholder="关键字" Style="width: 12rem;"
+                   @bind-Value="searchKeyword" />
+            <Input Prefix="@_folder" Placeholder="目录" Style="width: 12rem;"
+                   @bind-Value="searchCatalog" />
+            <Input Prefix="@_team" Placeholder="作者" Style="width: 12rem;"
+                   @bind-Value="searchAuthor" />
+        </SpaceItem>
+        <SpaceItem>
+            <Button Type="@ButtonType.Primary" @onclick="Search">查询</Button>
+        </SpaceItem>
+    </Space>
+
+
+    <AntList ItemLayout="ListItemLayout.Horizontal"
+             Grid="gutter" DataSource="_AVideoEntities">
+        <ListItem Grid="gutter">
+            <Card Size="small" Hoverable
+                  Cover="@coverTemplate(@context.Id)">
+                <ChildContent>
+                    <div>
+                        <IconFavorite Favorite="@context.Favorite" />
+                        <TextLanguage Language="@context.Language" />
+                    </div>
+                    <CardMeta Style="font-size: 0.75rem" Title="@context.Title" Description="@context.Author" />
+                </ChildContent>
+                <ActionTemplate>
+                    <CardAction>
+                        <Icon Type="info" OnClick="() => OpenDetail(context.Id, context.Title)" />
+                    </CardAction>
+                    <CardAction>
+                        <a href="@("comic/viewer/" + context.Id)" target="_blank">
+                            <Icon Type="eye" />
+                        </a>
+                    </CardAction>
+                </ActionTemplate>
+            </Card>
+        </ListItem>
+    </AntList>
+
+    <Pagination Total="VideoPaginator.Total"
+                PageSize="VideoPaginator.PageSize"
+                PageIndex="VideoPaginator.PageIndex"
+                ShowQuickJumper="true"
+                OnPageIndexChange="_paging"
+                OnPageSizeChange="_sizing" />
 
 </PageContainer>
+@code
+{
+
+    RenderFragment _folder =@<Icon Type="folder" />;
+RenderFragment _team =@<Icon Type="team" />;
+RenderFragment _filter =@<Icon Type="filter" />;
+
+public ListGridType gutter = new ListGridType
+{
+Gutter = 8,
+Xs = 1,
+Sm = 1,
+Md = 2,
+Lg = 2,
+Xl = 4,
+Xxl = 4,
+Column = 5
+};
+
+private RenderFragment coverTemplate(string id)
+{
+return @<div style="height: 180px; overflow: hidden;"><Image Src="@("/api/Video/Preview/" + id)" /></div>;
+}
+
+}
