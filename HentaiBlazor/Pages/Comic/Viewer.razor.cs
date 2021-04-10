@@ -235,7 +235,7 @@ namespace HentaiBlazor.Pages.Comic
 
             // 过滤不是图片的压缩包文件，并按文件名排序
             entries = archive.Entries
-                    .Where(a => (! a.IsDirectory && ComicUtils.IsImage(a.Key)))
+                    .Where(a => (! a.IsDirectory && ComicUtils.IsImage(a.Key) && ! a.Key.StartsWith("__MACOSX")))
                     .OrderBy(a => a.Key)
                     .ToList();
 

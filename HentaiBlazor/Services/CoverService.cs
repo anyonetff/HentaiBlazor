@@ -1,13 +1,10 @@
 ﻿using HentaiBlazor.Common;
 using HentaiBlazor.Data.Comic;
-using HentaiBlazor.Services.Comic;
-using Microsoft.AspNetCore.Components;
 using SharpCompress.Archives;
+using SharpCompress.Common;
 using System;
 using System.Collections.Generic;
-using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace HentaiBlazor.Services
@@ -55,10 +52,14 @@ namespace HentaiBlazor.Services
             //string cover = "";
 
             byte[] c = await ReadAsync(Path.Combine(book.Path, book.Name));
-
             cache.Add(book.Id, c);
 
-            return c;
+            if (c == null || c.Length == 0)
+            {
+                book.Note = "err:拾取封面失败.";
+            }
+            
+            return cache[book.Id];
         }
 
         // TODO: 数据回收算法
@@ -79,19 +80,33 @@ namespace HentaiBlazor.Services
                     Console.WriteLine("文件不存在...");
                     return none;
                 }
-                
+
                 using (var archive = ArchiveFactory.Open(file))
                 {
-                    foreach (var entry in archive.Entries)
+                    try
                     {
-                        if (!entry.IsDirectory && ComicUtils.IsImage(entry.Key))
+                        foreach (var entry in archive.Entries)
                         {
-                            Console.WriteLine("找到了一个图片");
-                            byte [] preview = ImageUtils.PreviewBuffer(entry, width, height);
+                            if (!entry.IsDirectory && ComicUtils.IsImage(entry.Key))
+                            {
+                                Console.WriteLine("找到了一个图片");
+                                byte[] preview = ImageUtils.PreviewBuffer(entry, width, height);
 
-                            // return (StringUtils.IsBlank(preview)) ? none : base64 + preview;
-                            return preview;
+                                // return (StringUtils.IsBlank(preview)) ? none : base64 + preview;
+                                return preview;
+                            }
                         }
+                    }
+                    catch (ArchiveException ex)
+                    {
+                        Console.WriteLine(file);
+                        Console.WriteLine(ex);
+                        //throw;
+                    }
+                    catch (CryptographicException ex)
+                    {
+                        Console.WriteLine(file);
+                        Console.WriteLine(ex);
                     }
                 }
 

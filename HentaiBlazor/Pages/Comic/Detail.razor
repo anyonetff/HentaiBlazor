@@ -35,6 +35,9 @@
     <DescriptionsItem Title="最爱">
         <IconFavorite OnClick="OnFavorite" Favorite="@bookEntity.Favorite" />
     </DescriptionsItem>
+    <DescriptionsItem Title="大小">
+        <TextFileLength FileLength="@bookEntity.Length" />
+    </DescriptionsItem>
     <DescriptionsItem Title="备注">
         @bookEntity.Note
     </DescriptionsItem>

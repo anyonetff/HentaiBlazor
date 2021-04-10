@@ -53,10 +53,10 @@
     }
     else
     {
-        <AntList ItemLayout="ListItemLayout.Horizontal"
-                 Grid="gutter" DataSource="@entry">
-            <ListItem Grid="gutter" Style="text-align:center;" OnClick="() => OnRead(context.Key)">
-                <img alt="@context.Key" src="@_Cache.GetValueOrDefault(context.Key)" 
+        <AntList Grid="@gutter" DataSource="@entry">
+            <ListItem Style="text-align:center;" OnClick="() => OnRead(context.Key)">
+                <img alt="@context.Key" 
+                     src="@_Cache.GetValueOrDefault(context.Key)"
                      class="viewer-content-preview" />
             </ListItem>
         </AntList>
