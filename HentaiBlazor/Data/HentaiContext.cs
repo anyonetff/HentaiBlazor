@@ -17,6 +17,7 @@ namespace HentaiBlazor.Data
         public DbSet<SFunctionEntity> SFunctionEntities { get; set; }
         public DbSet<SUserEntity> SUserEntities { get; set; }
 
+        public DbSet<BProducerEntity> BProducerEntities { get; set; }
         public DbSet<BAuthorEntity> BAuthorEntities { get; set; }
         public DbSet<BTagEntity> BTagEntities { get; set; }
         public DbSet<BCatalogEntity> BCatalogEntities { get; set; }

@@ -69,7 +69,7 @@ namespace HentaiBlazor.Pages.Basic.Catalog
             video.Path = file.DirectoryName;
             video.Name = file.Name;
 
-            video.Author = "";
+            video.Producer = "";
             video.Title = AnimeUtils.ParseTitle(video.Name);
             video.Language = "ja";
 

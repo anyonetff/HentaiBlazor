@@ -24,7 +24,10 @@ INSERT INTO s_function (f_id, f_parent, f_leaf, f_path, f_name, f_icon, f_note, 
 VALUES ('6030', '60', true, '/comic/book/list', '漫画管理', 'book', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO s_function (f_id, f_parent, f_leaf, f_path, f_name, f_icon, f_note, x_insert_, x_update_)
+VALUES ('6050', '60', true, '/basic/producer/list', '制作公司', 'deployment-unit', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO s_function (f_id, f_parent, f_leaf, f_path, f_name, f_icon, f_note, x_insert_, x_update_)
 VALUES ('6060', '60', true, '/basic/author/list', '作品作者', 'team', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
 INSERT INTO s_function (f_id, f_parent, f_leaf, f_path, f_name, f_icon, f_note, x_insert_, x_update_)
 VALUES ('6070', '60', true, '/basic/tag/list', '标签分类', 'tags', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 

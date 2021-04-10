@@ -56,6 +56,7 @@ namespace HentaiBlazor
             services.AddScoped<UserService>();
 
             services.AddScoped<AuthorService>();
+            services.AddScoped<ProducerService>();
             services.AddScoped<TagService>();
             services.AddScoped<CatalogService>();
 

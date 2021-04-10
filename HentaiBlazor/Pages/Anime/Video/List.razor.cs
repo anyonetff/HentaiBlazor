@@ -39,7 +39,7 @@ namespace HentaiBlazor.Pages.Anime.Video
         protected override async Task OnInitializedAsync()
         {
             Sortable.Add(nameof(AVideoEntity.Title), "标题");
-            Sortable.Add(nameof(AVideoEntity.Author), "作者");
+            Sortable.Add(nameof(AVideoEntity.Producer), "作者");
             Sortable.Add(nameof(AVideoEntity.Path), "目录");
             Sortable.Add(nameof(AVideoEntity.Name), "文件");
             Sortable.AddDesc(nameof(AVideoEntity.XInsert_), "时间");

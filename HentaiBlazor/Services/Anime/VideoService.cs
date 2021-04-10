@@ -17,13 +17,13 @@ namespace HentaiBlazor.Services.Anime
         {
         }
 
-        public async Task<List<AVideoEntity>> SearchAsync(string searchPath, string searchAuthor, string searchKeyword, IEnumerable<SortableItem> sortables)
+        public async Task<List<AVideoEntity>> SearchAsync(string searchPath, string searchProducer, string searchKeyword, IEnumerable<SortableItem> sortables)
         {
             //var Id = new SqlParameter("author", "%" + searchAuthor + "%");
 
             var query = this.dbContext.Set<AVideoEntity>()
                 .Where<AVideoEntity>(video => StringUtils.IsBlank(searchPath) || video.Path.Contains(searchPath))
-                .Where<AVideoEntity>(video => StringUtils.IsBlank(searchAuthor) || video.Author.Contains(searchAuthor))
+                .Where<AVideoEntity>(video => StringUtils.IsBlank(searchProducer) || video.Producer.Contains(searchProducer))
                 .Where<AVideoEntity>(video => StringUtils.IsBlank(searchKeyword) || video.Title.Contains(searchKeyword) || video.Name.Contains(searchKeyword));
 
             query = OrderUtils.Sort<AVideoEntity>(query, sortables);

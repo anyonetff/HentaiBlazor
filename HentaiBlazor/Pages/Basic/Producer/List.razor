@@ -1,8 +1,8 @@
-﻿@page "/basic/author/list"
+﻿@page "/basic/producer/list"
 
 @using HentaiBlazor.Data.Basic
 
-<PageContainer Title="作品作者">
+<PageContainer Title="制作公司">
 
     <Space Style="margin-bottom: 0.5rem">
         <SpaceItem>
@@ -17,10 +17,11 @@
         </SpaceItem>
         <SpaceItem>
             <Button Type="@ButtonType.Primary" OnClick="()=>Search()">查询</Button>
+            <Button Type="@ButtonType.Primary" OnClick="() => OpenEdit(null)">新建</Button>
         </SpaceItem>
     </Space>
 
-    <Table TItem="BAuthorEntity" DataSource="@BAuthorEntities" Size=@TableSize.Small>
+    <Table TItem="BProducerEntity" DataSource="@BProducerEntities" Size=@TableSize.Small>
         <ActionColumn Width="160">
             <Space>
                 <SpaceItem>

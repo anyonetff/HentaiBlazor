@@ -28,8 +28,8 @@ namespace HentaiBlazor.Data.Anime
         [Column("v_title")]
         public string Title { get; set; }
 
-        [Column("v_author")]
-        public string Author { get; set; }
+        [Column("v_producer")]
+        public string Producer { get; set; }
 
         [Column("v_language")]
         public string Language { get; set; }
