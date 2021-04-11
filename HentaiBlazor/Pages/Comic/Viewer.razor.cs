@@ -165,6 +165,12 @@ namespace HentaiBlazor.Pages.Comic
 
             Console.WriteLine(entry.First().Key);
 
+            if (_Paged)
+            {
+                book.Index = EntryPaginator.PageIndex;
+                await bookService.UpdateAsync(book);
+            }
+
             StateHasChanged();
 
             await reading();
@@ -213,7 +219,7 @@ namespace HentaiBlazor.Pages.Comic
                     return "data:image/*;base64," + ImageUtils.Read(e);
                 }
 
-                return "data:image/*;base64," + ImageUtils.PreviewBase64(e, 200, 200);
+                return "data:image/*;base64," + ImageUtils.PreviewInBase64(e, 320, 360);
             });
         }
 
@@ -235,13 +241,29 @@ namespace HentaiBlazor.Pages.Comic
 
             // 过滤不是图片的压缩包文件，并按文件名排序
             entries = archive.Entries
-                    .Where(a => (! a.IsDirectory && ComicUtils.IsImage(a.Key) && ! a.Key.StartsWith("__MACOSX")))
+                    .Where(a => (! a.IsDirectory && ComicUtils.IsImage(a.Key)))
                     .OrderBy(a => a.Key)
                     .ToList();
 
+            if (book.Count != entries.Count)
+            {
+                Console.WriteLine("更新页码数.");
+
+                book.Count = entries.Count;
+
+                await bookService.UpdateAsync(book);
+            }
+            
+            
             Console.WriteLine("找到[" + entries.Count + "]张图片");
 
             EntryPaginator.DataSource = entries;
+
+            if (_Paged && book.Index > 0 && book.Index <= entries.Count)
+            {
+                await EntryPaginator.HandlePageIndexChange(new PaginationEventArgs { PageIndex = book.Index });
+            }
+
             entry = EntryPaginator.Paged().ToList();
 
             //Console.WriteLine

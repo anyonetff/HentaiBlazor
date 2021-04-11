@@ -31,8 +31,15 @@
                   Cover="@coverTemplate(@context.Id)">
                 <ChildContent>
                     <div>
+                        <Text Style="float: right; font-size: 0.5rem;">
+                            @context.Index/@context.Count
+                        </Text>
+
                         <IconFavorite Favorite="@context.Favorite" />
                         <TextLanguage Language="@context.Language" />
+
+                        <Progress Percent="@(context.Count > 0 ? (100 * context.Index / context.Count) : 0)" 
+                                  StrokeWidth="3" ShowInfo="false" />
                     </div>
                     <CardMeta Style="font-size: 0.75rem" Title="@context.Title" Description="@context.Author" />
                 </ChildContent>
@@ -61,7 +68,7 @@
 
 @code
 {
-    RenderFragment _folder =@<Icon Type="folder" />;
+RenderFragment _folder =@<Icon Type="folder" />;
 RenderFragment _team =@<Icon Type="team" />;
 RenderFragment _filter =@<Icon Type="filter" />;
 

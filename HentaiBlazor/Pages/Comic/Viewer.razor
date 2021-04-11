@@ -54,10 +54,10 @@
     else
     {
         <AntList Grid="@gutter" DataSource="@entry">
-            <ListItem Style="text-align:center;" OnClick="() => OnRead(context.Key)">
-                <img alt="@context.Key" 
-                     src="@_Cache.GetValueOrDefault(context.Key)"
-                     class="viewer-content-preview" />
+            <ListItem Grid="@gutter">
+                <div @onclick="() => OnRead(context.Key)" class="viewer-content-preview">
+                    <img alt="@context.Key" src="@_Cache.GetValueOrDefault(context.Key)"/>
+                </div>
             </ListItem>
         </AntList>
     }
@@ -70,11 +70,11 @@
     public ListGridType gutter = new ListGridType
     {
         Gutter = 8,
-        Xs = 2,
-        Sm = 2,
-        Md = 4,
-        Lg = 4,
-        Xl = 5,
+        Xs = 1,
+        Sm = 1,
+        Md = 2,
+        Lg = 2,
+        Xl = 4,
         Xxl = 5,
         Column = 5
     };

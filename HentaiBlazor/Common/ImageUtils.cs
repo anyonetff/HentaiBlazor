@@ -26,6 +26,20 @@ namespace HentaiBlazor.Common
             return WriteToBase64(target);
         }
 
+        public static string PreviewInBase64(IArchiveEntry entry,
+            int width, int height)
+        {
+            Image source = Create(entry);
+            if (source == null)
+            {
+                return "";
+            }
+
+            Image target = ThumbnailIn(source, width, height);
+
+            return WriteToBase64(target);
+        }
+
         public static byte [] PreviewBuffer(IArchiveEntry entry,
             int width, int height)
         {

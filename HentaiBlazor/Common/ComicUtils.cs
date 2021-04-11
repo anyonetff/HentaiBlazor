@@ -19,8 +19,15 @@ namespace HentaiBlazor.Common
                 return false;
             }
 
+            if (name.StartsWith("__MACOSX", StringComparison.OrdinalIgnoreCase)) 
+            {
+                return false;
+            }
+
             foreach (var image in _image)
             {
+                // 排除MACOSX自动生成的文件.
+                // 检查文件后缀名是否合法.
                 if (name.EndsWith(image, StringComparison.OrdinalIgnoreCase))
                 {
                     return true;
