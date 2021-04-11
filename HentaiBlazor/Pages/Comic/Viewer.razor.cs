@@ -216,10 +216,10 @@ namespace HentaiBlazor.Pages.Comic
             {
                 if (_Paged)
                 {
-                    return "data:image/*;base64," + ImageUtils.Read(e);
+                    return ImageUtils.Read(e);
                 }
 
-                return "data:image/*;base64," + ImageUtils.PreviewInBase64(e, 320, 360);
+                return ImageUtils.PreviewInBase64(e, 320, 360);
             });
         }
 

@@ -17,6 +17,29 @@ namespace HentaiBlazor.Services.Comic
         {
         }
 
+        public async Task<PagedList<CBookEntity>> SearchPagedAsync(
+            string searchPath, string searchAuthor, string searchKeyword, IEnumerable<SortableItem> sortables, 
+            int pageSize, int pageIndex)
+        {
+            var query = this.dbContext.Set<CBookEntity>()
+                .Where<CBookEntity>(book => StringUtils.IsBlank(searchPath) || book.Path.Contains(searchPath))
+                .Where<CBookEntity>(book => StringUtils.IsBlank(searchAuthor) || book.Author.Contains(searchAuthor))
+                .Where<CBookEntity>(book => StringUtils.IsBlank(searchKeyword) || book.Title.Contains(searchKeyword) || book.Name.Contains(searchKeyword));
+
+            query = OrderUtils.Sort<CBookEntity>(query, sortables);
+
+            int totalCount = query.Count();
+
+            PagedList<CBookEntity> result = new PagedList<CBookEntity>(pageSize, pageIndex, totalCount);
+
+            result.Data = await query
+                .Skip(result.Skip())
+                .Take(result.Take())
+                .ToListAsync<CBookEntity>();
+
+            return result;
+        }
+
         public async Task<List<CBookEntity>> SearchAsync(string searchPath, string searchAuthor, string searchKeyword, IEnumerable<SortableItem> sortables)
         {
             var query = this.dbContext.Set<CBookEntity>()

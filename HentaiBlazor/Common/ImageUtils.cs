@@ -1,5 +1,6 @@
 ﻿using SharpCompress.Archives;
 using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Formats.Png;
 using SixLabors.ImageSharp.Processing;
 using System;
 using System.Collections.Generic;
@@ -29,27 +30,28 @@ namespace HentaiBlazor.Common
         public static string PreviewInBase64(IArchiveEntry entry,
             int width, int height)
         {
-            Image source = Create(entry);
+            using Image source = Create(entry);
             if (source == null)
             {
                 return "";
             }
 
-            Image target = ThumbnailIn(source, width, height);
+            using Image target = ThumbnailIn(source, width, height);
 
-            return WriteToBase64(target);
+            return target.ToBase64String(PngFormat.Instance);
         }
 
         public static byte [] PreviewBuffer(IArchiveEntry entry,
             int width, int height)
         {
-            Image source = Create(entry);
+            using Image source = Create(entry);
+
             if (source == null)
             {
                 return null;
             }
 
-            Image target = ThumbnailOut(source, width, height);
+            using Image target = ThumbnailOut(source, width, height);
 
             return WriteToBuffer(target);
         }
@@ -65,16 +67,12 @@ namespace HentaiBlazor.Common
                     return null;
                 }
 
-                using (var stream = entry.OpenEntryStream())
-                {
-                    using (var ms = new MemoryStream())
-                    {
-                        stream.CopyTo(ms);
-                        // bytes = ms.ToArray();
+                using var stream = entry.OpenEntryStream();
+                using var ms = new MemoryStream();
+                stream.CopyTo(ms);
+                // bytes = ms.ToArray();
 
-                        return Convert.ToBase64String(ms.ToArray());
-                    }
-                }
+                return "data:image/*;base64," + Convert.ToBase64String(ms.ToArray());
             }
             catch (Exception e)
             {
@@ -129,19 +127,17 @@ namespace HentaiBlazor.Common
                     return null;
                 }
 
-                using (var stream = entry.OpenEntryStream()) 
-                using (var ms = new MemoryStream())
-                {
-                    stream.CopyTo(ms);
-                    // bytes = ms.ToArray();
+                using var stream = entry.OpenEntryStream();
+                using var ms = new MemoryStream();
+                stream.CopyTo(ms);
+                // bytes = ms.ToArray();
 
-                    //return Image.FromStream(ms);
-                    //var format = Image.DetectFormat(ms);
-                    //Console.WriteLine(format);
-                    // return Image.Load(ms);
-                    return Image.Load(ms.ToArray());
-                }
-                
+                //return Image.FromStream(ms);
+                //var format = Image.DetectFormat(ms);
+                //Console.WriteLine(format);
+                // return Image.Load(ms);
+                return Image.Load(ms.ToArray());
+
             }
             catch (Exception e)
             {
