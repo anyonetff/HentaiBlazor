@@ -2,6 +2,7 @@
 using HentaiBlazor.Common;
 using HentaiBlazor.Data.Comic;
 using HentaiBlazor.Ezcomp;
+using HentaiBlazor.Services;
 using HentaiBlazor.Services.Comic;
 using Microsoft.AspNetCore.Components;
 using SharpCompress.Archives;
@@ -21,6 +22,9 @@ namespace HentaiBlazor.Pages.Comic
 
         [Inject]
         public BookService bookService { get; set; }
+
+        [Inject]
+        public CoverService coverService { get; set; }
 
 
         [Inject] 
@@ -101,6 +105,23 @@ namespace HentaiBlazor.Pages.Comic
 
             await _paging(new PaginationEventArgs { PageIndex = EntryPaginator.PageIndex + 1 });
 
+        }
+
+        public async Task OnCovered()
+        {
+            Console.WriteLine("设置该页为封面");
+
+            foreach (var e in entry)
+            {
+                book.Cover = e.Key;
+                await bookService.SaveAsync(book);
+
+                coverService.RemoveCached(book.Id);
+
+                break;
+            }
+
+            await _message.Warning("已将该页设置为了封面.");
         }
 
         public async Task OnPreview()

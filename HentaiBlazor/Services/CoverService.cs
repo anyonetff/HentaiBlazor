@@ -41,6 +41,14 @@ namespace HentaiBlazor.Services
             return null;
         }
 
+        public void RemoveCached(string id)
+        {
+            if (cache.ContainsKey(id))
+            {
+                cache.Remove(id);
+            }
+        }
+
         public async Task<byte[]> GetAsync(CBookEntity book)
         {
             //lock(this);
@@ -51,7 +59,7 @@ namespace HentaiBlazor.Services
             }
             //string cover = "";
 
-            byte[] c = await ReadAsync(Path.Combine(book.Path, book.Name));
+            byte[] c = await ReadAsync(Path.Combine(book.Path, book.Name), book.Cover);
             cache.Add(book.Id, c);
 
             if (c == null || c.Length == 0)
@@ -69,7 +77,7 @@ namespace HentaiBlazor.Services
             await Task.CompletedTask;
         }
 
-        private async Task<byte[]> ReadAsync(string file)
+        private async Task<byte[]> ReadAsync(string file, string cover)
         {
             return await Task<byte[]>.Run(() =>
             {
@@ -85,16 +93,30 @@ namespace HentaiBlazor.Services
                 {
                     try
                     {
+                        IArchiveEntry result = null;
+
                         foreach (var entry in archive.Entries)
                         {
-                            if (!entry.IsDirectory && ComicUtils.IsImage(entry.Key))
+                            if (result == null && !entry.IsDirectory && ComicUtils.IsImage(entry.Key))
                             {
-                                Console.WriteLine("找到了一个图片");
-                                byte[] preview = ImageUtils.PreviewBuffer(entry, width, height);
+                                result = entry;
 
-                                // return (StringUtils.IsBlank(preview)) ? none : base64 + preview;
-                                return preview;
+                                if (StringUtils.IsBlank(cover))
+                                {
+                                    break;
+                                }
                             }
+
+                            if (StringUtils.IsEqual(entry.Key, cover))
+                            {
+                                result = entry;
+                                break;
+                            }
+                        }
+
+                        if (result != null)
+                        {
+                            return ImageUtils.PreviewBuffer(result, width, height);
                         }
                     }
                     catch (ArchiveException ex)
