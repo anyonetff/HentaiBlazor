@@ -16,6 +16,14 @@ namespace HentaiBlazor.Services.Basic
         {
         }
 
+        public async Task<List<BAuthorEntity>> ListByNameAliasAsync(string nameAlias)
+        {
+            return await this.dbContext.Set<BAuthorEntity>()
+                    .Where<BAuthorEntity>(author => author.Name == nameAlias || author.Alias == nameAlias)
+                    .OrderBy(author => author.Name)
+                    .ToListAsync<BAuthorEntity>();
+        }
+
         public async Task<BAuthorEntity> FindByNameAsync(string name)
         {
             return await this.dbContext.Set<BAuthorEntity>()

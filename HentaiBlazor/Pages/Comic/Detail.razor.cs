@@ -1,5 +1,7 @@
 ﻿using HentaiBlazor.Common;
+using HentaiBlazor.Data.Basic;
 using HentaiBlazor.Data.Comic;
+using HentaiBlazor.Services.Basic;
 using HentaiBlazor.Services.Comic;
 using Microsoft.AspNetCore.Components;
 using System;
@@ -15,6 +17,8 @@ namespace HentaiBlazor.Pages.Comic
 
         private CBookEntity bookEntity;
 
+        private BAuthorEntity authorEntity;
+
         private List<CBookTagEntity> bookTagEntities;
 
         private bool tagEdit = false;
@@ -27,12 +31,17 @@ namespace HentaiBlazor.Pages.Comic
         [Inject]
         public BookTagService bookTagService { get; set; }
 
+        [Inject]
+        public AuthorService authorService { get; set; }
+
         protected override async Task OnInitializedAsync()
         {
             bookId = base.Options;
 
             bookEntity = await bookService.FindAsync(bookId);
             bookTagEntities = await bookTagService.ListByBookAsync(bookId);
+
+            authorEntity = await authorService.FindByNameAsync(bookEntity.Author);
 
             await base.OnInitializedAsync();
         }

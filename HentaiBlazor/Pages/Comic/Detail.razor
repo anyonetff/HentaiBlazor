@@ -11,7 +11,18 @@
         @bookEntity.Name
     </DescriptionsItem>
     <DescriptionsItem Title="作者">
-        @bookEntity.Author
+        @if (authorEntity == null)
+        {
+            <span>
+                @bookEntity.Author
+            </span>
+        }
+        else
+        {
+            <a href="@("comic/author/" + authorEntity.Id)" target="_blank">
+                @authorEntity.Name
+            </a>
+        }
     </DescriptionsItem>
     <DescriptionsItem Title="语言">
         <TextLanguage Language="@bookEntity.Language" />

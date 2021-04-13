@@ -101,9 +101,9 @@ namespace HentaiBlazor.Pages.Basic.Author
 
             if (authorEntity.Alias != ".")
             {
-                Console.WriteLine("批量更新作者名称.");
-
-                await this .bookService.UpdateAuthorAsync(authorEntity.Name, authorEntity.Alias);
+                Console.WriteLine("目前已经做了关联查询，不再批量更新作者名字");
+                // Console.WriteLine("批量更新作者名称.");
+                // await this .bookService.UpdateAuthorAsync(authorEntity.Name, authorEntity.Alias);
             }
 
             _ = base.ModalRef.CloseAsync();

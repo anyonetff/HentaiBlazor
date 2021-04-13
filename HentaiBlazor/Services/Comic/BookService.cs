@@ -59,6 +59,23 @@ namespace HentaiBlazor.Services.Comic
                 .FirstOrDefaultAsync<CBookEntity>();
         }
 
+        public async Task<List<CBookEntity>> ListByAuthorAsync(string author)
+        {
+            return await this.dbContext.Set<CBookEntity>()
+                .Where<CBookEntity>(book => book.Author == author)
+                .OrderBy(book => book.Title)
+                .ToListAsync<CBookEntity>();
+        }
+
+        public async Task<List<CBookEntity>> ListByAuthorAsync(List<string> authors)
+        {
+            return await this.dbContext.Set<CBookEntity>()
+                .Where<CBookEntity>(book => authors.Contains(book.Author))
+                .OrderBy(book => book.Title)
+                .ToListAsync<CBookEntity>();
+        }
+
+
         public async Task<int> TotalCountAsync()
         {
             return await this.dbContext.Set<CBookEntity>()
