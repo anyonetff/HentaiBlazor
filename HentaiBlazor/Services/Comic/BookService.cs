@@ -18,7 +18,7 @@ namespace HentaiBlazor.Services.Comic
         }
 
         public async Task<PagedList<CBookEntity>> SearchPagedAsync(
-            string searchPath, string searchAuthor, string searchKeyword, IEnumerable<SortableItem> sortables, 
+            string searchPath, string searchAuthor, string searchKeyword, IEnumerable<SortableItem> sortables,
             int pageSize, int pageIndex)
         {
             var query = this.dbContext.Set<CBookEntity>()
@@ -89,6 +89,14 @@ namespace HentaiBlazor.Services.Comic
                 .ForEachAsync(book => book.Author = alias);
 
             return await this.dbContext.SaveChangesAsync();
+        }
+
+        public async Task<List<(string, int)>> DuplicateNameAsync()
+        {
+            return await this.dbContext.Set<CBookEntity>()
+                .GroupBy(b => new { b.Name })
+                .Select(b => new ValueTuple<string, int>(b.Key.Name, b.Count()))
+                .ToListAsync<ValueTuple<string, int>>();
         }
 
 
