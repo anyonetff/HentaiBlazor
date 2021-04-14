@@ -29,26 +29,7 @@
     <AntList ItemLayout="ListItemLayout.Horizontal"
              Grid="gutter" DataSource="_AVideoEntities">
         <ListItem Grid="gutter">
-            <Card Size="small" Hoverable
-                  Cover="@coverTemplate(@context.Id)">
-                <ChildContent>
-                    <div>
-                        <IconFavorite Favorite="@context.Favorite" />
-                        <TextLanguage Language="@context.Language" />
-                    </div>
-                    <CardMeta Style="font-size: 0.75rem" Title="@context.Title" Description="@context.Producer" />
-                </ChildContent>
-                <ActionTemplate>
-                    <CardAction>
-                        <Icon Type="info" OnClick="() => OpenDetail(context.Id, context.Title)" />
-                    </CardAction>
-                    <CardAction>
-                        <a href="@("comic/viewer/" + context.Id)" target="_blank">
-                            <Icon Type="eye" />
-                        </a>
-                    </CardAction>
-                </ActionTemplate>
-            </Card>
+            <CardVideo Video="@context" OnDetail="() => OpenDetail(context.Id, context.Title)"></CardVideo>
         </ListItem>
     </AntList>
 

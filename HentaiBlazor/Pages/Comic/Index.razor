@@ -27,33 +27,7 @@
     <AntList ItemLayout="ListItemLayout.Horizontal"
              Grid="gutter" DataSource="_CBookEntities">
         <ListItem Grid="gutter">
-            <Card Size="small" Hoverable
-                  Cover="@coverTemplate(@context.Id)">
-                <ChildContent>
-                    <div>
-                        <Text Style="float: right; font-size: 0.5rem;">
-                            @context.Index/@context.Count
-                        </Text>
-
-                        <IconFavorite Favorite="@context.Favorite" />
-                        <TextLanguage Language="@context.Language" />
-
-                        <Progress Percent="@(context.Count > 0 ? (100 * context.Index / context.Count) : 0)" 
-                                  StrokeWidth="3" ShowInfo="false" />
-                    </div>
-                    <CardMeta Style="font-size: 0.75rem" Title="@context.Title" Description="@context.Author" />
-                </ChildContent>
-                <ActionTemplate>
-                    <CardAction>
-                        <Icon Type="info" OnClick="() => OpenDetail(context.Id, context.Title)" />
-                    </CardAction>
-                    <CardAction>
-                        <a href="@("comic/viewer/" + context.Id)" target="_blank">
-                            <Icon Type="eye" />
-                        </a>
-                    </CardAction>
-                </ActionTemplate>
-            </Card>
+            <CardBook Book="@context" OnDetail="() => OpenDetail(context.Id, context.Title)"></CardBook>
         </ListItem>
     </AntList>
 
@@ -83,10 +57,5 @@ Xl = 5,
 Xxl = 5,
 Column = 10
 };
-
-private RenderFragment coverTemplate(string id)
-{
-return @<div style="height: 200px; overflow: hidden;"><Image PreviewSrc="@("/api/Book/Cover/" + id)" Src="@("/api/Book/Cover/" + id)" /></div>;
-}
 
 }

@@ -1,0 +1,37 @@
+﻿<Card Size="small" Hoverable
+      Cover="@coverTemplate(Book.Id)">
+    <ChildContent>
+        <div>
+            <Text Style="float: right; font-size: 0.5rem;">
+                @Book.Index/@Book.Count
+            </Text>
+
+            <IconFavorite Favorite="@Book.Favorite" />
+            <TextLanguage Language="@Book.Language" />
+
+            <Progress Percent="@(Book.Count > 0 ? (100 * Book.Index / Book.Count) : 0)"
+                      StrokeWidth="3" ShowInfo="false" />
+        </div>
+        <CardMeta Style="font-size: 0.75rem" Title="@Book.Title" Description="@Book.Author" />
+    </ChildContent>
+    <ActionTemplate>
+        <CardAction>
+            <Icon Type="info" OnClick="HandleOnDetail" />
+        </CardAction>
+        <CardAction>
+            <a href="@("/comic/viewer/" + Book.Id)" target="_blank">
+                <Icon Type="eye" />
+            </a>
+        </CardAction>
+    </ActionTemplate>
+</Card>
+
+@code
+{
+    private RenderFragment coverTemplate(string id)
+    {
+        return @<div style="height: 200px; overflow: hidden;">
+            <Image PreviewSrc="@("/api/Book/Cover/" + id)" Src="@("/api/Book/Cover/" + id)" />
+        </div>;
+    }
+}

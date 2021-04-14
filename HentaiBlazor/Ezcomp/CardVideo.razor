@@ -1,0 +1,31 @@
+﻿<Card Size="small" Hoverable
+      Cover="@coverTemplate(Video.Id)">
+    <ChildContent>
+        <div>
+            <IconFavorite Favorite="@Video.Favorite" />
+            <TextLanguage Language="@Video.Language" />
+        </div>
+        <CardMeta Style="font-size: 0.75rem" Title="@Video.Title" Description="@Video.Producer" />
+    </ChildContent>
+    <ActionTemplate>
+        <CardAction>
+            <Icon Type="info" OnClick="HandleOnDetail" />
+        </CardAction>
+        <CardAction>
+            <a href="@("anime/player/" + Video.Id)" target="_blank">
+                <Icon Type="eye" />
+            </a>
+        </CardAction>
+    </ActionTemplate>
+</Card>
+
+@code {
+
+    private RenderFragment coverTemplate(string id)
+    {
+        return @<div style="height: 180px; overflow: hidden;">
+            <Image Src="@("/api/Video/Preview/" + id)" />
+        </div>;
+    }
+
+}

@@ -8,12 +8,13 @@
 <PageContainer Title="@authorEntity.Name">
     <Space Style="margin-bottom: 0.5rem;">
         <SpaceItem>
-            <Button Type="@(All ? ButtonType.Primary : ButtonType.Default)" Size="@ButtonSize.Small" OnClick="OnAll">全部</Button>
+            <Button Type="@buttonAllType()" Size="@ButtonSize.Small" OnClick="OnAll">全部</Button>
         </SpaceItem>
         <SpaceItem>
             @foreach (var author in authorEntities)
             {
-                <Button Size="@ButtonSize.Small" @onclick="@(() =>  NavigationManager.NavigateTo("/comic/author/" + author.Id))">@author.Name</Button>
+                <Button Type="@buttonAuthorType(author.Id)" Size="@ButtonSize.Small" 
+                        OnClick="() => OnAuthor(author.Id)">@author.Name</Button>
             }
         </SpaceItem>
     </Space>
@@ -21,33 +22,7 @@
     <AntList ItemLayout="ListItemLayout.Horizontal"
              Grid="gutter" DataSource="bookEntities">
         <ListItem Grid="gutter">
-            <Card Size="small" Hoverable
-                  Cover="@coverTemplate(@context.Id)">
-                <ChildContent>
-                    <div>
-                        <Text Style="float: right; font-size: 0.5rem;">
-                            @context.Index/@context.Count
-                        </Text>
-
-                        <IconFavorite Favorite="@context.Favorite" />
-                        <TextLanguage Language="@context.Language" />
-
-                        <Progress Percent="@(context.Count > 0 ? (100 * context.Index / context.Count) : 0)"
-                                  StrokeWidth="3" ShowInfo="false" />
-                    </div>
-                    <CardMeta Style="font-size: 0.75rem" Title="@context.Title" Description="@context.Author" />
-                </ChildContent>
-                <ActionTemplate>
-                    <CardAction>
-                        <Icon Type="info" OnClick="() => OpenDetail(context.Id, context.Title)" />
-                    </CardAction>
-                    <CardAction>
-                        <a href="@("comic/viewer/" + context.Id)" target="_blank">
-                            <Icon Type="eye" />
-                        </a>
-                    </CardAction>
-                </ActionTemplate>
-            </Card>
+            <CardBook Book="@context" OnDetail="() => OpenDetail(context.Id, context.Title)"></CardBook>
         </ListItem>
     </AntList>
 </PageContainer>
@@ -66,9 +41,14 @@
         Column = 10
     };
 
-    private RenderFragment coverTemplate(string id)
+    private string buttonAllType()
     {
-        return@<div style="height: 200px; overflow: hidden;"><Image PreviewSrc="@("/api/Book/Cover/" + id)" Src="@("/api/Book/Cover/" + id)" /></div>;
-}
+        return All ? ButtonType.Primary : ButtonType.Default;
+    }
+
+    private string buttonAuthorType(string id)
+    {
+        return id == authorEntity.Id ? (All ? ButtonType.Default : ButtonType.Primary) : ButtonType.Dashed;
+    }
 
 }

@@ -1,9 +1,7 @@
 ﻿
-<ul>
-    @foreach (var item in _index)
-    {
-        <li>
-            @item
-        </li>
-    }
-</ul>
+@foreach (var item in _index)
+{
+    <Button Type="@ButtonType.Link" Size="@ButtonSize.Small" @onclick="(e) => HandleOnIndex(e, item)">@item</Button>
+}
+
+

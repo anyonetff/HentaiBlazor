@@ -51,9 +51,19 @@ namespace HentaiBlazor.Pages.Comic
             await Refresh();
         }
 
+
         private async Task OnAll()
         {
             All = true;
+
+            await Refresh();
+        }
+
+        private async Task OnAuthor(string id)
+        {
+            All = false;
+
+            authorEntity = await authorService.FindAsync(Id);
 
             await Refresh();
         }
