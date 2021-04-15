@@ -29,7 +29,11 @@
                 </SpaceItem>
             </Space>
         </ActionColumn>
-        <Column Title="名称" @bind-Field="@context.Name"></Column>
+        <Column Title="名称" @bind-Field="@context.Name">
+            <a href="@("/comic/author/" + context.Id)" target="_blank">
+                @context.Name
+            </a>
+        </Column>
         <Column Title="映射" @bind-Field="@context.Alias"></Column>
         <Column Title="合法" @bind-Field="@context.Valid"></Column>
         <Column Title="项目数量" @bind-Field="@context.Items"></Column>

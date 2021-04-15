@@ -24,6 +24,8 @@ namespace HentaiBlazor.Data
 
         public DbSet<CBookEntity> CBookEntities { get; set; }
         public DbSet<CBookTagEntity> CBookTagEntities { get; set; }
+        public DbSet<CCryptoEntity> CCryptoEntities { get; set; }
+
         public DbSet<AVideoEntity> AVideoEntities { get; set; }
         public DbSet<AVideoTagEntity> AVideoTagEntities { get; set; }
 

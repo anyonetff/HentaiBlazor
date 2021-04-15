@@ -6,6 +6,7 @@ using HentaiBlazor.Services;
 using HentaiBlazor.Services.Comic;
 using Microsoft.AspNetCore.Components;
 using SharpCompress.Archives;
+using SharpCompress.Common;
 using System;
 using System.Collections.Generic;
 using System.Drawing.Imaging;
@@ -34,9 +35,9 @@ namespace HentaiBlazor.Pages.Comic
         public CBookEntity book;
 
 
-        private List<IArchiveEntry> entries;
+        private List<IArchiveEntry> entries = new List<IArchiveEntry>();
 
-        private List<IArchiveEntry> entry;
+        private List<IArchiveEntry> entry = new List<IArchiveEntry>();
 
         private string ModeFit = "fit";
 
@@ -258,13 +259,29 @@ namespace HentaiBlazor.Pages.Comic
                 return;
             }
 
-            var archive = ArchiveFactory.Open(file);
 
-            // 过滤不是图片的压缩包文件，并按文件名排序
-            entries = archive.Entries
-                    .Where(a => (! a.IsDirectory && ComicUtils.IsImage(a.Key)))
+            // IArchive archive = null;
+            try
+            {
+                var archive = ArchiveFactory.Open(file);
+
+                Console.WriteLine("开始对内容排序.");
+
+                entries = archive.Entries
+                    .Where(a => (!a.IsDirectory && ComicUtils.IsImage(a.Key)))
                     .OrderBy(a => a.Key)
                     .ToList();
+            }
+            catch (CryptographicException ex)
+            {
+                Console.WriteLine("打开文件需要密码.");
+                Console.WriteLine(ex);
+            }
+
+
+            Console.WriteLine("文件页数:" + entries.Count);
+
+            // 过滤不是图片的压缩包文件，并按文件名排序
 
             if (book.Count != entries.Count)
             {

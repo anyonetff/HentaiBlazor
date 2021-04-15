@@ -1,44 +1,41 @@
 ﻿using AntDesign;
-using HentaiBlazor.Data.Comic;
-using HentaiBlazor.Services.Comic;
+using HentaiBlazor.Data.Basic;
+using HentaiBlazor.Services.Basic;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace HentaiBlazor.Pages.Comic.Book
+namespace HentaiBlazor.Pages.Comic.Crypto
 {
     public partial class Remove
     {
-        private string bookId;
+        private string tagId;
 
-        private CBookEntity bookEntity;
+        private BTagEntity tagEntity;
 
         [Inject]
-        public BookService bookService { get; set; }
-
-        private bool eliminate;
+        public TagService tagService { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
-            bookId = base.Options;
+            tagId = base.Options;
 
-            bookEntity = await bookService.FindAsync(bookId);
+            tagEntity = await tagService.FindAsync(tagId);
 
             await base.OnInitializedAsync();
         }
 
         public override async Task OkAsync(ModalClosingEventArgs args)
         {
-            Console.WriteLine("删除漫画[" + bookEntity.Id + "]");
+            Console.WriteLine("删除标签[" + tagEntity.Id + "]");
 
             ConfirmRef.Config.OkButtonProps.Loading = true;
 
-            await bookService.RemoveAsync(bookEntity);
+            await tagService.RemoveAsync(tagEntity);
 
             await base.OkAsync(args);
         }
-
     }
 }

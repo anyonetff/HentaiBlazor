@@ -1,0 +1,35 @@
+﻿@page "/basic/tag/list"
+
+@using HentaiBlazor.Data.Basic
+
+<PageContainer Title="标签维护">
+
+    <Space Style="margin-bottom: 0.5rem">
+        <SpaceItem>
+            <Input Prefix="@_filter" Placeholder="关键字" Style="width: 12rem;"
+                   @bind-Value="searchKeyword" />
+        </SpaceItem>
+        <SpaceItem>
+            <Button Type="@ButtonType.Primary" @onclick="Search">查询</Button>
+            <Button Type="@ButtonType.Primary" OnClick="() => OpenEdit(null)">添加</Button>
+        </SpaceItem>
+    </Space>
+
+    <Table TItem="BTagEntity" DataSource="@BTagEntities" Size=@TableSize.Small>
+        <ActionColumn Width="160">
+            <Space>
+                <SpaceItem>
+                    <Button Type="@ButtonType.Primary" Danger OnClick="() => OpenRemove(context.Id)">删除</Button>
+                    <Button Type="@ButtonType.Primary" OnClick="() => OpenEdit(context.Id)">修改</Button>
+                </SpaceItem>
+            </Space>
+        </ActionColumn>
+        <Column Title="名称" @bind-Field="@context.Name"></Column>
+        <Column Title="项目数量" @bind-Field="@context.Items"></Column>
+        <Column Title="备注" @bind-Field="@context.Note"></Column>
+    </Table>
+</PageContainer>
+
+@code {
+    RenderFragment _filter =@<Icon Type="filter" />;
+}

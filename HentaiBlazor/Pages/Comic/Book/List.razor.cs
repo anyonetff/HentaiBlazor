@@ -96,5 +96,25 @@ namespace HentaiBlazor.Pages.Comic.Book
             _removeRef = await _modal.CreateConfirmAsync<Remove, string, string>(_config, options);
         }
 
+        private async Task OpenDuplicate(string options)
+        {
+            var _config = new DrawerOptions();
+
+            _config.Title = "重复作品";
+            _config.Width = 800;
+            //modalConfig.Footer = null;
+
+            _editRef = await _drawer
+                .CreateAsync<Duplicate, string, string>(_config, options);
+
+            _editRef.OnClosed = async (r) =>
+            {
+                Console.WriteLine(r);
+
+                await Search();
+                StateHasChanged();
+            };
+        }
+
     }
 }
