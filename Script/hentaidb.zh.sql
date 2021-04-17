@@ -30,6 +30,8 @@ VALUES ('6060', '60', true, '/basic/author/list', '作品作者', 'team', '', CU
 
 INSERT INTO s_function (f_id, f_parent, f_leaf, f_path, f_name, f_icon, f_note, x_insert_, x_update_)
 VALUES ('6070', '60', true, '/basic/tag/list', '标签分类', 'tags', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO s_function (f_id, f_parent, f_leaf, f_path, f_name, f_icon, f_note, x_insert_, x_update_)
+VALUES ('6080', '60', true, '/comic/crypto/list', '档案密钥', 'tags', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO s_function (f_id, f_parent, f_leaf, f_path, f_name, f_icon, f_note, x_insert_, x_update_)
 VALUES ('80', '0', false, '', '系统设置', 'setting', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
