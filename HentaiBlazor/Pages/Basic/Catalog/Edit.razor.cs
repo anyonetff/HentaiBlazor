@@ -41,7 +41,7 @@ namespace HentaiBlazor.Pages.Basic.Catalog
         {
             await this.catalogService.SaveAsync(catalogEntity);
 
-            await base.ModalRef.CloseAsync();
+            _ = base.FeedbackRef.CloseAsync();
         }
 
         private async Task OnFinishFailed(EditContext editContext)

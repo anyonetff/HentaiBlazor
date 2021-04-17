@@ -78,7 +78,7 @@ namespace HentaiBlazor.Pages.Basic.Tag
 
             await this.tagService.SaveAsync(tagEntity);
 
-            await base.ModalRef.CloseAsync();
+            _ = base.FeedbackRef.CloseAsync();
         }
 
         private async Task OnFinishFailed(EditContext editContext)

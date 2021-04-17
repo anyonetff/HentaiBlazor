@@ -1,4 +1,5 @@
-﻿using HentaiBlazor.Common;
+﻿using AntDesign;
+using HentaiBlazor.Common;
 using HentaiBlazor.Data.Comic;
 using HentaiBlazor.Services.Comic;
 using Microsoft.AspNetCore.Components;
@@ -40,7 +41,7 @@ namespace HentaiBlazor.Pages.Comic.Book
         {
             await bookService.SaveAsync(bookEntity);
 
-            await base.DrawerRef.CloseAsync("success");
+            await ((DrawerRef<string>)base.FeedbackRef)?.CloseAsync("success");
         }
 
         private async Task OnFinishFailed(EditContext editContext)

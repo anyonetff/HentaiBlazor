@@ -1,4 +1,5 @@
-﻿using HentaiBlazor.Common;
+﻿using AntDesign;
+using HentaiBlazor.Common;
 using HentaiBlazor.Data.Anime;
 using HentaiBlazor.Services.Anime;
 using Microsoft.AspNetCore.Components;
@@ -40,7 +41,7 @@ namespace HentaiBlazor.Pages.Anime.Video
         {
             await videoService.SaveAsync(videoEntity);
 
-            await base.DrawerRef.CloseAsync("success");
+            await ((DrawerRef<string>)base.FeedbackRef)?.CloseAsync("success");
         }
 
         private async Task OnFinishFailed(EditContext editContext)

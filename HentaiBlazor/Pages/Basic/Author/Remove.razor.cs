@@ -27,15 +27,19 @@ namespace HentaiBlazor.Pages.Basic.Author
             await base.OnInitializedAsync();
         }
 
-        public override async Task OkAsync(ModalClosingEventArgs args)
+        public override async Task OnFeedbackOkAsync(ModalClosingEventArgs args)
         {
-            Console.WriteLine("删除标签[" + authorEntity.Id + "]");
+            Console.WriteLine("删除作者[" + authorEntity.Id + "]");
 
-            ConfirmRef.Config.OkButtonProps.Loading = true;
+            if (FeedbackRef is ConfirmRef confirmRef)
+            {
+                confirmRef.Config.OkButtonProps.Loading = true;
+                await confirmRef.UpdateConfigAsync();
+            }
 
             await authorService.RemoveAsync(authorEntity);
 
-            await base.OkAsync(args);
+            await base.OnFeedbackOkAsync(args);
         }
     }
 }

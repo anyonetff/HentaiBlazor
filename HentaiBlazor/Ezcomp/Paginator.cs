@@ -122,11 +122,11 @@ namespace HentaiBlazor.Ezcomp
 
         public async Task HandlePageIndexChange(PaginationEventArgs args)
         {
-            _pageIndex = args.PageIndex;
+            _pageIndex = args.Page;
 
             if (PageIndexChanged.HasDelegate)
             {
-                await PageIndexChanged.InvokeAsync(args.PageIndex);
+                await PageIndexChanged.InvokeAsync(args.Page);
             }
 
             if (OnPageIndexChange.HasDelegate)

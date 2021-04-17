@@ -70,7 +70,7 @@ namespace HentaiBlazor.Pages.Comic.Crypto
 
             await this.cryptoService.SaveAsync(cryptoEntity);
 
-            await base.ModalRef.CloseAsync();
+            _ = base.FeedbackRef.CloseAsync();
         }
 
         private async Task OnFinishFailed(EditContext editContext)

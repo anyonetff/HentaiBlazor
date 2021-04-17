@@ -29,15 +29,19 @@ namespace HentaiBlazor.Pages.Basic.Catalog
             await base.OnInitializedAsync();
         }
 
-        public override async Task OkAsync(ModalClosingEventArgs args)
+        public override async Task OnFeedbackOkAsync(ModalClosingEventArgs args)
         {
-            Console.WriteLine("删除漫画[" + catalogEntity.Id + "]");
+            Console.WriteLine("删除档案目录[" + catalogEntity.Id + "]");
 
-            ConfirmRef.Config.OkButtonProps.Loading = true;
+            if (FeedbackRef is ConfirmRef confirmRef)
+            {
+                confirmRef.Config.OkButtonProps.Loading = true;
+                await confirmRef.UpdateConfigAsync();
+            }
 
             await catalogService.RemoveAsync(catalogEntity);
 
-            await base.OkAsync(args);
+            await base.OnFeedbackOkAsync(args);
         }
 
     }

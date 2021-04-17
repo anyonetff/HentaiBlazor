@@ -29,15 +29,19 @@ namespace HentaiBlazor.Pages.Comic.Book
             await base.OnInitializedAsync();
         }
 
-        public override async Task OkAsync(ModalClosingEventArgs args)
+        public override async Task OnFeedbackOkAsync(ModalClosingEventArgs args)
         {
             Console.WriteLine("删除漫画[" + bookEntity.Id + "]");
 
-            ConfirmRef.Config.OkButtonProps.Loading = true;
+            if (FeedbackRef is ConfirmRef confirmRef)
+            {
+                confirmRef.Config.OkButtonProps.Loading = true;
+                await confirmRef.UpdateConfigAsync();
+            }
 
             await bookService.RemoveAsync(bookEntity);
 
-            await base.OkAsync(args);
+            await base.OnFeedbackOkAsync(args);
         }
 
     }

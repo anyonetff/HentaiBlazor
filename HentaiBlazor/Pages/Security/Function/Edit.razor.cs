@@ -79,7 +79,7 @@ namespace HentaiBlazor.Pages.Security.Function
 
             await this.functionService.SaveAsync(functionEntity);
 
-            await base.ModalRef.CloseAsync();
+            _ = base.FeedbackRef.CloseAsync();
         }
 
         private async Task OnFinishFailed(EditContext editContext)

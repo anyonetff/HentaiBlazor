@@ -89,7 +89,7 @@ namespace HentaiBlazor.Pages.Comic
                 return;
             }
 
-            await _paging(new PaginationEventArgs { PageIndex = EntryPaginator.PageIndex - 1 });
+            await _paging(new PaginationEventArgs(EntryPaginator.PageIndex - 1, 1));
             
         }
 
@@ -104,7 +104,7 @@ namespace HentaiBlazor.Pages.Comic
                 return;
             }
 
-            await _paging(new PaginationEventArgs { PageIndex = EntryPaginator.PageIndex + 1 });
+            await _paging(new PaginationEventArgs(EntryPaginator.PageIndex - 1, 1));
 
         }
 
@@ -129,7 +129,7 @@ namespace HentaiBlazor.Pages.Comic
         {
             _Paged = false;
 
-            var args = new PaginationEventArgs { PageSize = 20, PageIndex = 1 };
+            var args = new PaginationEventArgs(1, 20);
 
             await EntryPaginator.HandlePageSizeChange(args);
             await EntryPaginator.HandlePageIndexChange(args);
@@ -152,7 +152,7 @@ namespace HentaiBlazor.Pages.Comic
                 {
                     Console.WriteLine("快速定位页面[" + i + "]");
 
-                    var args = new PaginationEventArgs { PageSize = 1, PageIndex = i + 1 };
+                    var args = new PaginationEventArgs(i + 1, 1);
 
                     await EntryPaginator.HandlePageSizeChange(args);
                     await EntryPaginator.HandlePageIndexChange(args);
@@ -299,7 +299,7 @@ namespace HentaiBlazor.Pages.Comic
 
             if (_Paged && book.Index > 0 && book.Index <= entries.Count)
             {
-                await EntryPaginator.HandlePageIndexChange(new PaginationEventArgs { PageIndex = book.Index });
+                await EntryPaginator.HandlePageIndexChange(new PaginationEventArgs(book.Index, 1));
             }
 
             entry = EntryPaginator.Paged().ToList();

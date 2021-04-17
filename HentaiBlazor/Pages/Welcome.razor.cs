@@ -34,6 +34,8 @@ namespace HentaiBlazor.Pages
 
         private int TagTotal;
 
+        private string shortcut;
+
         protected override async Task OnInitializedAsync()
         {
             BookTotal = await bookService.TotalCountAsync();
@@ -47,6 +49,12 @@ namespace HentaiBlazor.Pages
             NavigationManager.NavigateTo(url);
         }
 
+        private void OnValueChanged(string value)
+        {
+            shortcut = value;
+
+            Console.WriteLine(shortcut);
+        }
 
     }
 }

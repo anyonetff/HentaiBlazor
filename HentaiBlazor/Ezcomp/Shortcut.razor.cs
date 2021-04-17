@@ -22,16 +22,17 @@ namespace HentaiBlazor.Ezcomp
         public string Value { get; set; }
 
         [Parameter]
-        public EventCallback<MouseEventArgs> OnIndex { get; set; }
+        public EventCallback<string> OnChange { get; set; }
 
-        private async Task HandleOnIndex(MouseEventArgs args, string index)
+
+        private async Task HandleOnChange(string value)
         {
             
-            Value = index;
+            Value = value;
 
-            if (OnIndex.HasDelegate)
+            if (OnChange.HasDelegate)
             {
-                await OnIndex.InvokeAsync(args);
+                await OnChange.InvokeAsync(value);
             }
         }
 

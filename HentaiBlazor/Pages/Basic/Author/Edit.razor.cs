@@ -106,7 +106,7 @@ namespace HentaiBlazor.Pages.Basic.Author
                 // await this .bookService.UpdateAuthorAsync(authorEntity.Name, authorEntity.Alias);
             }
 
-            _ = base.ModalRef.CloseAsync();
+            _ = base.FeedbackRef.CloseAsync();
 
             // StateHasChanged();
         }

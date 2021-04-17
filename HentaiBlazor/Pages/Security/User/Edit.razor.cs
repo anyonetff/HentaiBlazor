@@ -95,7 +95,7 @@ namespace HentaiBlazor.Pages.Security.User
 
             await this.userService.SaveAsync(userEntity);
 
-            await base.ModalRef.CloseAsync();
+            _ = base.FeedbackRef.CloseAsync();
         }
 
         private async Task OnFinishFailed(EditContext editContext)

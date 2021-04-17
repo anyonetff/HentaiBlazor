@@ -103,9 +103,7 @@ namespace HentaiBlazor.Pages.Basic.Producer
                 // await this .bookService.UpdateProducerAsync(producerEntity.Name, producerEntity.Alias);
             }
 
-            _ = base.ModalRef.CloseAsync();
-
-            // StateHasChanged();
+            _ = base.FeedbackRef.CloseAsync();
         }
 
         private async Task OnFinishFailed(EditContext editContext)
