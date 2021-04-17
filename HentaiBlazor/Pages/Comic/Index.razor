@@ -30,10 +30,10 @@
             <CardBook Book="@context" OnDetail="() => OpenDetail(context.Id, context.Title)"></CardBook>
         </ListItem>
     </AntList>
-
+    
     <Pagination Total="BookPaginator.Total"
                 PageSize="BookPaginator.PageSize"
-                PageIndex="BookPaginator.PageIndex"
+                
                 ShowQuickJumper="true"
                 OnPageIndexChange="_paging"
                 OnPageSizeChange="_sizing" />
