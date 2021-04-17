@@ -1,6 +1,6 @@
 ﻿using AntDesign;
-using HentaiBlazor.Data.Basic;
-using HentaiBlazor.Services.Basic;
+using HentaiBlazor.Data.Comic;
+using HentaiBlazor.Services.Comic;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
@@ -11,29 +11,29 @@ namespace HentaiBlazor.Pages.Comic.Crypto
 {
     public partial class Remove
     {
-        private string tagId;
+        private string cryptoId;
 
-        private BTagEntity tagEntity;
+        private CCryptoEntity cryptoEntity;
 
         [Inject]
-        public TagService tagService { get; set; }
+        public CryptoService cryptoService { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
-            tagId = base.Options;
+            cryptoId = base.Options;
 
-            tagEntity = await tagService.FindAsync(tagId);
+            cryptoEntity = await cryptoService.FindAsync(cryptoId);
 
             await base.OnInitializedAsync();
         }
 
         public override async Task OkAsync(ModalClosingEventArgs args)
         {
-            Console.WriteLine("删除标签[" + tagEntity.Id + "]");
+            Console.WriteLine("删除密码[" + cryptoEntity.Id + "]");
 
             ConfirmRef.Config.OkButtonProps.Loading = true;
 
-            await tagService.RemoveAsync(tagEntity);
+            await cryptoService.RemoveAsync(cryptoEntity);
 
             await base.OkAsync(args);
         }

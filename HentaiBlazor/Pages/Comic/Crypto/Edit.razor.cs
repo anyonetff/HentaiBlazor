@@ -1,6 +1,6 @@
 ﻿using HentaiBlazor.Common;
-using HentaiBlazor.Data.Basic;
-using HentaiBlazor.Services.Basic;
+using HentaiBlazor.Data.Comic;
+using HentaiBlazor.Services.Comic;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using System;
@@ -17,24 +17,24 @@ namespace HentaiBlazor.Pages.Comic.Crypto
 
         // private int _times = 0;
 
-        private string tagId;
+        private string cryptoId;
 
-        private BTagEntity tagEntity;
+        private CCryptoEntity cryptoEntity;
 
         [Inject]
-        public TagService tagService { get; set; }
+        public CryptoService cryptoService { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
-            tagId = base.Options ?? null;
+            cryptoId = base.Options ?? null;
 
-            if (StringUtils.IsBlank(tagId))
+            if (StringUtils.IsBlank(cryptoId))
             {
-                tagEntity = new BTagEntity();
+                cryptoEntity = new CCryptoEntity();
             }
             else 
             {
-                tagEntity = await tagService.FindCloneAsync(tagId);
+                cryptoEntity = await cryptoService.FindCloneAsync(cryptoId);
             }
 
             await base.OnInitializedAsync();
@@ -42,14 +42,11 @@ namespace HentaiBlazor.Pages.Comic.Crypto
 
         private async Task ValidatorByName(EditContext editContext)
         {
-            BTagEntity other = await this.tagService.FindByNameAsync(tagEntity.Name);
+            CCryptoEntity other = await this.cryptoService.FindBySecretAsync(cryptoEntity.Secret);
 
-            if (other != null && StringUtils.IsNotEqual(tagEntity.Id, other.Id))
+            if (other != null && StringUtils.IsNotEqual(cryptoEntity.Id, other.Id))
             {
-                // _times += 1; 跟踪同一个页面的验证次数
-                // messageStore.Add(editContext.Field("Name"), "名字重复了 [第" + _times + "次验证]");
-                messageStore.Add(editContext.Field("Name"), "名字重复了");
-                // StateHasChanged();
+                messageStore.Add(editContext.Field(nameof(CCryptoEntity.Secret)), "密码重复了");
             }
         }
         
@@ -64,19 +61,14 @@ namespace HentaiBlazor.Pages.Comic.Crypto
 
             if (editContext.GetValidationMessages().Any())
             {
-                // Console.WriteLine("错误内容:" +  editContext.GetValidationMessages().Count());
-                // 这里要用这个方面通知页面，才能触发页面渲染. 用一般的那个StateHasChanged()不管用
                 editContext.NotifyValidationStateChanged();
                 
-                // 这里还要清空当前验证状态，不然表单永远不能触发第二次提交
                 messageStore.Clear();
 
                 return;
             }
 
-            tagEntity.Alias = ".";
-
-            await this.tagService.SaveAsync(tagEntity);
+            await this.cryptoService.SaveAsync(cryptoEntity);
 
             await base.ModalRef.CloseAsync();
         }

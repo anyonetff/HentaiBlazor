@@ -136,6 +136,13 @@ namespace HentaiBlazor.Services
             });
         }
 
+        private IEnumerable<IArchiveEntry> process(string file)
+        {
+
+
+            return null;
+        }
+
 
     }
 }

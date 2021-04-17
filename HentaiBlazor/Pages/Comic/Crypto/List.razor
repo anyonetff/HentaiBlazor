@@ -1,8 +1,8 @@
-﻿@page "/basic/tag/list"
+﻿@page "/comic/crypto/list"
 
-@using HentaiBlazor.Data.Basic
+@using HentaiBlazor.Data.Comic
 
-<PageContainer Title="标签维护">
+<PageContainer Title="解压密码">
 
     <Space Style="margin-bottom: 0.5rem">
         <SpaceItem>
@@ -15,7 +15,7 @@
         </SpaceItem>
     </Space>
 
-    <Table TItem="BTagEntity" DataSource="@BTagEntities" Size=@TableSize.Small>
+    <Table TItem="CCryptoEntity" DataSource="@CCryptoEntities" Size=@TableSize.Small>
         <ActionColumn Width="160">
             <Space>
                 <SpaceItem>
@@ -24,8 +24,7 @@
                 </SpaceItem>
             </Space>
         </ActionColumn>
-        <Column Title="名称" @bind-Field="@context.Name"></Column>
-        <Column Title="项目数量" @bind-Field="@context.Items"></Column>
+        <Column Title="密码" @bind-Field="@context.Secret"></Column>
         <Column Title="备注" @bind-Field="@context.Note"></Column>
     </Table>
 </PageContainer>

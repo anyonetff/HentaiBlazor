@@ -65,6 +65,8 @@ namespace HentaiBlazor
             services.AddScoped<VideoService>();
             services.AddScoped<VideoTagService>();
 
+            services.AddScoped<CryptoService>();
+
             services.AddSingleton<CoverService>();
             services.AddSingleton<PreviewService>();
 

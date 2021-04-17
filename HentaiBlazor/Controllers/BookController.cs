@@ -21,6 +21,8 @@ namespace HentaiBlazor.Controllers
 
         private readonly CoverService coverService;
 
+        //private readonly CoverService coverService;
+
         public BookController(
             BookService bookService, 
             CoverService coverService)

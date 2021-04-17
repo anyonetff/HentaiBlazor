@@ -1,6 +1,8 @@
 ﻿using AntDesign;
 using HentaiBlazor.Data.Basic;
+using HentaiBlazor.Data.Comic;
 using HentaiBlazor.Services.Basic;
+using HentaiBlazor.Services.Comic;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
@@ -12,7 +14,7 @@ namespace HentaiBlazor.Pages.Comic.Crypto
     public partial class List
     {
         [Inject]
-        public TagService tagService { get; set; }
+        public CryptoService cryptoService { get; set; }
 
         [Inject]
         public ModalService _modal { get; set; }
@@ -21,7 +23,7 @@ namespace HentaiBlazor.Pages.Comic.Crypto
 
         private ConfirmRef _removeRef;
 
-        private List<BTagEntity> BTagEntities;
+        private List<CCryptoEntity> CCryptoEntities;
 
         private string searchKeyword;
 
@@ -32,7 +34,7 @@ namespace HentaiBlazor.Pages.Comic.Crypto
 
         public async Task Search()
         {
-            BTagEntities = await tagService.SearchAsync(searchKeyword);
+            CCryptoEntities = await cryptoService.SearchAsync(searchKeyword);
         }
 
         private async Task OpenEdit(string options)
