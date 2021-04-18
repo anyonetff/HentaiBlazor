@@ -1,19 +1,19 @@
 ﻿using AntDesign;
-using HentaiBlazor.Data.Comic;
-using HentaiBlazor.Services.Comic;
+using HentaiBlazor.Data.Basic;
+using HentaiBlazor.Services.Basic;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace HentaiBlazor.Pages.Comic.Crypto
+namespace HentaiBlazor.Pages.Basic.Crypto
 {
     public partial class Remove
     {
         private string cryptoId;
 
-        private CCryptoEntity cryptoEntity;
+        private BCryptoEntity cryptoEntity;
 
         [Inject]
         public CryptoService cryptoService { get; set; }

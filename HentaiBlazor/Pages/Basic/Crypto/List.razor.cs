@@ -1,15 +1,13 @@
 ﻿using AntDesign;
 using HentaiBlazor.Data.Basic;
-using HentaiBlazor.Data.Comic;
 using HentaiBlazor.Services.Basic;
-using HentaiBlazor.Services.Comic;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace HentaiBlazor.Pages.Comic.Crypto
+namespace HentaiBlazor.Pages.Basic.Crypto
 {
     public partial class List
     {
@@ -23,7 +21,7 @@ namespace HentaiBlazor.Pages.Comic.Crypto
 
         private ConfirmRef _removeRef;
 
-        private List<CCryptoEntity> CCryptoEntities;
+        private List<BCryptoEntity> CCryptoEntities;
 
         private string searchKeyword;
 

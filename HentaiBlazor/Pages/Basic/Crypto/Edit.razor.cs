@@ -1,6 +1,6 @@
 ﻿using HentaiBlazor.Common;
-using HentaiBlazor.Data.Comic;
-using HentaiBlazor.Services.Comic;
+using HentaiBlazor.Data.Basic;
+using HentaiBlazor.Services.Basic;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using System;
@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace HentaiBlazor.Pages.Comic.Crypto
+namespace HentaiBlazor.Pages.Basic.Crypto
 {
     public partial class Edit
     {
@@ -19,7 +19,7 @@ namespace HentaiBlazor.Pages.Comic.Crypto
 
         private string cryptoId;
 
-        private CCryptoEntity cryptoEntity;
+        private BCryptoEntity cryptoEntity;
 
         [Inject]
         public CryptoService cryptoService { get; set; }
@@ -30,7 +30,7 @@ namespace HentaiBlazor.Pages.Comic.Crypto
 
             if (StringUtils.IsBlank(cryptoId))
             {
-                cryptoEntity = new CCryptoEntity();
+                cryptoEntity = new BCryptoEntity();
             }
             else 
             {
@@ -42,11 +42,11 @@ namespace HentaiBlazor.Pages.Comic.Crypto
 
         private async Task ValidatorByName(EditContext editContext)
         {
-            CCryptoEntity other = await this.cryptoService.FindBySecretAsync(cryptoEntity.Secret);
+            BCryptoEntity other = await this.cryptoService.FindBySecretAsync(cryptoEntity.Secret);
 
             if (other != null && StringUtils.IsNotEqual(cryptoEntity.Id, other.Id))
             {
-                messageStore.Add(editContext.Field(nameof(CCryptoEntity.Secret)), "密码重复了");
+                messageStore.Add(editContext.Field(nameof(BCryptoEntity.Secret)), "密码重复了");
             }
         }
         

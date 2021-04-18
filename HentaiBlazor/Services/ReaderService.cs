@@ -37,11 +37,11 @@ namespace HentaiBlazor.Services
                 {
                     if (StringUtils.IsBlank(_secret))
                     {
-                        archive = ArchiveFactory.Open("");
+                        archive = ArchiveFactory.Open(f);
                     }
                     else
                     {
-                        archive = ArchiveFactory.Open("", new ReaderOptions { Password = _secret });
+                        archive = ArchiveFactory.Open(f, new ReaderOptions { Password = _secret });
                     }
 
                     entries = archive.Entries;
@@ -57,6 +57,11 @@ namespace HentaiBlazor.Services
                     Console.WriteLine("解压密码不正确.");
                     Console.WriteLine(ex);
                 }
+            }
+
+            if (entries != null)
+            {
+
             }
 
             return entries;

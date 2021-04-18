@@ -1,6 +1,6 @@
-﻿@page "/comic/crypto/list"
+﻿@page "/basic/crypto/list"
 
-@using HentaiBlazor.Data.Comic
+@using HentaiBlazor.Data.Basic
 
 <PageContainer Title="解压密码">
 
@@ -15,7 +15,7 @@
         </SpaceItem>
     </Space>
 
-    <Table TItem="CCryptoEntity" DataSource="@CCryptoEntities" Size=@TableSize.Small>
+    <Table TItem="BCryptoEntity" DataSource="@CCryptoEntities" Size=@TableSize.Small>
         <ActionColumn Width="160">
             <Space>
                 <SpaceItem>
