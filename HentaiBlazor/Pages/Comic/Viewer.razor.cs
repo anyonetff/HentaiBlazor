@@ -104,7 +104,7 @@ namespace HentaiBlazor.Pages.Comic
                 return;
             }
 
-            await Paging(new PaginationEventArgs(EntryPaginator.PageIndex - 1, 1));
+            await Paging(new PaginationEventArgs(EntryPaginator.PageIndex + 1, 1));
 
         }
 
@@ -181,6 +181,8 @@ namespace HentaiBlazor.Pages.Comic
 
         public async Task Paging(PaginationEventArgs args)
         {
+            Console.WriteLine(args.Page);
+
             await EntryPaginator.HandlePageIndexChange(args);
 
             entry = EntryPaginator.Paged().ToList();

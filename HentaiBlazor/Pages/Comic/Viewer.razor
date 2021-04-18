@@ -32,7 +32,9 @@
             }
         </Space>
 
-        <Pagination Style="margin-bottom: 0.5rem; background-color: rgba(255,255,255,0.3);" Total="EntryPaginator.Total"
+        <Pagination Style="margin-bottom: 0.5rem; background-color: rgba(255,255,255,0.3);" 
+                    Total="EntryPaginator.Total"
+                    Current="EntryPaginator.PageIndex"
                     PageSize="EntryPaginator.PageSize"
                     OnChange="Paging"
                     ShowQuickJumper />
