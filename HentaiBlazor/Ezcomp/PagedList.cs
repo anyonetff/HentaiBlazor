@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace HentaiBlazor.Ezcomp
 {
-    public class PagedList<T>
+    public class PagedList<E>
     {
-        public List<T> Data { get; set; }
+        public List<E> Data { get; set; }
 
         public int PageSize { get; set; }
 
@@ -17,12 +17,18 @@ namespace HentaiBlazor.Ezcomp
 
         public int TotalCount { get; set; }
 
-        public Dictionary<string, object> Total { get; set; }
+        public ValueTuple Total { get; set; }
 
         public PagedList() 
         {
             PageSize = 10;
             PageIndex = 1;
+        }
+
+        public PagedList(int pageSize, int pageIndex)
+        {
+            PageSize = pageSize;
+            PageIndex = pageIndex;
         }
 
         public PagedList(int pageSize, int pageIndex, int totalCount)

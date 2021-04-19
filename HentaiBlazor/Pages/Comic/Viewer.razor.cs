@@ -1,8 +1,10 @@
 ﻿using AntDesign;
 using HentaiBlazor.Common;
+using HentaiBlazor.Data.Basic;
 using HentaiBlazor.Data.Comic;
 using HentaiBlazor.Ezcomp;
 using HentaiBlazor.Services;
+using HentaiBlazor.Services.Basic;
 using HentaiBlazor.Services.Comic;
 using Microsoft.AspNetCore.Components;
 using SharpCompress.Archives;
@@ -27,6 +29,11 @@ namespace HentaiBlazor.Pages.Comic
         [Inject]
         public CoverService coverService { get; set; }
 
+        [Inject]
+        public ReaderService readerService { get; set; }
+
+        [Inject]
+        public CryptoService cryptoService { get; set; }
 
         [Inject] 
         public MessageService _message { get; set; }
@@ -73,7 +80,7 @@ namespace HentaiBlazor.Pages.Comic
         {
             if (firstRender)
             {
-                await preparing();
+                await reader();
                 await reading();
             }
         }
@@ -234,6 +241,40 @@ namespace HentaiBlazor.Pages.Comic
 
                 return ImageUtils.PreviewInBase64(e, 320, 360);
             });
+        }
+
+        private async Task reader()
+        {
+            List<BCryptoEntity> cs = await this.cryptoService.SearchAsync("");
+
+            await Task.Run(() =>
+            {
+                entries = this.readerService.Images(book, cs);
+            });
+
+            Console.WriteLine("文件页数:" + entries.Count);
+
+            // 过滤不是图片的压缩包文件，并按文件名排序
+
+            if (book.Count != entries.Count)
+            {
+                Console.WriteLine("更新页码数.");
+
+                book.Count = entries.Count;
+
+                await bookService.UpdateAsync(book);
+            }
+
+            Console.WriteLine("找到[" + entries.Count + "]张图片");
+
+            EntryPaginator.DataSource = entries;
+
+            if (_Paged && book.Index > 0 && book.Index <= entries.Count)
+            {
+                await EntryPaginator.HandlePageIndexChange(new PaginationEventArgs(book.Index, 1));
+            }
+
+            entry = EntryPaginator.Paged().ToList();
         }
 
         private async Task preparing()

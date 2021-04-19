@@ -25,11 +25,11 @@ namespace HentaiBlazor.Pages.Comic
         [Inject]
         public DrawerService _drawer { get; set; }
 
-        private List<CBookEntity> CBookEntities;
+        //private List<CBookEntity> CBookEntities;
 
-        private List<CBookEntity> _CBookEntities;
+        //private List<CBookEntity> _CBookEntities;
 
-        private Paginator<CBookEntity> BookPaginator = new Paginator<CBookEntity>(20);
+        //private Paginator<CBookEntity> BookPaginator = new Paginator<CBookEntity>(20);
 
         private DrawerRef<string> _detailRef;
 
@@ -40,6 +40,8 @@ namespace HentaiBlazor.Pages.Comic
         private string searchAuthor = "";
 
         private Sortable Sortable = new Sortable();
+
+        private PagedList<CBookEntity> CBookEntitiesPaged = new PagedList<CBookEntity>(20, 1);
 
         protected override async Task OnInitializedAsync()
         {
@@ -54,21 +56,23 @@ namespace HentaiBlazor.Pages.Comic
 
         public async Task Search()
         {
-            Console.WriteLine(" search: " + searchKeyword);
+            // Console.WriteLine(" search: " + searchKeyword);
 
-            CBookEntities = await bookService.SearchAsync(searchCatalog, searchAuthor, searchKeyword,
-                Sortable.ToOrders());
+            CBookEntitiesPaged = await bookService.SearchPagedAsync(
+                searchCatalog, searchAuthor, searchKeyword,
+                Sortable.ToOrders(), CBookEntitiesPaged.PageSize, CBookEntitiesPaged.PageIndex);
 
-            BookPaginator.DataSource = CBookEntities;
 
-            _CBookEntities = BookPaginator.Paged().ToList();
+            //BookPaginator.DataSource = CBookEntities;
+
+            //_CBookEntities = BookPaginator.Paged().ToList();
         }
 
         public async Task Paging(PaginationEventArgs args)
         {
-            await BookPaginator.HandlePageIndexChange(args);
+            CBookEntitiesPaged.PageIndex = args.Page;
 
-            _CBookEntities = BookPaginator.Paged().ToList();
+            await Search();
         }
 
 

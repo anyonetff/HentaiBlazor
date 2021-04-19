@@ -43,8 +43,7 @@ namespace HentaiBlazor.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) 
         {
-            //modelBuilder.Entity<BAuthorEntity>().HasData(GetAuthors());
-            //modelBuilder.Entity<CBookEntity>();
+            Console.WriteLine("创建数据库.");
             base.OnModelCreating(modelBuilder);
         }
 

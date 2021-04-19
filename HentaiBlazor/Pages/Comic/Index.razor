@@ -25,14 +25,14 @@
     </Space>
 
     <AntList ItemLayout="ListItemLayout.Horizontal"
-             Grid="gutter" DataSource="_CBookEntities">
+             Grid="gutter" DataSource="CBookEntitiesPaged.Data">
         <ListItem Grid="gutter">
             <CardBook Book="@context" OnDetail="() => OpenDetail(context.Id, context.Title)"></CardBook>
         </ListItem>
     </AntList>
     
-    <Pagination Total="BookPaginator.Total"
-                PageSize="BookPaginator.PageSize"
+    <Pagination Total="CBookEntitiesPaged.TotalCount"
+                PageSize="CBookEntitiesPaged.PageSize"
                 OnChange="Paging"
                 ShowQuickJumper="true" />
 

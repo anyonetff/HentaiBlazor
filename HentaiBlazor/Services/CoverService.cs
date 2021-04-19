@@ -2,6 +2,7 @@
 using HentaiBlazor.Data.Comic;
 using SharpCompress.Archives;
 using SharpCompress.Common;
+using SharpCompress.Readers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -89,7 +90,7 @@ namespace HentaiBlazor.Services
                     return none;
                 }
 
-                using (var archive = ArchiveFactory.Open(file))
+                using (var archive = ArchiveFactory.Open(file, new ReaderOptions { LeaveStreamOpen = false }))
                 {
                     try
                     {
