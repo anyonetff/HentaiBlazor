@@ -41,7 +41,8 @@ namespace HentaiBlazor.Pages.Anime.Video
         {
             await videoService.SaveAsync(videoEntity);
 
-            await ((DrawerRef<string>)base.FeedbackRef)?.CloseAsync("success");
+            await this.FeedbackRef.CloseAsync();
+            // await ((DrawerRef<string>)base.FeedbackRef)?.CloseAsync("success");
         }
 
         private async Task OnFinishFailed(EditContext editContext)
