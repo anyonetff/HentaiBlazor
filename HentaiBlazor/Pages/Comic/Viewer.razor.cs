@@ -277,68 +277,6 @@ namespace HentaiBlazor.Pages.Comic
             entry = EntryPaginator.Paged().ToList();
         }
 
-        private async Task preparing()
-        {
-            Console.WriteLine("识别文件中的有效图片.");
-
-            string file = Path.Combine(book.Path, book.Name);
-
-            FileInfo f = new FileInfo(file);
-
-            if (!f.Exists)
-            {
-                Console.WriteLine("文件不存在...");
-                return;
-            }
-
-
-            // IArchive archive = null;
-            try
-            {
-                var archive = ArchiveFactory.Open(file);
-
-                Console.WriteLine("开始对内容排序.");
-
-                entries = archive.Entries
-                    .Where(a => (!a.IsDirectory && ComicUtils.IsImage(a.Key)))
-                    .OrderBy(a => a.Key)
-                    .ToList();
-            }
-            catch (CryptographicException ex)
-            {
-                Console.WriteLine("打开文件需要密码.");
-                Console.WriteLine(ex);
-            }
-
-
-            Console.WriteLine("文件页数:" + entries.Count);
-
-            // 过滤不是图片的压缩包文件，并按文件名排序
-
-            if (book.Count != entries.Count)
-            {
-                Console.WriteLine("更新页码数.");
-
-                book.Count = entries.Count;
-
-                await bookService.UpdateAsync(book);
-            }
-            
-            
-            Console.WriteLine("找到[" + entries.Count + "]张图片");
-
-            EntryPaginator.DataSource = entries;
-
-            if (_Paged && book.Index > 0 && book.Index <= entries.Count)
-            {
-                await EntryPaginator.HandlePageIndexChange(new PaginationEventArgs(book.Index, 1));
-            }
-
-            entry = EntryPaginator.Paged().ToList();
-
-            //Console.WriteLine
-            await Task.CompletedTask;
-        }
 
 
     }

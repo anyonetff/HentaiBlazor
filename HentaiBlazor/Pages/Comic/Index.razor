@@ -24,15 +24,23 @@
         </SpaceItem>
     </Space>
 
+    <Pagination Style="margin-bottom: 0.5rem;" 
+                Total="CBookEntitiesPaged.TotalCount"
+                PageSize="CBookEntitiesPaged.PageSize"
+                Current="CBookEntitiesPaged.PageIndex"
+                OnChange="Paging"
+                ShowQuickJumper="true" />
+
     <AntList ItemLayout="ListItemLayout.Horizontal"
              Grid="gutter" DataSource="CBookEntitiesPaged.Data">
         <ListItem Grid="gutter">
             <CardBook Book="@context" OnDetail="() => OpenDetail(context.Id, context.Title)"></CardBook>
         </ListItem>
     </AntList>
-    
+
     <Pagination Total="CBookEntitiesPaged.TotalCount"
                 PageSize="CBookEntitiesPaged.PageSize"
+                Current="CBookEntitiesPaged.PageIndex"
                 OnChange="Paging"
                 ShowQuickJumper="true" />
 

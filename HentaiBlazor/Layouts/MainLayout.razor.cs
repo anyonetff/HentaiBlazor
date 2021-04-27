@@ -12,11 +12,14 @@ namespace HentaiBlazor.Layouts
 {
     public partial class MainLayout
     {
+
         private MenuDataItem[] Menus;
 
         private int _maxDepth = 3;
 
         // private BasicLayout Layout;
+        [Inject]
+        public NavigationManager NavigationManager { get; set; }
 
         [Inject]
         public FunctionService service { get; set; }
@@ -24,11 +27,15 @@ namespace HentaiBlazor.Layouts
         protected override async Task OnInitializedAsync()
         {
             Menus = await CreateMenu(null, 1);
-
-            // Console.WriteLine(Layout.ColSize + "|" + Layout.IsMobile);
-
-            
         }
+
+        private bool _menu()
+        {
+            // Console.WriteLine("路由:" + NavigationManager.NavigateTo);
+
+            return ! NavigationManager.Uri.StartsWith(NavigationManager.BaseUri + "comic/viewer");
+        }
+
 
         // 递归查询生成菜单
         // 这个写法在本应用中影响不大，毕竟菜单较少
