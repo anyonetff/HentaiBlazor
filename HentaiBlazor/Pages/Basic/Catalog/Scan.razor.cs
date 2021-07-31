@@ -1,4 +1,5 @@
 ﻿using HentaiBlazor.Common;
+using HentaiBlazor.Constant;
 using HentaiBlazor.Data.Basic;
 using HentaiBlazor.Data.Comic;
 using HentaiBlazor.Services.Basic;
@@ -16,6 +17,10 @@ namespace HentaiBlazor.Pages.Basic.Catalog
     {
 
         private bool _scaning = false;
+
+        private int _total = 0;
+
+        private int _current = 0;
 
         private int _percent = 0;
 
@@ -51,6 +56,15 @@ namespace HentaiBlazor.Pages.Basic.Catalog
             await Task.CompletedTask;
         }
 
+        private async Task Refresh()
+        {
+            Console.WriteLine("重置上次扫描时间...");
+
+            catalogEntity.Refresh = DateTime.MinValue;
+
+            catalogEntity = await this.catalogService.SaveAsync(catalogEntity);
+        }
+
         private async Task Start()
         {
             if (_scaning)
@@ -59,17 +73,24 @@ namespace HentaiBlazor.Pages.Basic.Catalog
             }
 
             _scaning = true;
+            //_percent = 50;
 
-            StateHasChanged();
+            //catalogEntity.Refresh = DateTime.Now;
+
+            await InvokeAsync(StateHasChanged);
+
+            DateTime _refresh = DateTime.Now;
+            int _items = 0;
 
             switch (catalogEntity.Usage)
             {
-                case "COMIC":
+                case nameof(UsageConstant.COMIC):
                     Console.WriteLine("漫画目录:");
-                    await this.DiscoveryComic(catalogEntity.Path, catalogEntity.Children);
+                    _items = await this.DiscoveryComic(
+                        catalogEntity.Path, catalogEntity.Children, catalogEntity.Refresh);
                     break;
 
-                case "ANIME":
+                case nameof(UsageConstant.ANIME):
                     Console.WriteLine("动画目录:");
                     await this.DiscoveryAnime(catalogEntity.Path, catalogEntity.Children);
                     break;
@@ -78,6 +99,15 @@ namespace HentaiBlazor.Pages.Basic.Catalog
                     Console.WriteLine("所选目录用途不明");
                     break;
             }
+
+            catalogEntity.Refresh = _refresh;
+            catalogEntity.Items = _items;
+
+            catalogEntity = await this.catalogService.SaveAsync(catalogEntity);
+
+            Console.WriteLine("完成目录扫描...");
+
+            _percent = 100;
 
             _scaning = false;
         }

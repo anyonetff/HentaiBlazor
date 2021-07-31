@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace HentaiBlazor.Pages.Basic.Catalog
@@ -17,7 +18,7 @@ namespace HentaiBlazor.Pages.Basic.Catalog
         [Inject]
         public BookService bookService { get; set; }
 
-        private async Task DiscoveryComic(string path, bool children)
+        private async Task<int> DiscoveryComic(string path, bool children, DateTime refresh)
         {
             DirectoryInfo root = new DirectoryInfo(path);
 
@@ -26,7 +27,7 @@ namespace HentaiBlazor.Pages.Basic.Catalog
                 Console.WriteLine("目录不存在");
                 // 文件目录不存在
                 // TODO: 这里应该有个报警.
-                return;
+                return 0;
             }
 
             if (children)
@@ -35,23 +36,43 @@ namespace HentaiBlazor.Pages.Basic.Catalog
 
                 foreach (var dir in dirs)
                 {
-                    await DiscoveryComic(dir.FullName, children);
+                    await DiscoveryComic(dir.FullName, children, refresh);
                 }
             }
 
             FileInfo[] files = root.GetFiles();
 
+            this._total = _total + files.Length;
+
             foreach (var file in files)
             {
-                if (!ComicUtils.IsArchive(file.Name))
+                this._current += 1;
+
+                int _p = this._current * 100 / this._total;
+
+                if (Math.Abs(_p - this._percent) >= 5) 
+                {
+                    Console.WriteLine("当前进度:" + _percent);
+
+                    this._percent = _p;
+
+                    await InvokeAsync(StateHasChanged);
+                }
+
+                if (!ComicUtils.IsArchive(file.Name) || file.LastWriteTime.CompareTo(refresh) < 0)
                 {
                     // 如果当前文件不是漫画档案
+                    
                     continue;
                 }
 
                 CBookEntity book = await CreateBook(file);
                 BAuthorEntity author = await CreateAuthor(book.Author);
             }
+
+            int items = await this.bookService.TotalCountAsync(path, children);
+
+            return items;
         }
 
         private async Task<CBookEntity> CreateBook(FileInfo file)

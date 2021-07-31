@@ -82,6 +82,13 @@ namespace HentaiBlazor.Services.Comic
                 .CountAsync<CBookEntity>();
         }
 
+        public async Task<int> TotalCountAsync(string path, bool children)
+        {
+            return await this.dbContext.Set<CBookEntity>()
+                .Where<CBookEntity>(book => children ? book.Path.StartsWith(path) : book.Path.Equals(path))
+                .CountAsync<CBookEntity>();
+        }
+
         public async Task<int> UpdateAuthorAsync(string author, string alias)
         {
             await this.dbContext.Set<CBookEntity>()

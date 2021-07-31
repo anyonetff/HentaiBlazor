@@ -30,6 +30,9 @@ namespace HentaiBlazor.Data.Basic
         [Column("c_items")]
         public int Items { get; set; }
 
+        [Column("c_refresh", TypeName = "DATETIME")]
+        public DateTime Refresh { get; set; }
+
         [Column("c_note")]
         public string Note { get; set; }
     }

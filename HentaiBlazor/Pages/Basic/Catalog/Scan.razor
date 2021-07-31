@@ -14,6 +14,10 @@
         <DescriptionsItem Title="文件夹路径">@catalogEntity.Path</DescriptionsItem>
         <DescriptionsItem Title="包含子文件夹">@catalogEntity.Children</DescriptionsItem>
         <DescriptionsItem Title="项目数量">@catalogEntity.Items</DescriptionsItem>
+        <DescriptionsItem Title="扫描时间">
+            @catalogEntity.Refresh
+            <Icon Type="rollback" Style="color: darkslateblue;" @onclick="Refresh" />
+        </DescriptionsItem>
     </Descriptions>
     </Col>
 </Row>
